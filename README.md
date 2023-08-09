@@ -90,15 +90,15 @@ PATCH /api/lands/:land_id
 
 Updates a specified lands vote count and returns updated land
 Example request body:-
-{ "inc_like": 1 }
+{ "inc_vote": 1 }
 Example response:-
 {   "land_id": 1,
-    "name": "Living in the shadow of a great man",
+    "landName": "Living in the shadow of a great man",
     "city": "Salford",
     "country": "UK",
     "description": "I find this existence challenging",
     "created_at": "2020-07-09T20:11:00.000Z",
-    "like": 101,
+    "vote": 101,
     "land_img_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"  };
 
 DELETE /api/comments/:comment_id

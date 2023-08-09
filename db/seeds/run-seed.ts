@@ -1,9 +1,10 @@
-const devData = require('../data/development-data/index.ts');
-const seed1 = require('./seed.ts');
-const db1 = require('../connection.ts');
+const devData = require('../data/development-data/index.js');
+const seed = require('./seed.js');
+const db = require('../connection.js');
 
 const runSeed = () => {
-  return seed1(devData).then(() => db1.end());
+  console.log("in the run-seed");
+  return seed(devData.landData, devData.userData).then(() => db.end());
 };
 
 runSeed();
