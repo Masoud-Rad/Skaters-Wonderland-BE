@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const format = require('pg-format');
 const db = require('../connection');
-console.log("in the seed");
-async function seed(landData, userData) {
+const formatComments = require('./utils').formatComments;
+async function seed(landData, commentData, userData) {
     try {
         await db.query(`DROP TABLE IF EXISTS comments;`);
         await db.query(`DROP TABLE IF EXISTS lands;`);
@@ -31,16 +31,18 @@ async function seed(landData, userData) {
             CREATE TABLE comments (
             comment_id SERIAL PRIMARY KEY,
             body VARCHAR NOT NULL,
-            land_id INT REFERENCES lands(land_id) NOT NULL,
+            land_id INTEGER REFERENCES lands(land_id) NOT NULL,
             username VARCHAR REFERENCES users(username) NOT NULL,
             created_at TIMESTAMP DEFAULT NOW()
             );
         `);
         const insertUsersQueryStr = format(`INSERT INTO users (username, name, avatar_url, password) VALUES %L;`, userData.map(({ username, name, avatar_url, password }) => [username, name, avatar_url, password]));
         await db.query(insertUsersQueryStr);
-        const insertLandsQueryStr = format(`INSERT INTO lands (landName, city, country, description, vote, created_at, land_img_url, username) VALUES %L;`, landData.map(({ landName, city, country, description, vote, created_at, land_img_url, username }) => [landName, city, country, description, vote, created_at, land_img_url, username]));
-        const res = await db.query(insertLandsQueryStr);
-        console.log("Inserted lands:", res.rows);
+        const insertLandsQueryStr = format(`INSERT INTO lands (landName, city, country, description, vote, created_at, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landName, city, country, description, vote, created_at, land_img_url, username }) => [landName, city, country, description, vote, created_at, land_img_url, username]));
+        const result = await db.query(insertLandsQueryStr);
+        const formatedCommentsData = formatComments(commentData, result.rows);
+        const insertCommentsQueryStr = format(`INSERT INTO comments (body, land_id, username, created_at) VALUES %L;`, formatedCommentsData.map((formatedComment) => [formatedComment.body, formatedComment.land_id, formatedComment.username, formatedComment.created_at]));
+        await db.query(insertCommentsQueryStr);
     }
     catch (error) {
         console.error('Error executing queries:', error);

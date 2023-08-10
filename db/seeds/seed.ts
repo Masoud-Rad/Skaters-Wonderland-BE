@@ -1,5 +1,7 @@
 const format = require('pg-format');
 const db = require('../connection');
+const formatComments = require('./utils').formatComments;
+
 
 interface Land {
     landName: string;
@@ -19,8 +21,21 @@ interface User {
     password: string;
 }
 
-console.log("in the seed");
-async function seed(landData: Land[], userData: User[]) {
+interface Comment{
+    body: string;
+    landName: string;
+    username: string;
+    created_at: Date;
+}
+interface FormatedComment{
+    body: string;
+    land_id: number;
+    username: string;
+    created_at: Date;
+}
+
+
+async function seed(landData: Land[], commentData: Comment[], userData: User[]) {
     try {
 
         await db.query(`DROP TABLE IF EXISTS comments;`);
@@ -52,7 +67,7 @@ async function seed(landData: Land[], userData: User[]) {
             CREATE TABLE comments (
             comment_id SERIAL PRIMARY KEY,
             body VARCHAR NOT NULL,
-            land_id INT REFERENCES lands(land_id) NOT NULL,
+            land_id INTEGER REFERENCES lands(land_id) NOT NULL,
             username VARCHAR REFERENCES users(username) NOT NULL,
             created_at TIMESTAMP DEFAULT NOW()
             );
@@ -62,18 +77,25 @@ async function seed(landData: Land[], userData: User[]) {
             `INSERT INTO users (username, name, avatar_url, password) VALUES %L;`,
             userData.map(({ username, name, avatar_url, password }) => [username, name, avatar_url, password])
         );
-        await db.query(insertUsersQueryStr);
+       await db.query(insertUsersQueryStr);
 
         const insertLandsQueryStr = format(
-            `INSERT INTO lands (landName, city, country, description, vote, created_at, land_img_url, username) VALUES %L;`,
+            `INSERT INTO lands (landName, city, country, description, vote, created_at, land_img_url, username) VALUES %L RETURNING *;`,
             landData.map(({ landName, city, country, description, vote, created_at, land_img_url, username }) =>
                 [landName, city, country, description, vote, created_at, land_img_url, username])
         );
-        const res = await db.query(insertLandsQueryStr);
-        console.log("Inserted lands:", res.rows);
-        
+        const result = await db.query(insertLandsQueryStr);
+            
+        const formatedCommentsData  = formatComments(commentData, result.rows)
+        const insertCommentsQueryStr = format (`INSERT INTO comments (body, land_id, username, created_at) VALUES %L;`,
+        formatedCommentsData.map((formatedComment : FormatedComment)=>[formatedComment.body, formatedComment.land_id, formatedComment.username, formatedComment.created_at])
+        );
 
-    } catch (error) {
+        await db.query(insertCommentsQueryStr)
+            
+
+    } 
+    catch (error) {
         console.error('Error executing queries:', error);
     }
 }
