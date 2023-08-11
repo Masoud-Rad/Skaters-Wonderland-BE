@@ -1,6 +1,6 @@
 SKATERS-WONDERLAND API
 Project Overview
-Tech Stack Typescript, Expres.js, Node.js, PostgreSQL
+Tech Stack Typescript, Expres.js, Node.js, PostgreSQL, Jest
 
 This repo is a RESTful API that serves as the backend architecture for a Reddit-style SKATERS-WONDERLAND Web Application. It is built using Node.js and Express.js and uses PostgreSQL as its database. The API allows users to interact with the application by performing full CRUD (Create, Read, Update, Delete) operations on lands, comments, and users.
 
@@ -32,8 +32,18 @@ $ git clone https://github.com/gsaltuk/be_nc_news_project.git
 
 Install dependencies
 $ npm install
-$ npm install -D jest
-$ npm install -D jest-sorted
+
+/*
+"devDependencies": {
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-typescript": "^7.22.5",
+    "babel-jest": "^29.6.2",
+    "@types/jest": "^29.5.3",
+    "jest": "^29.6.2",
+    "ts-node": "^10.9.1"
+  },
+*/
 
 Create and setup environment variables
 Create two .env files:

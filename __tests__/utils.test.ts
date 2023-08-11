@@ -18,7 +18,7 @@ interface CommentTemple {
     created_at: Date;
 }
 
-type resultCommentTemple {
+type resultCommentTemple = {
     body: string;
     land_id: number;
     username: string;

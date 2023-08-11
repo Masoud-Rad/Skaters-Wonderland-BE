@@ -9,15 +9,17 @@
     "ts-node": "^10.9.1"
   },
   "scripts": {
-    "start": "npx ts-node ./api.ts",
+    "start": "npx ts-node ./app.ts",
     "setup-dbs": "psql -f ./db/setup.sql",
-    "seed": "node ./db/seeds/run-seed.js",
+    "seed": "npx ts-node ./db/seeds/run-seed.js",
     "test": "NODE_ENV=test jest",
     "prepare": "husky install",
     "seed-prod": "NODE_ENV=production npm run seed",
     "build": "tsc"
   },
   "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.4.9",
     "dotenv": "^16.3.1",
     "pg": "^8.11.2",
     "pg-format": "^1.0.4"
