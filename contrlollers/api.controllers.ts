@@ -20,7 +20,6 @@ const {selectLands} = require('../models/lands.models')
 
 
 exports.getLands= (_req : Request , res : Response, next : NextFunction)=>{
-  console.log("in the api ctrl")
   selectLands()
   .then((lands: LandSample[])=>{
     res.status(200).send({"lands": lands})

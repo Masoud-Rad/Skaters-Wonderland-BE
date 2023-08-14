@@ -9,12 +9,14 @@
     "supertest": "^6.3.3",
     "ts-node": "^10.9.1"
   },   
+  "jest": {
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"
+  },
   "scripts": {
     "start": "npx ts-node ./listen.ts",
     "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "npx ts-node ./db/seeds/run-seed.js",
     "test": "psql -f ./db/setup.sql && NODE_ENV=test jest",
-    "prepare": "husky install",
     "seed-prod": "NODE_ENV=production npm run seed",
     "build": "tsc"
   },
