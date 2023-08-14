@@ -1,0 +1,34 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express = require("express");
+const app = express();
+app.use(express.json());
+const { getLands } = require('./contrlollers/api.controllers');
+app.get('/api/lands', getLands);
+app.use((error, _req, res, next) => {
+    if (error.code === "22P02") {
+        res.status(404).send({ msg: "Not Found!" });
+    }
+    else {
+        next(error);
+    }
+});
+app.use((error, _req, res, next) => {
+    if (error.code === "23503") {
+        res.status(203).send({ msg: "Non-Authoritative Information" });
+    }
+    else {
+        next(error);
+    }
+});
+app.use((error, _req, res, _next) => {
+    res.status(error.status).send({ msg: error.msg });
+});
+app.all("*", (_req, res) => {
+    res.status(404).send({ msg: "Not Found!" });
+});
+app.use((_error, _req, res, _next) => {
+    res.status(500).send({ msg: "Server Error!" });
+});
+module.exports = app;
+//# sourceMappingURL=app.js.map

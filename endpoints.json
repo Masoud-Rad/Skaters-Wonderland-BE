@@ -1,0 +1,98 @@
+{
+    "GET /api/getApi": {
+      "description": "serves up a json representation of all the available endpoints of the api"
+    },
+  
+  "Get /api/users": {
+      "description": "serves an array of all users",
+      "queries": ["username"],
+      "exampleResponse": {
+        "users": [
+          {
+            "username": "tickle122",
+            "landName": "Tom Tickle",
+            "avatar_url":
+              "https://vignette.wikia.nocookie.net/mrmen/images/d/d6/Mr-Tickle-9a.png/revision/latest?cb=20180127221953",
+            "password": "5467uygfjh"
+          }
+        ]
+      }
+    },
+  
+    "GET /api/lands": {
+      "description": "serves an array of all lands",
+      "queries": [],
+      "exampleResponse": {
+        "Lands": [{ "landName": "Media City Salford Quays", 
+      "description": "A popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester." ,
+   "City" : "Salford"}]
+      }
+    },
+  
+    "Get /api/lands/:land_id": {
+      "description": "serves an array of an land by ID ",
+      "parametr": ["land_id"],
+      "exampleResponse": {
+        "Land": {
+            "name": "Seafood substitutions are increasing",
+            "city": "Salford",
+            "country": "UK",
+            "description": "Text from the article..",
+            "created_at": "2018-05-30T15:59:13.341Z",
+            "Vote": 0,
+        "land_img_url": ["1..","2.."],
+        "user": "Mas"
+          }
+      }
+    },
+  
+    "Get /api/lands/:land_id/comments": {
+      "description": "serves an array of a specefic article's comments ",
+      "parametr": ["article_id"],
+      "exampleResponse": {
+        "comments": [
+          {
+            "body": "I like it because it is smooth and easy for amateur, nice view",
+           "username": "Mas",
+            "land_id": 18,
+            "created_at": 1590103140000
+          }
+        ]
+      }
+    },
+  
+    
+  
+    "Post /api/lands/:land_id/comments": {
+      "description": "Post an comment for specific article ",
+      "parametr": ["article_id"],
+      "exampleResponse": {
+        "comment":   {
+          "body": "this is my test_add_comment body",
+          "username": "Mas"
+          }
+      }
+  
+    },
+  
+    "Patch /api/lands/:land_id": {
+      "description": "Patch specific land ",
+      "parametr": ["land_id"],
+      "exampleResponse": {
+        "land": {
+          "name": "Seafood substitutions are increasing",
+           "Land": {
+            "name": "Seafood substitutions are increasing",
+            "city": "Salford",
+            "country": "UK",
+            "description": "Text from the article..",
+        "img-url": ["1..","2.."]
+          }
+        }
+      }
+    },
+  
+    "Delete /api/comments/:comment_id":{},
+    "Delete land. /api/lands/:land_id":{}   
+  
+  }
