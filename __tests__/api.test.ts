@@ -59,6 +59,10 @@ interface CommentSample{
 interface CommentResponseBody {
   comments: CommentSample[];
 }
+
+interface AddedCommentResponseBody {
+  addedComment: CommentSample;
+}
   //------------------------------------------------------------------------
   describe("GET WRONG END-POINT",()=>{
     test("GET - status: 404 - not exist", ()=>{
@@ -374,5 +378,67 @@ describe("GET /api/lands/:land_id/comments",()=>{
         expect(comments).toEqual(expectedResult);
 
     })
+  })
+})
+
+
+describe("POST /api/lands/:land_id/comments",()=>{
+  test("POST- status: 203- responds with error because username does not exist",()=>{
+    const newComment = {
+                        "body": "this is my test_add_comment body",
+                        "username": "username500"
+                       }
+  return request(app)
+  .post('/api/lands/3/comments')
+  .send(newComment)
+  .expect(203)
+  .then((response : ErrorResponse)=>{
+    expect(response.body.msg).toBe("Non-Authoritative Information!")
+    })
+  })
+
+  test("POST- status: 203- responds with error because not sending correct information",()=>{
+    const newComment = {
+                        "body": "this is my test_add_comment body"
+                       }
+  return request(app)
+  .post('/api/lands/3/comments')
+  .send(newComment)
+  .expect(400)
+  .then((response : ErrorResponse)=>{
+    expect(response.body.msg).toBe("BAD REQUEST!")
+    })
+  })
+
+  test("POST- status: 203- responds with error because not sending correct information",()=>{
+    const newComment = {
+                        "text": "this is my test_add_comment body",
+                        "username": "username1"
+                       }
+  return request(app)
+  .post('/api/lands/3/comments')
+  .send(newComment)
+  .expect(400)
+  .then((response : ErrorResponse)=>{
+    expect(response.body.msg).toBe("BAD REQUEST!")
+    })
+  })
+
+  test("POST- status: 201- responds with the added comment",()=>{
+    const newComment = {
+                        "body": "this is my test_add_comment body",
+                        "username": "username1"
+                       }
+  return request(app)
+  .post('/api/lands/3/comments')
+  .send(newComment)
+  .expect(201)
+  .then(( response : Response ) => {
+    const responseBody: AddedCommentResponseBody = response.body;
+        const comment: CommentSample = responseBody.addedComment;
+        expect(comment.username).toBe("username1");
+        expect(comment.body).toBe(newComment.body);
+        expect(comment.land_id).toBe(3);
+      })
   })
 })
