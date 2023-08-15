@@ -18,10 +18,6 @@ interface LandsResult {
   [key: string]: unknown;
 }
 
-interface SingleLandsResult {
-  rows: LandSample[];
-  [key: string]: unknown;
-}
 
 
 exports.selectLands=()=>{
@@ -33,7 +29,7 @@ exports.selectLands=()=>{
 
 exports.selectSingleLand=(landId : string)=>{
   return db.query(`SELECT * FROM lands WHERE land_id=$1;`,[landId])
-         .then(({rows} : SingleLandsResult)=>{
+         .then(({rows} : LandsResult)=>{
           if(rows.length===0)
           {
                return Promise.reject({ status: 404 , msg: 'Not Found!'})

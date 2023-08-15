@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const { selectLands, selectSingleLand } = require('../models/lands.models');
 const { selectUsers } = require('../models/users.models');
-exports.getUsers = (_req, res, next) => {
-    selectUsers().then((users) => {
+exports.getUsers = (req, res, next) => {
+    const { username } = req.query;
+    selectUsers(username).then((users) => {
         res.status(200).send({ users });
     })
         .catch((err) => {
-        console.log("in the api.controllers>getusers, err:", err);
         next(err);
     });
 };
