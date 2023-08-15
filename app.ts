@@ -4,11 +4,13 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const {getLands} = require('./contrlollers/api.controllers')
+const { getUsers , getLands} = require('./contrlollers/api.controllers')
 
 //----------------------------------------------Get-------------------------------------------------
 
+app.get('/api/users', getUsers);
 app.get('/api/lands', getLands);
+
 
 
 

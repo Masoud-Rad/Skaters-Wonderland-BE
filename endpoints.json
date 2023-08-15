@@ -3,7 +3,7 @@
       "description": "serves up a json representation of all the available endpoints of the api"
     },
   
-  "Get /api/users": {
+  "GET /api/users": {
       "description": "serves an array of all users",
       "queries": ["username"],
       "exampleResponse": {
@@ -69,7 +69,8 @@
       "exampleResponse": {
         "comment":   {
           "body": "this is my test_add_comment body",
-          "username": "Mas"
+          "username": "Mas",
+          "created_at": 1590103140000
           }
       }
   

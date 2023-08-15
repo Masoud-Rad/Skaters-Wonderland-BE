@@ -9,11 +9,12 @@ beforeEach(() => seed(devData.landData, devData.commentData, devData.userData))
 afterAll(() => connection.end())
 
 //-------------------------Tyoes---------------------------------
+import { Response } from 'supertest';
+
 interface response404 {
 body: {msg:string};
 }
 
-import { Response } from 'supertest';
 
 interface LandSample {
     land_id: number;
@@ -27,11 +28,23 @@ interface LandSample {
     username: string;
 }
 
-interface ResponseBody {
+interface LandsResponseBody {
     lands: LandSample[];
   }
 
+interface UsersSample {
+  username: string;
+  name: string;
+  avatar_url: string;
+  password: string;
+}
 
+interface UsersResponseBody {
+    users: UsersSample[];
+  }
+
+
+//------------------------------------------------------------------------
 describe("GET /api/lands",()=>{
     test("GET - status: 404 - not exist", ()=>{
         return request(app)
@@ -46,8 +59,8 @@ describe("GET /api/lands",()=>{
         .get("/api/lands")
         .expect(200)
         .then((response : Response)=>{
-            const responseData: ResponseBody = response.body;
-            const lands: LandSample[] = responseData.lands;
+            const responseBody: LandsResponseBody = response.body;
+            const lands: LandSample[] = responseBody.lands;
             const expectedResult = [
                 {
                   land_id: 1,
@@ -87,4 +100,46 @@ describe("GET /api/lands",()=>{
 
         })
     })
+})
+
+describe("GET /api/users",()=>{
+  test("GET - status: 404 - not exist", ()=>{
+      return request(app)
+      .get("/api/nonsence")
+      .expect(404)
+      .then((response : response404)=>{
+          expect(response.body.msg).toBe("Not Found!")
+      })
+  })
+  test("GET - status: 200 - respond with all the properties",()=>{
+      return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then((response : Response)=>{
+          const responseBody: UsersResponseBody = response.body;
+          const users: UsersSample[] = responseBody.users;
+          const expectedResult =  [
+            {
+                username: 'username1',
+                name: 'name1',
+                avatar_url: 'https://vignette.wikia.nocookie.net/mrmen/images/d/d6/Mr-Tickle-9a.png/revision/latest?cb=20180127221953',
+                password: "jnhiu877"
+            },
+            {
+                username: 'username2',
+                name: 'name2',
+                avatar_url: 'https://vignette.wikia.nocookie.net/mrmen/images/7/78/Mr-Grumpy-3A.PNG/revision/latest?cb=20170707233013',
+                password: "87987hjjk"
+            },
+            {
+                username: 'username3',
+                name: 'name3',
+                avatar_url: 'https://vignette1.wikia.nocookie.net/mrmen/images/7/7f/Mr_Happy.jpg/revision/latest?cb=20140102171729',
+                password: "nk2nkl2nk"
+            }
+        ];
+          expect(users).toEqual(expectedResult);
+
+      })
+  })
 })
