@@ -47,9 +47,18 @@ interface LandsResponseBody {
 interface SingleLandsResponseBody {
     land: LandSample;
   }
+//**** commentsType
+interface CommentSample{
+  comment_id: number;
+  body: string;
+  land_id: number;
+  username: string;
+  created_at: Date;
+}
 
-
-  
+interface CommentResponseBody {
+  comments: CommentSample[];
+}
   //------------------------------------------------------------------------
   describe("GET WRONG END-POINT",()=>{
     test("GET - status: 404 - not exist", ()=>{
@@ -221,6 +230,46 @@ describe("GET /api/lands/:land_id",()=>{
             }
           
         expect(land).toEqual(expectedResult);
+
+    })
+  })
+})
+
+describe("GET /api/lands/:land_id/comments",()=>{
+  test("GET - status: 400 - when add NON integer id should recive error", ()=>{
+    return request(app)
+    .get("/api/lands/any_id/comments")
+    .expect(400)
+    .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("invalid input syntax or type!")
+    })
+  })
+  test("GET - status: 404 - not exist", ()=>{
+    return request(app)
+    .get("/api/lands/500/comments")
+    .expect(404)
+    .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("Not Found!")
+    })
+  })
+  test("GET - status: 200 - respond with a specific land's info",()=>{
+    return request(app)
+    .get("/api/lands/2/comments")
+    .expect(200)
+    .then((response : Response)=>{
+        const responseBody: CommentResponseBody = response.body;
+        const comments: CommentSample[] = responseBody.comments;
+        const expectedResult =[
+                                {
+                                  comment_id: 3,
+                                  body: "kkQui sunt sit voluptas repellendus sed. Voluptatem et repellat fugiat. Rerum doloribus eveniet quidem vero aut sint officiis. Dolor facere et et architecto vero qui et perferendis dolorem. Magni quis ratione adipisci error assumenda ut. Id rerum eos facere sit nihil ipsam officia aspernatur odio.",
+                                  username: "username2",
+                                  land_id: 2,
+                                  created_at: "2023-08-10T11:00:00.000Z"
+                                }
+                              ]
+          
+        expect(comments).toEqual(expectedResult);
 
     })
   })
