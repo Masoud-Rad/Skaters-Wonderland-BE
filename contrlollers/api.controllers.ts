@@ -49,8 +49,9 @@ exports.getUsers = (req : Request , res : Response, next : NextFunction)=>{
 
 //------------------------------Lands------------------------------
 
-exports.getLands= (_req : Request , res : Response, next : NextFunction)=>{
-    selectLands()
+exports.getLands= (req : Request , res : Response, next : NextFunction)=>{
+  const {city} = req.query; 
+  selectLands(city)
     .then((lands: LandSample[])=>{
       res.status(200).send({"lands": lands})
     })

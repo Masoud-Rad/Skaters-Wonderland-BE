@@ -12,8 +12,9 @@ exports.getUsers = (req, res, next) => {
         next(err);
     });
 };
-exports.getLands = (_req, res, next) => {
-    selectLands()
+exports.getLands = (req, res, next) => {
+    const { city } = req.query;
+    selectLands(city)
         .then((lands) => {
         res.status(200).send({ "lands": lands });
     })

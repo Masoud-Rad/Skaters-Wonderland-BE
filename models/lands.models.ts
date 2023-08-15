@@ -20,11 +20,22 @@ interface LandsResult {
 
 
 
-exports.selectLands=()=>{
+exports.selectLands=(city: string)=>{
+  if(!city){
     return db.query(`SELECT * FROM lands;`)
            .then((response : LandsResult)=>{
             return response.rows;
            })
+  }else{
+    return db.query(`SELECT * FROM lands WHERE city=$1;`,[city])
+           .then((response : LandsResult)=>{
+            if(response.rows.length===0){
+              return Promise.reject({ status: 404 , msg: 'Not Found!'})
+            }else{
+              return response.rows;
+            }
+           })
+  }
 }
 
 exports.selectSingleLand=(landId : string)=>{

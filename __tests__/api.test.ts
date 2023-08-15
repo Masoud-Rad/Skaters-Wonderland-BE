@@ -192,6 +192,32 @@ describe("GET /api/lands",()=>{
     })
 })
 
+describe("GET /api/lands/?city",()=>{
+  test("GET - status: 200 - respond with all the properties",()=>{
+      return request(app)
+      .get("/api/lands/?city=Cityexample2")
+      .expect(200)
+      .then((response : Response)=>{
+          const responseBody: LandsResponseBody = response.body;
+          const lands: LandSample[] = responseBody.lands;
+          const expectedResult = [
+              {
+                land_id: 2,
+                landname: 'Second land',
+                city: 'Cityexample2',
+                country: 'countryexample2',
+                description: 'Urban park with a championship golf course  for grown-ups, farm animals and play areas for kids.',
+                vote: 8,
+                created_at: '2023-08-10T11:00:00.000Z',
+                land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+                username: 'username2'
+              }
+            ]
+          expect(lands).toEqual(expectedResult);
+      })
+  })
+})
+
 describe("GET /api/lands/:land_id",()=>{
   test("GET - status: 400 - when add NON integer id should recive error", ()=>{
     return request(app)
