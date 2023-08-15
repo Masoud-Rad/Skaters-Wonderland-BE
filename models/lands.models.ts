@@ -13,7 +13,12 @@ interface LandSample {
 }
 
 
-interface Result {
+interface LandsResult {
+  rows: LandSample[];
+  [key: string]: unknown;
+}
+
+interface SingleLandsResult {
   rows: LandSample[];
   [key: string]: unknown;
 }
@@ -21,7 +26,18 @@ interface Result {
 
 exports.selectLands=()=>{
     return db.query(`SELECT * FROM lands;`)
-           .then((response : Result)=>{
+           .then((response : LandsResult)=>{
             return response.rows;
            })
+}
+
+exports.selectSingleLand=(landId : string)=>{
+  return db.query(`SELECT * FROM lands WHERE land_id=$1;`,[landId])
+         .then(({rows} : SingleLandsResult)=>{
+          if(rows.length===0)
+          {
+               return Promise.reject({ status: 404 , msg: 'Not Found!'})
+          }
+          return rows[0]; 
+         })        
 }
