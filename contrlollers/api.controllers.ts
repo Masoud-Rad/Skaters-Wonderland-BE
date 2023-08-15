@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-const {selectLands} = require('../models/lands.models')
+const {selectLands, selectSingleLand} = require('../models/lands.models')
 const { selectUsers }= require ('../models/users.models')
 
 //-------------------------------Types----------------------------
 
+//**** usersType
 interface UsersSample {
   username: string;
   name: string;
@@ -11,7 +12,8 @@ interface UsersSample {
   password: string;
 }
 
-  interface LandSample {
+//**** landsType
+interface LandSample {
     land_id: number;
     landName: string;
     city: string;
@@ -29,21 +31,34 @@ exports.getUsers = (_req : Request , res : Response, next : NextFunction)=>{
     res.status(200).send({users})
   })
   .catch((err: any)=>{
-    console.log("in the ctrl>getusers, err:", err);
+    console.log("in the api.controllers>getusers, err:", err);
     next(err);
   })
 }
 
+
 //------------------------------Land------------------------------
 
 exports.getLands= (_req : Request , res : Response, next : NextFunction)=>{
-  selectLands()
-  .then((lands: LandSample[])=>{
-    res.status(200).send({"lands": lands})
+    selectLands()
+    .then((lands: LandSample[])=>{
+      res.status(200).send({"lands": lands})
+    })
+    .catch((err: any)=>{
+      next(err);
+    })
+}
+
+
+exports.getLandById= (req : Request , res : Response, next : NextFunction)=>{
+
+  const landId= req.params.land_id;
+
+  selectSingleLand(landId)
+  .then((land: LandSample)=>{
+    res.status(200).send({land})
   })
   .catch((err: any)=>{
-    console.log("in the ctrl>getLands, err:", err);
     next(err);
   })
-
 }

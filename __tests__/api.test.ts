@@ -11,11 +11,23 @@ afterAll(() => connection.end())
 //-------------------------Tyoes---------------------------------
 import { Response } from 'supertest';
 
-interface response404 {
+interface ErrorResponse {
 body: {msg:string};
 }
 
+//**** usersType
+interface UsersSample {
+  username: string;
+  name: string;
+  avatar_url: string;
+  password: string;
+}
 
+interface UsersResponseBody {
+    users: UsersSample[];
+  }
+
+//**** landsType
 interface LandSample {
     land_id: number;
     landName: string;
@@ -31,26 +43,63 @@ interface LandSample {
 interface LandsResponseBody {
     lands: LandSample[];
   }
-
-interface UsersSample {
-  username: string;
-  name: string;
-  avatar_url: string;
-  password: string;
-}
-
-interface UsersResponseBody {
-    users: UsersSample[];
+interface SingleLandsResponseBody {
+    land: LandSample;
   }
 
 
-//------------------------------------------------------------------------
+  
+  //------------------------------------------------------------------------
+  
+  describe("GET /api/users",()=>{
+    test("GET - status: 404 - not exist", ()=>{
+        return request(app)
+        .get("/api/nonsence")
+        .expect(404)
+        .then((response : ErrorResponse)=>{
+            expect(response.body.msg).toBe("Not Found!")
+        })
+    })
+    test("GET - status: 200 - respond with all the properties",()=>{
+        return request(app)
+        .get("/api/users")
+        .expect(200)
+        .then((response : Response)=>{
+            const responseBody: UsersResponseBody = response.body;
+            const users: UsersSample[] = responseBody.users;
+            const expectedResult =  [
+              {
+                  username: 'username1',
+                  name: 'name1',
+                  avatar_url: 'https://vignette.wikia.nocookie.net/mrmen/images/d/d6/Mr-Tickle-9a.png/revision/latest?cb=20180127221953',
+                  password: "jnhiu877"
+              },
+              {
+                  username: 'username2',
+                  name: 'name2',
+                  avatar_url: 'https://vignette.wikia.nocookie.net/mrmen/images/7/78/Mr-Grumpy-3A.PNG/revision/latest?cb=20170707233013',
+                  password: "87987hjjk"
+              },
+              {
+                  username: 'username3',
+                  name: 'name3',
+                  avatar_url: 'https://vignette1.wikia.nocookie.net/mrmen/images/7/7f/Mr_Happy.jpg/revision/latest?cb=20140102171729',
+                  password: "nk2nkl2nk"
+              }
+          ];
+            expect(users).toEqual(expectedResult);
+  
+        })
+    })
+  })
+
+
 describe("GET /api/lands",()=>{
     test("GET - status: 404 - not exist", ()=>{
         return request(app)
         .get("/wrongEndPoint")
         .expect(404)
-        .then((response : response404)=>{
+        .then((response : ErrorResponse)=>{
             expect(response.body.msg).toBe("Not Found!")
         })
     })
@@ -101,45 +150,45 @@ describe("GET /api/lands",()=>{
         })
     })
 })
-
-describe("GET /api/users",()=>{
-  test("GET - status: 404 - not exist", ()=>{
-      return request(app)
-      .get("/api/nonsence")
-      .expect(404)
-      .then((response : response404)=>{
-          expect(response.body.msg).toBe("Not Found!")
-      })
+describe("GET /api/lands/:land_id",()=>{
+  test("GET - status: 400 - when add NON integer id should recive error", ()=>{
+    return request(app)
+    .get("/api/lands/any_id")
+    .expect(400)
+    .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("invalid input syntax or type!")
+    })
   })
-  test("GET - status: 200 - respond with all the properties",()=>{
-      return request(app)
-      .get("/api/users")
-      .expect(200)
-      .then((response : Response)=>{
-          const responseBody: UsersResponseBody = response.body;
-          const users: UsersSample[] = responseBody.users;
-          const expectedResult =  [
+  test("GET - status: 404 - not exist", ()=>{
+    return request(app)
+    .get("/api/lands/500")
+    .expect(404)
+    .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("Not Found!")
+    })
+  })
+  test("GET - status: 200 - respond with a specific land's info",()=>{
+    return request(app)
+    .get("/api/lands/2")
+    .expect(200)
+    .then((response : Response)=>{
+        const responseBody: SingleLandsResponseBody = response.body;
+        const land: LandSample = responseBody.land;
+        const expectedResult =
             {
-                username: 'username1',
-                name: 'name1',
-                avatar_url: 'https://vignette.wikia.nocookie.net/mrmen/images/d/d6/Mr-Tickle-9a.png/revision/latest?cb=20180127221953',
-                password: "jnhiu877"
-            },
-            {
-                username: 'username2',
-                name: 'name2',
-                avatar_url: 'https://vignette.wikia.nocookie.net/mrmen/images/7/78/Mr-Grumpy-3A.PNG/revision/latest?cb=20170707233013',
-                password: "87987hjjk"
-            },
-            {
-                username: 'username3',
-                name: 'name3',
-                avatar_url: 'https://vignette1.wikia.nocookie.net/mrmen/images/7/7f/Mr_Happy.jpg/revision/latest?cb=20140102171729',
-                password: "nk2nkl2nk"
+              land_id: 2,
+              landname: 'Second land',
+              city: 'Cityexample2',
+              country: 'countryexample2',
+              description: 'Urban park with a championship golf course  for grown-ups, farm animals and play areas for kids.',
+              vote: 8,
+              created_at: '2023-08-10T11:00:00.000Z',
+              land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+              username: 'username2'
             }
-        ];
-          expect(users).toEqual(expectedResult);
+          
+        expect(land).toEqual(expectedResult);
 
-      })
+    })
   })
 })
