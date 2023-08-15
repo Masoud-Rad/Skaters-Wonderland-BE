@@ -41,7 +41,7 @@ exports.getUsers = (req : Request , res : Response, next : NextFunction)=>{
   selectUsers(username).then((users: UsersSample[])=>{
     res.status(200).send({users})
   })
-  .catch((err: any)=>{
+  .catch((err: Error)=>{
     next(err);
   })
 }
@@ -50,12 +50,12 @@ exports.getUsers = (req : Request , res : Response, next : NextFunction)=>{
 //------------------------------Lands------------------------------
 
 exports.getLands= (req : Request , res : Response, next : NextFunction)=>{
-  const {city} = req.query; 
-  selectLands(city)
+  const {city, sort_by, order_by} = req.query; 
+  selectLands(city, sort_by, order_by)
     .then((lands: LandSample[])=>{
       res.status(200).send({"lands": lands})
     })
-    .catch((err: any)=>{
+    .catch((err: Error)=>{
       next(err);
     })
 }
@@ -69,7 +69,7 @@ exports.getLandById= (req : Request , res : Response, next : NextFunction)=>{
   .then((land: LandSample)=>{
     res.status(200).send({land})
   })
-  .catch((err: any)=>{
+  .catch((err: Error)=>{
     next(err);
   })
 }
@@ -84,7 +84,7 @@ exports.getComments =(req : Request , res : Response, next : NextFunction)=>{
   .then((comments: CommentSample[] )=>{
     res.status(200).send({comments})
   })
-  .catch((err: any)=>{
+  .catch((err: Error)=>{
     next(err);
   })
 }

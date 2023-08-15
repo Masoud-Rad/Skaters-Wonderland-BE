@@ -20,14 +20,15 @@ interface LandsResult {
 
 
 
-exports.selectLands=(city: string)=>{
+exports.selectLands=(city: string, sort_by:string ="land_id" , order_by:string = "ASC")=>{
+ 
   if(!city){
-    return db.query(`SELECT * FROM lands;`)
+    return db.query(`SELECT * FROM lands ORDER BY ${sort_by} ${order_by};`)
            .then((response : LandsResult)=>{
             return response.rows;
            })
   }else{
-    return db.query(`SELECT * FROM lands WHERE city=$1;`,[city])
+    return db.query(`SELECT * FROM lands WHERE city=$1 ORDER BY ${sort_by} ${order_by};`,[city])
            .then((response : LandsResult)=>{
             if(response.rows.length===0){
               return Promise.reject({ status: 404 , msg: 'Not Found!'})
