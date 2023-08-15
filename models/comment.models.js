@@ -10,4 +10,17 @@ exports.selectComments = (landId) => {
         return rows;
     });
 };
+exports.addComment = (landId, newComment) => {
+    if (typeof newComment === "object" && newComment.hasOwnProperty("body") && newComment.hasOwnProperty("username")) {
+        const username = newComment.username;
+        const body = newComment.body;
+        return db.query(`INSERT INTO comments
+  (body, land_id, username) VALUES ($1,$2,$3) RETURNING *;`, [body, landId, username]).then(({ rows }) => {
+            return rows[0];
+        });
+    }
+    else {
+        return Promise.reject({ status: 400, msg: "BAD REQUEST!" });
+    }
+};
 //# sourceMappingURL=comment.models.js.map

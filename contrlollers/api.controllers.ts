@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 const {selectLands, selectSingleLand} = require('../models/lands.models')
 const { selectUsers }= require ('../models/users.models')
-const {selectComments}= require('../models/comment.models')
+const {selectComments, addComment}= require('../models/comment.models')
 
 //-------------------------------Types----------------------------
 
@@ -88,3 +88,20 @@ exports.getComments =(req : Request , res : Response, next : NextFunction)=>{
     next(err);
   })
 }
+
+exports.postComment=(req : Request , res : Response, next : NextFunction)=>{
+  const newComment= req.body;
+  const landId = req.params.land_id;
+  
+  addComment(landId, newComment)
+  .then((addedComment: CommentSample)=>{
+    res.status(201).send({addedComment})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
+
+
+
+

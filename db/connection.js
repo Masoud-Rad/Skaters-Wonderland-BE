@@ -8,6 +8,8 @@ require('dotenv').config({
 if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {
     throw new Error('PGDATABASE not set');
 }
-const config = {};
+const config = {
+    timezone: 'Europe/London',
+};
 module.exports = new Pool(config);
 //# sourceMappingURL=connection.js.map

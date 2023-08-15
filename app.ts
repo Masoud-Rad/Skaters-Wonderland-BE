@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const { getUsers, getLands, getLandById, getComments} = require('./contrlollers/api.controllers')
+const { getUsers, getLands, getLandById, getComments, postComment} = require('./contrlollers/api.controllers')
 
 //----------------------------------------------Get-------------------------------------------------
 
@@ -15,8 +15,9 @@ app.get('/api/lands/:land_id', getLandById);
 
 app.get('/api/lands/:land_id/comments', getComments);
 
+//----------------------------------------------Post-------------------------------------------------
 
-
+app.post('/api/lands/:land_id/comments', postComment);
 
 
 

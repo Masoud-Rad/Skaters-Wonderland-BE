@@ -9,6 +9,8 @@ if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {
   throw new Error('PGDATABASE not set');
 }
 
-const config = {}
+const config = {
+  timezone: 'Europe/London', // Set the desired time zone here
+}
 
 module.exports = new Pool(config);
