@@ -53,4 +53,23 @@ exports.addLand = (newLand) => {
         return Promise.reject({ status: 400, msg: "BAD REQUEST!" });
     }
 };
+exports.updateLand = (landId, votesUpdate) => {
+    return db.query(`
+        SELECT * FROM lands WHERE land_id= $1;
+        `, [landId])
+        .then(({ rows }) => {
+        const land = rows[0];
+        const currentVotes = land.vote;
+        const updatedVotes = currentVotes + votesUpdate;
+        return db.query(`
+            UPDATE lands
+            SET
+            vote= $1
+            WHERE land_id = $2
+            RETURNING *;
+            `, [updatedVotes, landId]).then(({ rows }) => {
+            return (rows[0]);
+        });
+    });
+};
 //# sourceMappingURL=lands.models.js.map

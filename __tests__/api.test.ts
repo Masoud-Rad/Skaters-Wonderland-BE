@@ -523,3 +523,28 @@ describe("POST /api/land",()=>{
       })
   })
 })
+
+describe("PATCH /api/lands/:land_id", ()=>{
+  test("PATCH- status: 202- responds with the updated land",()=>{
+    const votesUpdate = { inc_votes : 1 };
+    return request(app)
+    .patch('/api/lands/2')
+    .send(votesUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+          expect(body.updatedLand.vote).toBe(9);
+        })
+  })
+
+  test("PATCH- status: 202- responds with the updated land",()=>{
+    const votesUpdate = { inc_votes : -1 };
+    return request(app)
+    .patch('/api/lands/2')
+    .send(votesUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+          expect(body.updatedLand.vote).toBe(7);
+        })
+  })
+
+})

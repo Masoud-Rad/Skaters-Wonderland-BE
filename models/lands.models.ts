@@ -88,3 +88,25 @@ exports.addLand=(newLand: AddNewLandSample)=>{
       return Promise.reject({ status: 400, msg: "BAD REQUEST!" })
           }
 }
+
+exports.updateLand=(landId: string, votesUpdate: number)=>{
+  return db.query(`
+        SELECT * FROM lands WHERE land_id= $1;
+        `,[landId])
+    .then(({rows} : LandsResult)=>{
+        const land : LandSample =rows[0];
+        const currentVotes= land.vote;
+
+        const updatedVotes = currentVotes + votesUpdate;
+
+        return db.query(`
+            UPDATE lands
+            SET
+            vote= $1
+            WHERE land_id = $2
+            RETURNING *;
+            `,[updatedVotes,landId]).then(({rows} : LandsResult)=>{
+            return (rows[0]);
+        })
+    })
+}

@@ -3,13 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const app = express();
 app.use(express.json());
-const { getUsers, getLands, getLandById, getComments, postLand, postComment } = require('./contrlollers/api.controllers');
+const { getUsers, getLands, getLandById, getComments, postLand, postComment, patchLand } = require('./contrlollers/api.controllers');
 app.get('/api/users', getUsers);
 app.get('/api/lands', getLands);
 app.get('/api/lands/:land_id', getLandById);
 app.get('/api/lands/:land_id/comments', getComments);
 app.post('/api/land', postLand);
 app.post('/api/lands/:land_id/comments', postComment);
+app.patch('/api/lands/:land_id', patchLand);
 app.use((error, _req, res, next) => {
     if (error.code === "22P02") {
         res.status(400).send({ msg: "invalid input syntax or type!" });
