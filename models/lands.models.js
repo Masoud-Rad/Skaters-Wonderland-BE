@@ -29,4 +29,28 @@ exports.selectSingleLand = (landId) => {
         return rows[0];
     });
 };
+exports.addLand = (newLand) => {
+    if (typeof newLand === "object" &&
+        newLand.hasOwnProperty("landname") &&
+        newLand.hasOwnProperty("city") &&
+        newLand.hasOwnProperty("country") &&
+        newLand.hasOwnProperty("description") &&
+        newLand.hasOwnProperty("username")) {
+        if (newLand.land_img_url) {
+            return db.query(`INSERT INTO lands (landname, city, country, description, land_img_url, username) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *;`, [newLand.landname, newLand.city, newLand.country, newLand.description, newLand.land_img_url, newLand.username])
+                .then(({ rows }) => {
+                return rows[0];
+            });
+        }
+        else {
+            return db.query(`INSERT INTO lands (landname, city, country, description, username) VALUES ($1,$2,$3,$4,$5) RETURNING *;`, [newLand.landname, newLand.city, newLand.country, newLand.description, newLand.username])
+                .then(({ rows }) => {
+                return rows[0];
+            });
+        }
+    }
+    else {
+        return Promise.reject({ status: 400, msg: "BAD REQUEST!" });
+    }
+};
 //# sourceMappingURL=lands.models.js.map

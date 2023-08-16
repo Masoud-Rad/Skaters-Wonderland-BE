@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-const {selectLands, selectSingleLand} = require('../models/lands.models')
+const {selectLands, selectSingleLand, addLand} = require('../models/lands.models')
 const { selectUsers }= require ('../models/users.models')
 const {selectComments, addComment}= require('../models/comment.models')
 
@@ -16,7 +16,7 @@ interface UsersSample {
 //**** landsType
 interface LandSample {
     land_id: number;
-    landName: string;
+    landname: string;
     city: string;
     country: string;
     description: string;
@@ -73,6 +73,18 @@ exports.getLandById= (req : Request , res : Response, next : NextFunction)=>{
     next(err);
   })
 }
+
+exports.postLand =(req : Request , res : Response, next : NextFunction)=>{
+  const newLand= req.body;
+  
+  addLand(newLand)
+  .then((addedLand: LandSample)=>{
+    res.status(201).send({addedLand})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+} 
 
 //------------------------------Comments------------------------------
 

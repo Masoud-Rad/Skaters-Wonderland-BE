@@ -13,7 +13,7 @@ interface LandTemple {
 
 interface CommentTemple {
     body: string;
-    landName: string;
+    landname: string;
     username: string;
     created_at: Date;
 }
@@ -33,7 +33,7 @@ exports.formatComments = (comments : CommentTemple[], landsData: LandTemple[])=>
 
     return comments.map((comment : CommentTemple)=>{ 
         
-        let currentLand : LandTemple= landsData.filter((land : LandTemple)=> land.landname === comment.landName)[0];
+        let currentLand : LandTemple= landsData.filter((land : LandTemple)=> land.landname === comment.landname)[0];
         
         
         let currentCommentLandId : number = currentLand.land_id;

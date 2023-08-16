@@ -13,7 +13,7 @@ interface LandTemple {
 }
 interface CommentTemple {
     body: string;
-    landName: string;
+    landname: string;
     username: string;
     created_at: Date;
 }
@@ -60,17 +60,17 @@ describe("formatComments", ()=>{
         expect(formatComments(comments, lands)).toEqual([])
     })
 
-    test("the function should return a new comments array which landName is replaced with land_id",()=>{
+    test("the function should return a new comments array which landname is replaced with land_id",()=>{
         const comments : CommentTemple[] = [{
             body: "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
             username: "tickle122",
-            landName: 'Media City Salford Quays',
+            landname: 'Media City Salford Quays',
             created_at: new Date("2023-08-10T12:00:00Z")
           },
           {
             body: "Great park! We visited in June. We saw the animals, grabbed a drink and an ice cream which I felt we're reasonably priced. We took a picnic. Went down to the lake, played ball on the field. Great place to spend an afternoon. Easy access via Metrolink from where we live",
             username: "grumpy19",
-            landName: 'Heaton Park',
+            landname: 'Heaton Park',
             created_at: new Date("2023-08-10T12:00:00Z")
           }];
         const lands : LandTemple[] = [{
