@@ -47,6 +47,9 @@ exports.addComment=(landId: string, newComment: AddNewCommentSample)=>{
   }
 }
 
+exports.delComment=(CommentId : string)=>{
+  return db.query(`DELETE FROM comments WHERE comment_id=$1 RETURNING *;`, [CommentId])
+}
 
   
 

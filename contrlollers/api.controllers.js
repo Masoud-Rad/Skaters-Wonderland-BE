@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const { selectLands, selectSingleLand, addLand, updateLand } = require('../models/lands.models');
 const { selectUsers } = require('../models/users.models');
-const { selectComments, addComment } = require('../models/comment.models');
+const { selectComments, addComment, delComment } = require('../models/comment.models');
 exports.getUsers = (req, res, next) => {
     const { username } = req.query;
     selectUsers(username).then((users) => {
@@ -69,6 +69,15 @@ exports.postComment = (req, res, next) => {
     addComment(landId, newComment)
         .then((addedComment) => {
         res.status(201).send({ addedComment });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.deleteComment = (req, res, next) => {
+    const commentId = req.params.comment_id;
+    delComment(commentId).then(() => {
+        res.status(204).send();
     })
         .catch((err) => {
         next(err);
