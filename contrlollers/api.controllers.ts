@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-const {selectLands, selectSingleLand, addLand, updateLand} = require('../models/lands.models')
+const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
 const { selectUsers }= require ('../models/users.models')
 const {selectComments, addComment, delComment}= require('../models/comment.models')
 
@@ -93,6 +93,17 @@ exports.patchLand= (req : Request , res : Response, next : NextFunction)=>{
   updateLand(landId, votesUpdate)
   .then((updatedLand: LandSample)=>{
     res.status(202).send({updatedLand})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
+
+exports.deleteLand= (req : Request , res : Response, next : NextFunction)=>{
+  const landId = req.params.land_id
+
+  delLand(landId).then(()=>{
+    res.status(204).send();
   })
   .catch((err: Error)=>{
     next(err);
