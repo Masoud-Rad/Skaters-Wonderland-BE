@@ -13,7 +13,7 @@
   "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"
   },
   "scripts": {
-    "start": "npx ts-node ./listen.ts",
+    "start": "npx ts-node listen.ts",
     "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "npx ts-node ./db/seeds/run-seed.js",
     "test": "psql -f ./db/setup.sql && NODE_ENV=test jest",
@@ -34,7 +34,7 @@
   "name": "skaters-wonderland",
   "description": "SKATERS-WONDERLAND API Project Overview Tech Stack Typescript, Expres.js, Node.js, PostgreSQL",
   "version": "1.0.0",
-  "main": "./db/seeds/run-seed.js",
+  "main": "listen.ts",
   "keywords": [],
   "author": "",
   "license": "ISC"
