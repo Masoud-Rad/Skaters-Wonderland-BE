@@ -550,11 +550,18 @@ describe("PATCH /api/lands/:land_id", ()=>{
 
 })
 
+describe("DELETE - /api/lands/:land_id", ()=>{
+  test("DELETE - status: 204 , respond with no content",()=>{
+    return request(app)
+    .delete("/api/lands/2")
+    .expect(204)
+  })
+})
+
 describe("DELETE - /api/comments/:comment_id", ()=>{
   test("DELETE - status: 204 , respond with no content",()=>{
     return request(app)
     .delete("/api/comments/1")
     .expect(204)
   })
-
 })

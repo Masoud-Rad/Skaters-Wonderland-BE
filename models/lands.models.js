@@ -72,4 +72,9 @@ exports.updateLand = (landId, votesUpdate) => {
         });
     });
 };
+exports.delLand = (landId) => {
+    return db.query(`DELETE FROM comments WHERE land_id=$1 ;`, [landId]).then(() => {
+        return db.query(`DELETE FROM lands WHERE land_id=$1 ;`, [landId]);
+    });
+};
 //# sourceMappingURL=lands.models.js.map

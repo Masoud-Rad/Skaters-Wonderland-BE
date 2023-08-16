@@ -110,3 +110,26 @@ exports.updateLand=(landId: string, votesUpdate: number)=>{
         })
     })
 }
+
+exports.delLand=(landId : string)=>{
+  //First delete related comments
+  return db.query(`DELETE FROM comments WHERE land_id=$1 ;`, [landId]).then(()=>{
+    // Then delete the land
+    return db.query(`DELETE FROM lands WHERE land_id=$1 ;`, [landId])
+  })
+}
+
+/* if we use async/await method:
+exports.delLand = async (landId: string) => {
+  try {
+    // Delete related comments
+    await db.query(`DELETE FROM comments WHERE land_id = $1 RETURNING *;`, [landId]);
+    
+    // Delete the land
+    const result = await db.query(`DELETE FROM lands WHERE land_id = $1 RETURNING *;`, [landId]);
+    console.log("Deleted land:", result.rows);
+  } catch (error) {
+    console.error("Error deleting land:", error);
+    throw error;
+  }
+} */

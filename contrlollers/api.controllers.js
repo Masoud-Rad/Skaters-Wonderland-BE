@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const { selectLands, selectSingleLand, addLand, updateLand } = require('../models/lands.models');
+const { selectLands, selectSingleLand, addLand, updateLand, delLand } = require('../models/lands.models');
 const { selectUsers } = require('../models/users.models');
 const { selectComments, addComment, delComment } = require('../models/comment.models');
 exports.getUsers = (req, res, next) => {
@@ -48,6 +48,15 @@ exports.patchLand = (req, res, next) => {
     updateLand(landId, votesUpdate)
         .then((updatedLand) => {
         res.status(202).send({ updatedLand });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.deleteLand = (req, res, next) => {
+    const landId = req.params.land_id;
+    delLand(landId).then(() => {
+        res.status(204).send();
     })
         .catch((err) => {
         next(err);
