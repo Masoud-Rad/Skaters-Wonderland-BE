@@ -23,4 +23,7 @@ exports.addComment = (landId, newComment) => {
         return Promise.reject({ status: 400, msg: "BAD REQUEST!" });
     }
 };
+exports.delComment = (CommentId) => {
+    return db.query(`DELETE FROM comments WHERE comment_id=$1 RETURNING *;`, [CommentId]);
+};
 //# sourceMappingURL=comment.models.js.map

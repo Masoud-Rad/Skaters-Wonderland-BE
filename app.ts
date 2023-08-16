@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const { getUsers, getLands, getLandById, getComments, postLand, postComment, patchLand} = require('./contrlollers/api.controllers')
+const { getUsers, getLands, getLandById, getComments, postLand, postComment, patchLand, deleteComment} = require('./contrlollers/api.controllers')
 
 //----------------------------------------------Get-------------------------------------------------
 
@@ -24,6 +24,10 @@ app.post('/api/lands/:land_id/comments', postComment);
 //----------------------------------------------Patch-------------------------------------------------
 
 app.patch('/api/lands/:land_id', patchLand)
+
+//----------------------------------------------Delete-------------------------------------------------
+
+app.delete('/api/comments/:comment_id', deleteComment)
 
 //-----------------------------------------------ERROR HANDELING--------------------------------------
 

@@ -67,7 +67,7 @@ interface AddedCommentResponseBody {
   addedComment: CommentSample;
 }
   //------------------------------------------------------------------------
-  describe("GET WRONG END-POINT",()=>{
+describe("GET WRONG END-POINT",()=>{
     test("GET - status: 404 - not exist", ()=>{
         return request(app)
         .get("/wrongEndPoint")
@@ -84,9 +84,9 @@ interface AddedCommentResponseBody {
           expect(response.body.msg).toBe("Not Found!")
       })
     })
-  })
+})
 
-  describe("GET /api/users",()=>{
+describe("GET /api/users",()=>{
     
     test("GET - status: 200 - respond with all the properties",()=>{
         return request(app)
@@ -119,9 +119,9 @@ interface AddedCommentResponseBody {
   
         })
     })
-  })
+})
 
-  describe("GET /api/users/?username",()=>{
+describe("GET /api/users/?username",()=>{
     test("GET - status: 404 - not exist", ()=>{
       return request(app)
       .get("/api/users/?username=username500")
@@ -148,7 +148,7 @@ interface AddedCommentResponseBody {
   
       })
     })
-  })
+})
 
 describe("GET /api/lands",()=>{
     test("GET - status: 200 - respond with all the lands",()=>{
@@ -274,6 +274,7 @@ describe("GET /api/lands/?city&sort_by&order_by",()=>{
       })
   })
 })
+
 describe("GET /api/lands/?sort_by&order_by",()=>{
   test("GET - status: 200 - check is result is sorted",()=>{
       return request(app)
@@ -545,6 +546,15 @@ describe("PATCH /api/lands/:land_id", ()=>{
     .then(({ body }: Response) => {
           expect(body.updatedLand.vote).toBe(7);
         })
+  })
+
+})
+
+describe("DELETE - /api/comments/:comment_id", ()=>{
+  test("DELETE - status: 204 , respond with no content",()=>{
+    return request(app)
+    .delete("/api/comments/1")
+    .expect(204)
   })
 
 })
