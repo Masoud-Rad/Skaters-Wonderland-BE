@@ -31,7 +31,7 @@ interface UsersResponseBody {
 //**** landsType
 interface LandSample {
     land_id: number;
-    landName: string;
+    landname: string;
     city: string;
     country: string;
     description: string;
@@ -46,6 +46,9 @@ interface LandsResponseBody {
   }
 interface SingleLandsResponseBody {
     land: LandSample;
+  }
+interface AddedLandsResponseBody {
+    addedLand: LandSample;
   }
 //**** commentsType
 interface CommentSample{
@@ -381,7 +384,6 @@ describe("GET /api/lands/:land_id/comments",()=>{
   })
 })
 
-
 describe("POST /api/lands/:land_id/comments",()=>{
   test("POST- status: 203- responds with error because username does not exist",()=>{
     const newComment = {
@@ -439,6 +441,85 @@ describe("POST /api/lands/:land_id/comments",()=>{
         expect(comment.username).toBe("username1");
         expect(comment.body).toBe(newComment.body);
         expect(comment.land_id).toBe(3);
+      })
+  })
+})
+
+describe("POST /api/land",()=>{
+  test("POST- status: 203- responds with error because username does not exist",()=>{
+    const newLand = {
+                      landname: 'Forth land',
+                      city: 'Cityexample1',
+                      country: 'countryexample1',
+                      description: 'test description',
+                      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+                      username: 'username500'
+                    }
+  return request(app)
+  .post('/api/land')
+  .send(newLand)
+  .expect(203)
+  .then((response : ErrorResponse)=>{
+    expect(response.body.msg).toBe("Non-Authoritative Information!")
+    })
+  })
+
+  test("POST- status: 203- responds with error because not sending correct information",()=>{
+    const newLand = {
+                      name: 'Forth land',
+                      city: 'Cityexample1',
+                      country: 'countryexample1',
+                      description: 'test description',
+                      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+                      username: 'username500'
+                    }
+  return request(app)
+  .post('/api/land')
+  .send(newLand)
+  .expect(400)
+  .then((response : ErrorResponse)=>{
+    expect(response.body.msg).toBe("BAD REQUEST!")
+    })
+  })
+
+  test("POST- status: 203- responds with error because not sending correct information",()=>{
+    const newLand = {
+      landname: 'Forth land',
+      description: 'test description',
+      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+      username: 'username500'
+    }
+  return request(app)
+  .post('/api/land')
+  .send(newLand)
+  .expect(400)
+  .then((response : ErrorResponse)=>{
+    expect(response.body.msg).toBe("BAD REQUEST!")
+    })
+  })
+
+  test("POST- status: 201- responds with the added comment",()=>{
+    const newLand = {
+                      landname: 'Forth land',
+                      city: 'Cityexample1',
+                      country: 'countryexample1',
+                      description: 'test description',
+                      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+                      username: 'username1'
+                    }
+  return request(app)
+  .post('/api/land')
+  .send(newLand)
+  .expect(201)
+  .then(( response : Response ) => {
+    const responseBody: AddedLandsResponseBody = response.body;
+        const land: LandSample = responseBody.addedLand;
+        expect(land.username).toBe("username1");
+        expect(land.city).toBe(newLand.city);
+        expect(land.country).toBe('countryexample1');
+        expect(land.land_img_url).toBe(newLand.land_img_url);
+        expect(land.landname).toBe(newLand.landname);
+
       })
   })
 })

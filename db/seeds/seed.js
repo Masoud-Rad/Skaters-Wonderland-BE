@@ -17,7 +17,7 @@ async function seed(landData, commentData, userData) {
         await db.query(`
             CREATE TABLE lands(
             land_id SERIAL PRIMARY KEY,
-            landName VARCHAR NOT NULL,
+            landname VARCHAR NOT NULL,
             city VARCHAR NOT NULL,
             country VARCHAR NOT NULL,
             description VARCHAR NOT NULL,
@@ -38,7 +38,7 @@ async function seed(landData, commentData, userData) {
         `);
         const insertUsersQueryStr = format(`INSERT INTO users (username, name, avatar_url, password) VALUES %L;`, userData.map(({ username, name, avatar_url, password }) => [username, name, avatar_url, password]));
         await db.query(insertUsersQueryStr);
-        const insertLandsQueryStr = format(`INSERT INTO lands (landName, city, country, description, vote, created_at, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landName, city, country, description, vote, created_at, land_img_url, username }) => [landName, city, country, description, vote, created_at, land_img_url, username]));
+        const insertLandsQueryStr = format(`INSERT INTO lands (landname, city, country, description, vote, created_at, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landname, city, country, description, vote, created_at, land_img_url, username }) => [landname, city, country, description, vote, created_at, land_img_url, username]));
         const result = await db.query(insertLandsQueryStr);
         const formatedCommentsData = formatComments(commentData, result.rows);
         const insertCommentsQueryStr = format(`INSERT INTO comments (body, land_id, username, created_at) VALUES %L;`, formatedCommentsData.map((formatedComment) => [formatedComment.body, formatedComment.land_id, formatedComment.username, formatedComment.created_at]));

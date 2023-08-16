@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const { selectLands, selectSingleLand } = require('../models/lands.models');
+const { selectLands, selectSingleLand, addLand } = require('../models/lands.models');
 const { selectUsers } = require('../models/users.models');
 const { selectComments, addComment } = require('../models/comment.models');
 exports.getUsers = (req, res, next) => {
@@ -27,6 +27,16 @@ exports.getLandById = (req, res, next) => {
     selectSingleLand(landId)
         .then((land) => {
         res.status(200).send({ land });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.postLand = (req, res, next) => {
+    const newLand = req.body;
+    addLand(newLand)
+        .then((addedLand) => {
+        res.status(201).send({ addedLand });
     })
         .catch((err) => {
         next(err);

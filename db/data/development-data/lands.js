@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 module.exports = [
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -12,7 +12,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Heaton Park',
+        landname: 'Heaton Park',
         city: 'Manchester',
         country: 'England',
         description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
@@ -22,7 +22,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -32,7 +32,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -42,7 +42,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -52,7 +52,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -62,7 +62,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -72,7 +72,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -82,7 +82,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -92,7 +92,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -102,7 +102,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -112,7 +112,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -122,7 +122,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
@@ -132,7 +132,7 @@ module.exports = [
         username: 'cooljmessy'
     },
     {
-        landName: 'Media City Salford Quays',
+        landname: 'Media City Salford Quays',
         city: 'Salford',
         country: 'England',
         description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',

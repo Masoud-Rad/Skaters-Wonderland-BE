@@ -4,7 +4,7 @@ const {formatComments} = require('./utils');
 
 
 interface Land {
-    landName: string;
+    landname: string;
     city: string;
     country: string;
     description: string;
@@ -23,7 +23,7 @@ interface User {
 
 interface Comment{
     body: string;
-    landName: string;
+    landname: string;
     username: string;
     created_at: Date;
 }
@@ -50,7 +50,7 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
         await db.query(`
             CREATE TABLE lands(
             land_id SERIAL PRIMARY KEY,
-            landName VARCHAR NOT NULL,
+            landname VARCHAR NOT NULL,
             city VARCHAR NOT NULL,
             country VARCHAR NOT NULL,
             description VARCHAR NOT NULL,
@@ -71,7 +71,7 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
         `);
         const insertUsersQueryStr = format(`INSERT INTO users (username, name, avatar_url, password) VALUES %L;`, userData.map(({ username, name, avatar_url, password }) => [username, name, avatar_url, password]));
         await db.query(insertUsersQueryStr);
-        const insertLandsQueryStr = format(`INSERT INTO lands (landName, city, country, description, vote, created_at, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landName, city, country, description, vote, created_at, land_img_url, username }) => [landName, city, country, description, vote, created_at, land_img_url, username]));
+        const insertLandsQueryStr = format(`INSERT INTO lands (landname, city, country, description, vote, created_at, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landname, city, country, description, vote, created_at, land_img_url, username }) => [landname, city, country, description, vote, created_at, land_img_url, username]));
         const result = await db.query(insertLandsQueryStr);
         const formatedCommentsData = formatComments(commentData, result.rows);
         const insertCommentsQueryStr = format(`INSERT INTO comments (body, land_id, username, created_at) VALUES %L;`, formatedCommentsData.map((formatedComment: FormatedComment) => [formatedComment.body, formatedComment.land_id, formatedComment.username, formatedComment.created_at]));
@@ -105,7 +105,7 @@ module.exports = seed;
 //             return db.query(`
 //                 CREATE TABLE lands(
 //                 land_id SERIAL PRIMARY KEY,
-//                 landName VARCHAR NOT NULL,
+//                 landname VARCHAR NOT NULL,
 //                 city VARCHAR NOT NULL,
 //                 country VARCHAR NOT NULL,
 //                 description VARCHAR NOT NULL,
@@ -136,9 +136,9 @@ module.exports = seed;
 //         })
 //         .then(() => {
 //             const insertLandsQueryStr = format(
-//                 `INSERT INTO lands (landName, city, country, description, vote, created_at, land_img_url, username) VALUES %L RETURNING *;`,
-//                 landData.map(({ landName, city, country, description, vote, created_at, land_img_url, username }) =>
-//                     [landName, city, country, description, vote, created_at, land_img_url, username])
+//                 `INSERT INTO lands (landname, city, country, description, vote, created_at, land_img_url, username) VALUES %L RETURNING *;`,
+//                 landData.map(({ landname, city, country, description, vote, created_at, land_img_url, username }) =>
+//                     [landname, city, country, description, vote, created_at, land_img_url, username])
 //             );
 //             return db.query(insertLandsQueryStr);
 //         })
