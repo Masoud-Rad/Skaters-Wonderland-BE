@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const { getUsers, getLands, getLandById, getComments, postLand, postComment} = require('./contrlollers/api.controllers')
+const { getUsers, getLands, getLandById, getComments, postLand, postComment, patchLand} = require('./contrlollers/api.controllers')
 
 //----------------------------------------------Get-------------------------------------------------
 
@@ -21,12 +21,11 @@ app.post('/api/land', postLand)
 
 app.post('/api/lands/:land_id/comments', postComment);
 
+//----------------------------------------------Patch-------------------------------------------------
 
+app.patch('/api/lands/:land_id', patchLand)
 
-
-
-
-//-----------------------------------------------ERROR HANDELING-------------------------------------
+//-----------------------------------------------ERROR HANDELING--------------------------------------
 
 app.use((error : createError.HttpError, _req : Request , res : Response, next : NextFunction) => {
     if(error.code==="22P02")
