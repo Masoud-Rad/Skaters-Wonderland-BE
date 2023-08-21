@@ -61,7 +61,20 @@
       }
     },
   
-    
+    "Post /api/land": {
+      "description": "Post an comment for specific article ",
+      "parametr": ["article_id"],
+      "exampleResponse": {
+        "comment":   {
+          "land_id": 1,
+          "landname": "Forth land",
+          "city": "Cityexample1",
+          "country": "countryexample1",
+          "description": "test description",
+          "land_img_url": "url",
+          "username": "username500"
+          }
+    },
   
     "Post /api/lands/:land_id/comments": {
       "description": "Post an comment for specific article ",
@@ -97,3 +110,4 @@
     "Delete land. /api/lands/:land_id":{}   
   
   }
+}

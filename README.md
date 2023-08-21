@@ -1,105 +1,75 @@
-SKATERS-WONDERLAND API
+# SKATERS-WONDERLAND
+
+
+# SKATERS-WONDERLAND
+
+SKATERS-WONDERLAND is a platform that brings together skaters, trainers, and skate enthusiasts to explore and share great skating spots, connect with like-minded individuals, and discover local skate businesses and second-hand skating gear.
+
+
+## Features
+
+- Explore and discover skating spots in your area.
+- Share your favorite skating locations and provide details about safety, suitability, and cost.
+- Connect with trainers, find skating buddies, and plan group sessions.
+- Advertise skate businesses for free and browse second-hand skating gear listings.
+- Leave reviews for businesses and trainers to help others make informed decisions.
+- Location-based search to find spots and users near you.
+- Messaging feature to connect with other users.
+
+
 Project Overview
-Tech Stack Typescript, Expres.js, Node.js, PostgreSQL, Jest
 
-This repo is a RESTful API that serves as the backend architecture for a Reddit-style SKATERS-WONDERLAND Web Application. It is built using Node.js and Express.js and uses PostgreSQL as its database. The API allows users to interact with the application by performing full CRUD (Create, Read, Update, Delete) operations on lands, comments, and users.
-
-
-This API will serve as the backend for a frontend project built with React.js.
+// This API will serve as the backend for a frontend project built with React.js.
 
 
-A live version of this app is available here, hosted with Render. A list of available endpoints can be found here.
 
 
-Setup
-Follow the instructions below to get started
+# SKATERS-WONDERLAND Back-End (SKATERS-WONDERLAND-BE)
+
+This is the SKATERS-WONDERLAND Back-End repository! This is where the server-side logic of the SKATERS-WONDERLAND app resides.
+
+## Technologies Used
+
+- Typescript
+- Node.js
+- Express.js
+- PostgreSQL
+- Jest (for unit testing)
+
+## Installation and Setup
+
+1. Clone this repository: `git clone https://github.com/Masoud-Rad/Skaters-Wonderland-BE`
+2. Navigate to the project directory: `cd SKATERS-WONDERLAND-BE`
+3. Install dependencies: `npm install`
+4. Create and setup environment variables Create two .env files:
+    - $ touch .env.development  
+    (Should contain : PGDATABASE= dbName )
+    - $ touch .env.test  
+    (Should contain : PGDATABASE= dbName.test )   
+5. Create and seed the databases Run the following code to setup and seed both the development and test databases:
+    - $ npm run setup-dbs 
+    - $ npm run seed
+6. Start the development server: `npm start`
+7. The server will be running at `http://localhost:9090`.
 
 
-Minimum requirements:
-Node.js: v18.15.0
-PostgreSQL: v15.2
+## API Documentation
 
-Clone this repository locally
-In your terminal, create a new directory:
+API Endpoints Users are able to access and interact with the data using the following endpoints:
 
-$ mkdir <new-directory-name>
-Navigate to this directory:
+GET /api/users Returns a list of users
 
-$ cd <new-directory-name>
-Clone this repository:
+GET /api/users/?username Returns an object of a specipic user's info
 
-$ git clone https://github.com/gsaltuk/be_nc_news_project.git
+GET /api/lands Returns a list of lands Can be used with optional queries sort_by & city
 
-Install dependencies
-$ npm install
+GET /api/lands/:land_id Returns the specified land
 
-/*
-"devDependencies": {
-    "@babel/core": "^7.22.10",
-    "@babel/preset-env": "^7.22.10",
-    "@babel/preset-typescript": "^7.22.5",
-    "@types/jest": "^29.5.3",
-    "babel-jest": "^29.6.2",
-    "jest": "^29.6.2",
-    "supertest": "^6.3.3",
-    "ts-node": "^10.9.1"
-  }, 
-  "dependencies": {
-    "@types/express": "^4.17.17",
-    "@types/node": "^20.4.9",
-    "@types/supertest": "^2.0.12",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "fs.promises": "^0.1.2",
-    "http-errors": "^2.0.0",
-    "pg": "^8.11.2",
-    "pg-format": "^1.0.4"
-  },
-*/
+GET /api/lands/:land_id/comments Returns a list of comments from a specified land
 
-Create and setup environment variables
-Create two .env files:
+POST /api/lands/:land_id/comments Inserts a comment into the specified land and returns comment
 
-$ touch .env.development
-$ touch .env.test
-.env.development should contain the following:-
-
-PGDATABASE= dbName
-.env.test should contain the following:-
-
-PGDATABASE= dbName_test
-
-Create and seed the databases
-Run the following code to setup and seed both the development and test databases:
-
-$ npm run setup-dbs
-$ npm run seed
-
-API Endpoints
-Users are able to access and interact with the data using the following endpoints:
-
-GET /api/users
-Returns a list of users
-
-GET /api/users/?username
-Returns an object of a specipic user's info
-
-GET /api/lands
-Returns a list of lands
-Can be used with optional queries sort_by & city
-
-
-GET /api/lands/:land_id
-Returns the specified land
-
-GET /api/lands/:land_id/comments
-Returns a list of comments from a specified land
-
-POST /api/lands/:land_id/comments
-Inserts a comment into the specified land and returns comment
-
-PATCH /api/lands/:land_id
-Updates a specified lands vote count and returns updated land
+PATCH /api/lands/:land_id Updates a specified lands vote count and returns updated land
 
 DELETE /api/comments/:comment_id
 
@@ -107,5 +77,21 @@ Deletes specified comment
 
 Delete land. /api/lands/:land_id
 
-NOTICE: If you run tsc, make sure before run the test, delete all js file in folder of "__test__" to prevent dublicate test-file 
+## A live version of this app is available here, hosted with Render. A list of available endpoints can be found here:
+`https://dashboard.render.com/web/srv-cjei90ocfp5c73f0s3pg`
 
+
+### Contributing
+
+Contributions are welcome! If you'd like to contribute to the SKATERS-WONDERLAND Back-End, please follow the usual steps:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature-name`
+3. Make your changes and commit them: `git commit -m "Add some feature"`
+4. Push your changes to the branch: `git push origin feature-name`
+5. Submit a pull request.
+
+
+## Contact
+
+For questions or inquiries related to the back-end, please contact me `https://www.linkedin.com/in/masoud-rad65/`.
