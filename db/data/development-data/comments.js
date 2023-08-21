@@ -28,13 +28,13 @@ module.exports = [
     {
         body: "Quod qui quia dignissimos sit tempore vel reprehenderit. Ipsa ipsa veritatis architecto corporis et et non. Sed alias occaecati eum dignissimos sint eius. Ad ea iste quas quia velit libero voluptatem voluptatem. Animi illo nisi nulla quia sapiente omnis dolorem nulla. Sunt dolor similique.",
         username: "weegembump",
-        landname: 'Heaton Park',
+        landname: 'Seymour skatepark',
         created_at: new Date("2023-08-10T12:00:00Z")
     },
     {
         body: "Veritatis animi et voluptates nesciunt officia facere eaque. Eligendi earum explicabo necessitatibus aut dolorem nisi esse nesciunt. Non iusto rem ut consequuntur quam ut rem sed. Velit laboriosam consectetur enim delectus eos sit veritatis eveniet perspiciatis.",
         username: "grumpy19",
-        landname: 'Media City Salford Quays',
+        landname: 'Brookdale Skate Park',
         created_at: new Date("2023-08-10T12:00:00Z")
     },
     {
@@ -45,8 +45,8 @@ module.exports = [
     },
     {
         body: "Est debitis iusto sed consectetur. Eum eum rerum qui est nihil maxime quae. Ut autem velit sint iste consequatur culpa voluptatibus. Quo qui nobis cupiditate adipisci nostrum et. Est et qui at sit atque et fuga voluptatibus impedit.",
-        username: "tickle122",
-        landname: 'Media City Salford Quays',
+        username: "jessjelly",
+        landname: 'Delamere Skate park',
         created_at: new Date("2023-08-10T12:00:00Z")
     }
 ];

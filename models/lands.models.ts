@@ -1,3 +1,5 @@
+import { Console } from "console";
+
 const db = require('../db/connection');
 
 interface LandSample {
@@ -5,9 +7,16 @@ interface LandSample {
   landname: string;
   city: string;
   country: string;
+  postcode: string;
   description: string;
-  vote: number;
   created_at: Date;
+  vote: number;
+  safety_rating: number;
+  suitability_rating: number;
+  cost: string;
+  is_public: boolean;
+  has_rink: boolean;
+  suitabile_for: string;
   land_img_url: string;
   username: string;
 }
@@ -22,22 +31,70 @@ interface AddNewLandSample {
   landname: string;
   city: string;
   country: string;
+  postcode: string;
   description: string;
+  cost: string;
+  is_public: boolean;
+  has_rink: boolean;
+  suitabile_for: string;
   land_img_url: string;
   username: string;
 }
 
 
-
-exports.selectLands=(city: string, sort_by:string ="land_id" , order_by:string = "ASC")=>{
+exports.selectLands=(city: string, has_rink: string, cost: string, sort_by:string ="land_id" , order_by:string = "ASC")=>{
  
-  if(!city){
-    return db.query(`SELECT * FROM lands ORDER BY ${sort_by} ${order_by};`)
-           .then((response : LandsResult)=>{
-            return response.rows;
-           })
-  }else{
-    return db.query(`SELECT * FROM lands WHERE city=$1 ORDER BY ${sort_by} ${order_by};`,[city])
+  let queryStr: string =`SELECT * FROM lands`;
+  const quertValues : string[] = [];
+
+  if (city) {
+    quertValues.push(city);
+    queryStr += ` WHERE city=$${quertValues.length}`;
+}
+
+if (has_rink) {
+  quertValues.push(has_rink);
+    queryStr += `${queryStr.includes('WHERE') ? ' AND' : ' WHERE'} has_rink=$${quertValues.length}`;
+}
+
+if (cost) {
+  quertValues.push(cost);
+    queryStr += `${queryStr.includes('WHERE') ? ' AND' : ' WHERE'} cost=$${quertValues.length}`;
+}
+
+queryStr += ` ORDER BY ${sort_by} ${order_by};`;
+
+//this is an easier method but longer:
+  // if(city && has_rink && cost){
+  //   queryStr+=` WHERE city=$1 AND has_rink=$2 AND cost=$3 ORDER BY ${sort_by} ${order_by};`;
+  //   quertValues.push(city);
+  //   quertValues.push(has_rink);
+  //   quertValues.push(cost);
+  // }else if(city && has_rink){
+  //   queryStr+=` WHERE city=$1 AND has_rink=$2 ORDER BY ${sort_by} ${order_by};`;
+  //   quertValues.push(city);
+  //   quertValues.push(has_rink);
+  // }else if(city && cost){
+  //   queryStr+=` WHERE city=$1 AND cost=$2 ORDER BY ${sort_by} ${order_by};`;
+  //   quertValues.push(city);
+  //   quertValues.push(cost);
+  // }else if(has_rink && cost){
+  //   queryStr+=` WHERE has_rink=$1 AND cost=$2 ORDER BY ${sort_by} ${order_by};`;
+  //   quertValues.push(has_rink);
+  //   quertValues.push(cost);
+  // }else if(city){
+  //   queryStr+=` WHERE city=$1 ORDER BY ${sort_by} ${order_by};`;
+  //   quertValues.push(city);
+  // }else  if(has_rink){
+  //   queryStr+=` WHERE has_rink=$1 ORDER BY ${sort_by} ${order_by};`;
+  //   quertValues.push(has_rink);
+  // }else if(cost){
+  //   queryStr+=` WHERE cost=$1 ORDER BY ${sort_by} ${order_by};`;
+  //   quertValues.push(cost);
+  // }
+
+  
+ return db.query(queryStr,quertValues)
            .then((response : LandsResult)=>{
             if(response.rows.length===0){
               return Promise.reject({ status: 404 , msg: 'Not Found!'})
@@ -46,7 +103,7 @@ exports.selectLands=(city: string, sort_by:string ="land_id" , order_by:string =
             }
            })
   }
-}
+
 
 exports.selectSingleLand=(landId : string)=>{
   return db.query(`SELECT * FROM lands WHERE land_id=$1;`,[landId])

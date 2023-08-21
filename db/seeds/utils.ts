@@ -6,6 +6,11 @@ interface LandTemple {
     description: string;
     created_at: Date;
     vote: number;
+    safety_rating: number;
+    suitability_rating: number;
+    cost: string;
+    is_public: boolean;
+    has_rink: boolean;
     land_img_url: string;
     username: string;
 }

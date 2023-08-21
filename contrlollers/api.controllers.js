@@ -13,8 +13,8 @@ exports.getUsers = (req, res, next) => {
     });
 };
 exports.getLands = (req, res, next) => {
-    const { city, sort_by, order_by } = req.query;
-    selectLands(city, sort_by, order_by)
+    const { city, has_rink, cost, sort_by, order_by } = req.query;
+    selectLands(city, has_rink, cost, sort_by, order_by)
         .then((lands) => {
         res.status(200).send({ "lands": lands });
     })

@@ -7,10 +7,12 @@ const {selectComments, addComment, delComment}= require('../models/comment.model
 
 //**** usersType
 interface UsersSample {
-  username: string;
-  name: string;
-  avatar_url: string;
-  password: string;
+    username: string;
+    name: string;
+    email: string;
+    password: string;
+    avatar_url: string;
+    location: string;
 }
 
 //**** landsType
@@ -19,9 +21,16 @@ interface LandSample {
     landname: string;
     city: string;
     country: string;
+    postcode: string;
     description: string;
     created_at: Date;
     vote: number;
+    safety_rating: number;
+    suitability_rating: number;
+    cost: string;
+    is_public: boolean;
+    has_rink: boolean;
+    suitabile_for: string;
     land_img_url: string;
     username: string;
 }
@@ -50,8 +59,8 @@ exports.getUsers = (req : Request , res : Response, next : NextFunction)=>{
 //------------------------------Lands------------------------------
 
 exports.getLands= (req : Request , res : Response, next : NextFunction)=>{
-  const {city, sort_by, order_by} = req.query; 
-  selectLands(city, sort_by, order_by)
+  const {city, has_rink, cost, sort_by, order_by} = req.query; 
+  selectLands(city, has_rink, cost, sort_by, order_by)
     .then((lands: LandSample[])=>{
       res.status(200).send({"lands": lands})
     })

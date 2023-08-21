@@ -3,8 +3,10 @@ const db = require('../db/connection');
 interface UsersSample {
     username: string;
     name: string;
-    avatar_url: string;
+    email: string;
     password: string;
+    avatar_url: string;
+    location: string;
   }
 
 interface Result {
