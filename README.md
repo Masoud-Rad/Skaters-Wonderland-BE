@@ -1,8 +1,6 @@
 # SKATERS-WONDERLAND
 
 
-# SKATERS-WONDERLAND
-
 SKATERS-WONDERLAND is a platform that brings together skaters, trainers, and skate enthusiasts to explore and share great skating spots, connect with like-minded individuals, and discover local skate businesses and second-hand skating gear.
 
 
@@ -15,12 +13,6 @@ SKATERS-WONDERLAND is a platform that brings together skaters, trainers, and ska
 - Leave reviews for businesses and trainers to help others make informed decisions.
 - Location-based search to find spots and users near you.
 - Messaging feature to connect with other users.
-
-
-Project Overview
-
-// This API will serve as the backend for a frontend project built with React.js.
-
 
 
 
@@ -77,11 +69,11 @@ Deletes specified comment
 
 Delete land. /api/lands/:land_id
 
-## A live version of this app is available here, hosted with Render. A list of available endpoints can be found here:
+### A live version of this app is available here, hosted with Render. A list of available endpoints can be found here:
 `https://dashboard.render.com/web/srv-cjei90ocfp5c73f0s3pg`
 
 
-### Contributing
+## Contributing
 
 Contributions are welcome! If you'd like to contribute to the SKATERS-WONDERLAND Back-End, please follow the usual steps:
 
