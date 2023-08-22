@@ -3,14 +3,20 @@ interface LandTemple {
     landname: string;
     city: string;
     country: string;
+    postcode: string;
     description: string;
     created_at: Date;
     vote: number;
-    safety_rating: number;
-    suitability_rating: number;
+    safety_rating_total: number;
+    safety_rating_count: number;
+    safety_rating_ave: number;
+    suitability_rating_total: number;
+    suitability_rating_count: number;
+    suitability_rating_ave: number;
     cost: string;
     is_public: boolean;
     has_rink: boolean;
+    suitabile_for: string;
     land_img_url: string;
     username: string;
 }

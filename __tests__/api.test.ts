@@ -17,7 +17,7 @@ body: {msg:string};
 
 //**** usersType
 interface UsersSample {
-  username: string;
+    username: string;
     name: string;
     email: string;
     password: string;
@@ -32,22 +32,26 @@ interface UsersResponseBody {
 
 //**** landsType
 interface LandSample {
-    land_id: number;
-    landname: string;
-    city: string;
-    country: string;
-    postcode: string;
-    description: string;
-    created_at: Date;
-    vote: number;
-    safety_rating: number;
-    suitability_rating: number;
-    cost: string;
-    is_public: boolean;
-    has_rink: boolean;
-    suitabile_for: string;
-    land_img_url: string;
-    username: string;
+  land_id: number;
+  landname: string;
+  city: string;
+  country: string;
+  postcode: string;
+  description: string;
+  created_at: Date;
+  vote: number;
+  safety_rating_total: number;
+  safety_rating_count: number;
+  safety_rating_ave: number;
+  suitability_rating_total: number;
+  suitability_rating_count: number;
+  suitability_rating_ave: number;
+  cost: string;
+  is_public: boolean;
+  has_rink: boolean;
+  suitabile_for: string;
+  land_img_url: string;
+  username: string;
 }
 
 interface LandsResponseBody {
@@ -201,97 +205,118 @@ describe("GET /api/lands",()=>{
             const responseBody: LandsResponseBody = response.body;
             const lands: LandSample[] = responseBody.lands;
             const expectedResult = [
-                {
-                  land_id: 1,
-                  landname: 'Media City Salford Quays',
-                  city: 'Salford',
-                  country: 'England',
-                  postcode: 'M50 2NT',
-                  description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
-                  created_at: "2023-08-10T11:00:00.000Z",
-                  vote: 8,
-                  safety_rating: 4,
-                  suitability_rating: 5,
-                  cost: "Free",
-                  is_public: true,
-                  has_rink: false,
-                  suitabile_for: "Skateboarding , Roller skating ",
-                  land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-                  username: 'tickle122'
+              {
+                land_id: 1,
+                landname: 'Media City Salford Quays',
+                city: 'Salford',
+                country: 'England',
+                postcode: 'M50 2NT',
+                description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
+                created_at: '2023-08-10T11:00:00.000Z',
+                vote: 8,
+                safety_rating_total: 15,
+                safety_rating_count: 4,
+                safety_rating_ave: '3.75',
+                suitability_rating_total: 25,
+                suitability_rating_count: 5,
+                suitability_rating_ave: '5.00',
+                cost: 'Free',
+                is_public: true,
+                has_rink: false,
+                suitabile_for: 'Skateboarding , Roller skating ',
+                land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+                username: 'tickle122'
               },
               {
-                  land_id: 2,  
-                  landname: 'Heaton Park',
-                  city: 'Manchester',
-                  country: 'England',
-                  postcode: 'M25 2SW',
-                  description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
-                  created_at: "2023-08-10T11:00:00.000Z",
-                  vote: 8,
-                  safety_rating: 4,
-                  suitability_rating: 5,
-                  cost: "Free",
-                  is_public: true,
-                  has_rink: false,
-                  suitabile_for: "Roller skating",
-                  land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
-                  username: 'cooljmessy'
+                land_id: 2,
+                landname: 'Heaton Park',
+                city: 'Manchester',
+                country: 'England',
+                postcode: 'M25 2SW',
+                description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
+                created_at: '2023-08-10T11:00:00.000Z',
+                vote: 8,
+                safety_rating_total: 15,
+                safety_rating_count: 6,
+                safety_rating_ave: '2.50',
+                suitability_rating_total: 25,
+                suitability_rating_count: 5,
+                suitability_rating_ave: '5.00',
+                cost: 'Free',
+                is_public: true,
+                has_rink: false,
+                suitabile_for: 'Roller skating',
+                land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+                username: 'cooljmessy'
               },
               {
-                  land_id: 3,
-                  landname: 'Seymour skatepark',
-                  city: 'Manchester',
-                  country: 'England',
-                  postcode: 'M16 0UB',
-                  description: `Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there`,
-                  created_at: "2023-08-10T11:00:00.000Z",
-                  vote: 5,
-                  safety_rating: 4,
-                  suitability_rating: 5,
-                  cost: "Free",
-                  is_public: true,
-                  has_rink: true,
-                  suitabile_for: "Skateboarding , Roller skating ",
-                  land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
-                  username: 'grumpy19'
+                land_id: 3,
+                landname: 'Seymour skatepark',
+                city: 'Manchester',
+                country: 'England',
+                postcode: 'M16 0UB',
+                description: "Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there",
+                created_at: '2023-08-10T11:00:00.000Z',
+                vote: 5,
+                safety_rating_total: 20,
+                safety_rating_count: 4,
+                safety_rating_ave: '5.00',
+                suitability_rating_total: 30,
+                suitability_rating_count: 6,
+                suitability_rating_ave: '5.00',
+                cost: 'Free',
+                is_public: true,
+                has_rink: true,
+                suitabile_for: 'Skateboarding , Roller skating ',
+                land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+                username: 'grumpy19'
               },
               {
-                  land_id: 4,
-                  landname: 'Delamere Skate park',
-                  city: 'Manchester',
-                  country: 'England',
-                  postcode: 'M11 1JY',
-                  description: `This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!`,
-                  created_at: "2023-08-10T11:00:00.000Z",
-                  vote: 2,
-                  safety_rating: 5,
-                  suitability_rating: 1,
-                  cost: "Free",
-                  is_public: true,
-                  has_rink: true,
-                  suitabile_for: "Skateboarding",
-                  land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
-                  username: 'weegembump'
+                land_id: 4,
+                landname: 'Delamere Skate park',
+                city: 'Manchester',
+                country: 'England',
+                postcode: 'M11 1JY',
+                description: "This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!",
+                created_at: '2023-08-10T11:00:00.000Z',
+                vote: 2,
+                safety_rating_total: 7,
+                safety_rating_count: 2,
+                safety_rating_ave: '3.50',
+                suitability_rating_total: 25,
+                suitability_rating_count: 6,
+                suitability_rating_ave: '4.17',
+                cost: 'Free',
+                is_public: true,
+                has_rink: true,
+                suitabile_for: 'Skateboarding',
+                land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
+                username: 'weegembump'
               },
               {
-                  land_id: 5,
-                  landname: 'Brookdale Skate Park',
-                  city: 'Manchester',
-                  country: 'England',
-                  postcode: 'M40 1GJ',
-                  description: `Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park`,
-                  created_at: "2023-08-10T11:00:00.000Z",
-                  vote: 0,
-                  safety_rating: 4,
-                  suitability_rating: 1,
-                  cost: "Free",
-                  is_public: true,
-                  has_rink: true,
-                  suitabile_for: "Skateboarding",
-                  land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
-                  username: 'jessjelly'
+                land_id: 5,
+                landname: 'Brookdale Skate Park',
+                city: 'Manchester',
+                country: 'England',
+                postcode: 'M40 1GJ',
+                description: 'Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park',
+                created_at: '2023-08-10T11:00:00.000Z',
+                vote: 0,
+                safety_rating_total: 32,
+                safety_rating_count: 8,
+                safety_rating_ave: '4.00',
+                suitability_rating_total: 25,
+                suitability_rating_count: 6,
+                suitability_rating_ave: '4.17',
+                cost: 'Free',
+                is_public: true,
+                has_rink: true,
+                suitabile_for: 'Skateboarding',
+                land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
+                username: 'jessjelly'
               }
-          ]
+            ]
+            
             expect(lands).toEqual(expectedResult);
 
         })
@@ -314,17 +339,21 @@ describe("GET Filtered Lands",()=>{
               country: 'England',
               postcode: 'M50 2NT',
               description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
-              created_at: "2023-08-10T11:00:00.000Z",
+              created_at: '2023-08-10T11:00:00.000Z',
               vote: 8,
-              safety_rating: 4,
-              suitability_rating: 5,
-              cost: "Free",
+              safety_rating_total: 15,
+              safety_rating_count: 4,
+              safety_rating_ave: '3.75',
+              suitability_rating_total: 25,
+              suitability_rating_count: 5,
+              suitability_rating_ave: '5.00',
+              cost: 'Free',
               is_public: true,
               has_rink: false,
-              suitabile_for: "Skateboarding , Roller skating ",
+              suitabile_for: 'Skateboarding , Roller skating ',
               land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
               username: 'tickle122'
-          }
+            }
             ]
           expect(lands).toEqual(expectedResult);
       })
@@ -345,35 +374,43 @@ describe("GET Filtered Lands",()=>{
             country: 'England',
             postcode: 'M50 2NT',
             description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
-            created_at: "2023-08-10T11:00:00.000Z",
+            created_at: '2023-08-10T11:00:00.000Z',
             vote: 8,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
+            safety_rating_total: 15,
+            safety_rating_count: 4,
+            safety_rating_ave: '3.75',
+            suitability_rating_total: 25,
+            suitability_rating_count: 5,
+            suitability_rating_ave: '5.00',
+            cost: 'Free',
             is_public: true,
             has_rink: false,
-            suitabile_for: "Skateboarding , Roller skating ",
+            suitabile_for: 'Skateboarding , Roller skating ',
             land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'tickle122'
-        },
-        {
-            land_id: 2,  
+          },
+          {
+            land_id: 2,
             landname: 'Heaton Park',
             city: 'Manchester',
             country: 'England',
             postcode: 'M25 2SW',
             description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
-            created_at: "2023-08-10T11:00:00.000Z",
+            created_at: '2023-08-10T11:00:00.000Z',
             vote: 8,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
+            safety_rating_total: 15,
+            safety_rating_count: 6,
+            safety_rating_ave: '2.50',
+            suitability_rating_total: 25,
+            suitability_rating_count: 5,
+            suitability_rating_ave: '5.00',
+            cost: 'Free',
             is_public: true,
             has_rink: false,
-            suitabile_for: "Roller skating",
+            suitabile_for: 'Roller skating',
             land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
             username: 'cooljmessy'
-        }
+          }
           ]
         expect(lands).toEqual(expectedResult);
     })
@@ -388,94 +425,114 @@ test("GET - status: 200 - respond with all the lands filtered by has_rink",()=>{
       const lands: LandSample[] = responseBody.lands;
       const expectedResult = [
         {
-            land_id: 1,
-            landname: 'Media City Salford Quays',
-            city: 'Salford',
-            country: 'England',
-            postcode: 'M50 2NT',
-            description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
-            created_at: "2023-08-10T11:00:00.000Z",
-            vote: 8,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
-            is_public: true,
-            has_rink: false,
-            suitabile_for: "Skateboarding , Roller skating ",
-            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-            username: 'tickle122'
+          land_id: 1,
+          landname: 'Media City Salford Quays',
+          city: 'Salford',
+          country: 'England',
+          postcode: 'M50 2NT',
+          description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 8,
+          safety_rating_total: 15,
+          safety_rating_count: 4,
+          safety_rating_ave: '3.75',
+          suitability_rating_total: 25,
+          suitability_rating_count: 5,
+          suitability_rating_ave: '5.00',
+          cost: 'Free',
+          is_public: true,
+          has_rink: false,
+          suitabile_for: 'Skateboarding , Roller skating ',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+          username: 'tickle122'
         },
         {
-            land_id: 2,
-            landname: 'Heaton Park',
-            city: 'Manchester',
-            country: 'England',
-            postcode: 'M25 2SW',
-            description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
-            created_at: "2023-08-10T11:00:00.000Z",
-            vote: 8,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
-            is_public: true,
-            has_rink: false,
-            suitabile_for: "Roller skating",
-            land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
-            username: 'cooljmessy'
+          land_id: 2,
+          landname: 'Heaton Park',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M25 2SW',
+          description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 8,
+          safety_rating_total: 15,
+          safety_rating_count: 6,
+          safety_rating_ave: '2.50',
+          suitability_rating_total: 25,
+          suitability_rating_count: 5,
+          suitability_rating_ave: '5.00',
+          cost: 'Free',
+          is_public: true,
+          has_rink: false,
+          suitabile_for: 'Roller skating',
+          land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+          username: 'cooljmessy'
         },
         {
-            land_id: 3,
-            landname: 'Seymour skatepark',
-            city: 'Manchester',
-            country: 'England',
-            postcode: 'M16 0UB',
-            description: `Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there`,
-            created_at: "2023-08-10T11:00:00.000Z",
-            vote: 5,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
-            is_public: true,
-            has_rink: true,
-            suitabile_for: "Skateboarding , Roller skating ",
-            land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
-            username: 'grumpy19'
+          land_id: 3,
+          landname: 'Seymour skatepark',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M16 0UB',
+          description: "Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there",
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 5,
+          safety_rating_total: 20,
+          safety_rating_count: 4,
+          safety_rating_ave: '5.00',
+          suitability_rating_total: 30,
+          suitability_rating_count: 6,
+          suitability_rating_ave: '5.00',
+          cost: 'Free',
+          is_public: true,
+          has_rink: true,
+          suitabile_for: 'Skateboarding , Roller skating ',
+          land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+          username: 'grumpy19'
         },
         {
-            land_id: 4,
-            landname: 'Delamere Skate park',
-            city: 'Manchester',
-            country: 'England',
-            postcode: 'M11 1JY',
-            description: `This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!`,
-            created_at: "2023-08-10T11:00:00.000Z",
-            vote: 2,
-            safety_rating: 5,
-            suitability_rating: 1,
-            cost: "Free",
-            is_public: true,
-            has_rink: true,
-            suitabile_for: "Skateboarding",
-            land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
-            username: 'weegembump'
+          land_id: 4,
+          landname: 'Delamere Skate park',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M11 1JY',
+          description: "This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!",
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 2,
+          safety_rating_total: 7,
+          safety_rating_count: 2,
+          safety_rating_ave: '3.50',
+          suitability_rating_total: 25,
+          suitability_rating_count: 6,
+          suitability_rating_ave: '4.17',
+          cost: 'Free',
+          is_public: true,
+          has_rink: true,
+          suitabile_for: 'Skateboarding',
+          land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
+          username: 'weegembump'
         },
         {
-            land_id: 5,
-            landname: 'Brookdale Skate Park',
-            city: 'Manchester',
-            country: 'England',
-            postcode: 'M40 1GJ',
-            description: `Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park`,
-            created_at: "2023-08-10T11:00:00.000Z",
-            vote: 0,
-            safety_rating: 4,
-            suitability_rating: 1,
-            cost: "Free",
-            is_public: true,
-            has_rink: true,
-            suitabile_for: "Skateboarding",
-            land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
-            username: 'jessjelly'
+          land_id: 5,
+          landname: 'Brookdale Skate Park',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M40 1GJ',
+          description: 'Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park',
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 0,
+          safety_rating_total: 32,
+          safety_rating_count: 8,
+          safety_rating_ave: '4.00',
+          suitability_rating_total: 25,
+          suitability_rating_count: 6,
+          suitability_rating_ave: '4.17',
+          cost: 'Free',
+          is_public: true,
+          has_rink: true,
+          suitabile_for: 'Skateboarding',
+          land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
+          username: 'jessjelly'
         }
     ]
       expect(lands).toEqual(expectedResult);
@@ -491,60 +548,72 @@ test("GET - status: 200 - respond with all the lands filtered by has_rink",()=>{
       const lands: LandSample[] = responseBody.lands;
       const expectedResult = [
         {
-            land_id: 3,
-            landname: 'Seymour skatepark',
-            city: 'Manchester',
-            country: 'England',
-            postcode: 'M16 0UB',
-            description: `Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there`,
-            created_at: "2023-08-10T11:00:00.000Z",
-            vote: 5,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
-            is_public: true,
-            has_rink: true,
-            suitabile_for: "Skateboarding , Roller skating ",
-            land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
-            username: 'grumpy19'
+          land_id: 3,
+          landname: 'Seymour skatepark',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M16 0UB',
+          description: "Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there",
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 5,
+          safety_rating_total: 20,
+          safety_rating_count: 4,
+          safety_rating_ave: '5.00',
+          suitability_rating_total: 30,
+          suitability_rating_count: 6,
+          suitability_rating_ave: '5.00',
+          cost: 'Free',
+          is_public: true,
+          has_rink: true,
+          suitabile_for: 'Skateboarding , Roller skating ',
+          land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+          username: 'grumpy19'
         },
         {
-            land_id: 4,
-            landname: 'Delamere Skate park',
-            city: 'Manchester',
-            country: 'England',
-            postcode: 'M11 1JY',
-            description: `This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!`,
-            created_at: "2023-08-10T11:00:00.000Z",
-            vote: 2,
-            safety_rating: 5,
-            suitability_rating: 1,
-            cost: "Free",
-            is_public: true,
-            has_rink: true,
-            suitabile_for: "Skateboarding",
-            land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
-            username: 'weegembump'
+          land_id: 4,
+          landname: 'Delamere Skate park',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M11 1JY',
+          description: "This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!",
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 2,
+          safety_rating_total: 7,
+          safety_rating_count: 2,
+          safety_rating_ave: '3.50',
+          suitability_rating_total: 25,
+          suitability_rating_count: 6,
+          suitability_rating_ave: '4.17',
+          cost: 'Free',
+          is_public: true,
+          has_rink: true,
+          suitabile_for: 'Skateboarding',
+          land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
+          username: 'weegembump'
         },
         {
-            land_id: 5,
-            landname: 'Brookdale Skate Park',
-            city: 'Manchester',
-            country: 'England',
-            postcode: 'M40 1GJ',
-            description: `Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park`,
-            created_at: "2023-08-10T11:00:00.000Z",
-            vote: 0,
-            safety_rating: 4,
-            suitability_rating: 1,
-            cost: "Free",
-            is_public: true,
-            has_rink: true,
-            suitabile_for: "Skateboarding",
-            land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
-            username: 'jessjelly'
+          land_id: 5,
+          landname: 'Brookdale Skate Park',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M40 1GJ',
+          description: 'Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park',
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 0,
+          safety_rating_total: 32,
+          safety_rating_count: 8,
+          safety_rating_ave: '4.00',
+          suitability_rating_total: 25,
+          suitability_rating_count: 6,
+          suitability_rating_ave: '4.17',
+          cost: 'Free',
+          is_public: true,
+          has_rink: true,
+          suitabile_for: 'Skateboarding',
+          land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
+          username: 'jessjelly'
         }
-    ]
+      ]
       expect(lands).toEqual(expectedResult);
   })
 })
@@ -558,23 +627,27 @@ test("GET - status: 200 - respond with all the lands filtered by has_rink",()=>{
       const lands: LandSample[] = responseBody.lands;
       const expectedResult = [
         {
-          land_id: 2,  
+          land_id: 2,
           landname: 'Heaton Park',
           city: 'Manchester',
           country: 'England',
           postcode: 'M25 2SW',
           description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
-          created_at: "2023-08-10T11:00:00.000Z",
+          created_at: '2023-08-10T11:00:00.000Z',
           vote: 8,
-          safety_rating: 4,
-          suitability_rating: 5,
-          cost: "Free",
+          safety_rating_total: 15,
+          safety_rating_count: 6,
+          safety_rating_ave: '2.50',
+          suitability_rating_total: 25,
+          suitability_rating_count: 5,
+          suitability_rating_ave: '5.00',
+          cost: 'Free',
           is_public: true,
           has_rink: false,
-          suitabile_for: "Roller skating",
+          suitabile_for: 'Roller skating',
           land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
           username: 'cooljmessy'
-      }
+        }
     ]
       expect(lands).toEqual(expectedResult);
   })
@@ -596,35 +669,158 @@ describe("GET sorted lands",()=>{
       .get("/api/lands/?sort_by=landname&order_by=DESC")
       .expect(200)
       .then((response : Response)=>{
+        const expectedResult = [
+          {
+            land_id: 3,
+            landname: 'Seymour skatepark',
+            city: 'Manchester',
+            country: 'England',
+            postcode: 'M16 0UB',
+            description: "Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there",
+            created_at: '2023-08-10T11:00:00.000Z',
+            vote: 5,
+            safety_rating_total: 20,
+            safety_rating_count: 4,
+            safety_rating_ave: '5.00',
+            suitability_rating_total: 30,
+            suitability_rating_count: 6,
+            suitability_rating_ave: '5.00',
+            cost: 'Free',
+            is_public: true,
+            has_rink: true,
+            suitabile_for: 'Skateboarding , Roller skating ',
+            land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+            username: 'grumpy19'
+          },
+          {
+            land_id: 1,
+            landname: 'Media City Salford Quays',
+            city: 'Salford',
+            country: 'England',
+            postcode: 'M50 2NT',
+            description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
+            created_at: '2023-08-10T11:00:00.000Z',
+            vote: 8,
+            safety_rating_total: 15,
+            safety_rating_count: 4,
+            safety_rating_ave: '3.75',
+            suitability_rating_total: 25,
+            suitability_rating_count: 5,
+            suitability_rating_ave: '5.00',
+            cost: 'Free',
+            is_public: true,
+            has_rink: false,
+            suitabile_for: 'Skateboarding , Roller skating ',
+            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+            username: 'tickle122'
+          },
+          {
+            land_id: 2,
+            landname: 'Heaton Park',
+            city: 'Manchester',
+            country: 'England',
+            postcode: 'M25 2SW',
+            description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
+            created_at: '2023-08-10T11:00:00.000Z',
+            vote: 8,
+            safety_rating_total: 15,
+            safety_rating_count: 6,
+            safety_rating_ave: '2.50',
+            suitability_rating_total: 25,
+            suitability_rating_count: 5,
+            suitability_rating_ave: '5.00',
+            cost: 'Free',
+            is_public: true,
+            has_rink: false,
+            suitabile_for: 'Roller skating',
+            land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+            username: 'cooljmessy'
+          },
+          {
+            land_id: 4,
+            landname: 'Delamere Skate park',
+            city: 'Manchester',
+            country: 'England',
+            postcode: 'M11 1JY',
+            description: "This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!",
+            created_at: '2023-08-10T11:00:00.000Z',
+            vote: 2,
+            safety_rating_total: 7,
+            safety_rating_count: 2,
+            safety_rating_ave: '3.50',
+            suitability_rating_total: 25,
+            suitability_rating_count: 6,
+            suitability_rating_ave: '4.17',
+            cost: 'Free',
+            is_public: true,
+            has_rink: true,
+            suitabile_for: 'Skateboarding',
+            land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
+            username: 'weegembump'
+          },
+          {
+            land_id: 5,
+            landname: 'Brookdale Skate Park',
+            city: 'Manchester',
+            country: 'England',
+            postcode: 'M40 1GJ',
+            description: 'Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park',
+            created_at: '2023-08-10T11:00:00.000Z',
+            vote: 0,
+            safety_rating_total: 32,
+            safety_rating_count: 8,
+            safety_rating_ave: '4.00',
+            suitability_rating_total: 25,
+            suitability_rating_count: 6,
+            suitability_rating_ave: '4.17',
+            cost: 'Free',
+            is_public: true,
+            has_rink: true,
+            suitabile_for: 'Skateboarding',
+            land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
+            username: 'jessjelly'
+          }
+        ]
+  
           const responseBody: LandsResponseBody = response.body;
           const lands: LandSample[] = responseBody.lands;
-          
-          expect(lands).toBeSortedBy("title", { ascending: true, coerce: false});
+          expect(lands).toEqual(expectedResult);
 
       })
   })
 })
 
-describe.skip("GET /api/lands/?sort_by&order_by",()=>{
+describe("GET /api/lands/?sort_by&order_by",()=>{
   test("GET - status: 200 - check is result is sorted",()=>{
       return request(app)
-      .get("/api/lands/?city=Cityexample2&sort_by=landname&order_by=DESC")
+      .get("/api/lands/?city=Salford&sort_by=landname&order_by=DESC")
       .expect(200)
       .then((response : Response)=>{
           const responseBody: LandsResponseBody = response.body;
           const lands: LandSample[] = responseBody.lands;
           const expectedResult = [
-              {
-                land_id: 2,
-                landname: 'Second land',
-                city: 'Cityexample2',
-                country: 'countryexample2',
-                description: 'Urban park with a championship golf course  for grown-ups, farm animals and play areas for kids.',
-                vote: 8,
-                created_at: '2023-08-10T11:00:00.000Z',
-                land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-                username: 'username2'
-              }
+            {
+              land_id: 1,
+              landname: 'Media City Salford Quays',
+              city: 'Salford',
+              country: 'England',
+              postcode: 'M50 2NT',
+              description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
+              created_at: '2023-08-10T11:00:00.000Z',
+              vote: 8,
+              safety_rating_total: 15,
+              safety_rating_count: 4,
+              safety_rating_ave: '3.75',
+              suitability_rating_total: 25,
+              suitability_rating_count: 5,
+              suitability_rating_ave: '5.00',
+              cost: 'Free',
+              is_public: true,
+              has_rink: false,
+              suitabile_for: 'Skateboarding , Roller skating ',
+              land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+              username: 'tickle122'
+            }
             ]
           expect(lands).toEqual(expectedResult);
 
@@ -632,7 +828,7 @@ describe.skip("GET /api/lands/?sort_by&order_by",()=>{
   })
 })
 
-describe.skip("GET /api/lands/:land_id",()=>{
+describe("GET /api/lands/:land_id",()=>{
   test("GET - status: 400 - when add NON integer id should recive error", ()=>{
     return request(app)
     .get("/api/lands/any_id")
@@ -657,17 +853,28 @@ describe.skip("GET /api/lands/:land_id",()=>{
         const responseBody: SingleLandsResponseBody = response.body;
         const land: LandSample = responseBody.land;
         const expectedResult =
-            {
-              land_id: 2,
-              landname: 'Second land',
-              city: 'Cityexample2',
-              country: 'countryexample2',
-              description: 'Urban park with a championship golf course  for grown-ups, farm animals and play areas for kids.',
-              vote: 8,
-              created_at: '2023-08-10T11:00:00.000Z',
-              land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-              username: 'username2'
-            }
+        {
+          land_id: 2,
+          landname: 'Heaton Park',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M25 2SW',
+          description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 8,
+          safety_rating_total: 15,
+          safety_rating_count: 6,
+          safety_rating_ave: '2.50',
+          suitability_rating_total: 25,
+          suitability_rating_count: 5,
+          suitability_rating_ave: '5.00',
+          cost: 'Free',
+          is_public: true,
+          has_rink: false,
+          suitabile_for: 'Roller skating',
+          land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+          username: 'cooljmessy'
+        }
           
         expect(land).toEqual(expectedResult);
 
@@ -675,7 +882,7 @@ describe.skip("GET /api/lands/:land_id",()=>{
   })
 })
 
-describe.skip("GET /api/lands/:land_id/comments",()=>{
+describe("GET /api/lands/:land_id/comments",()=>{
   test("GET - status: 400 - when add NON integer id should recive error", ()=>{
     return request(app)
     .get("/api/lands/any_id/comments")
@@ -701,9 +908,9 @@ describe.skip("GET /api/lands/:land_id/comments",()=>{
         const comments: CommentSample[] = responseBody.comments;
         const expectedResult =[
                                 {
-                                  comment_id: 3,
-                                  body: "kkQui sunt sit voluptas repellendus sed. Voluptatem et repellat fugiat. Rerum doloribus eveniet quidem vero aut sint officiis. Dolor facere et et architecto vero qui et perferendis dolorem. Magni quis ratione adipisci error assumenda ut. Id rerum eos facere sit nihil ipsam officia aspernatur odio.",
-                                  username: "username2",
+                                  comment_id: 2,
+                                  body: "Great park! We visited in June. We saw the animals, grabbed a drink and an ice cream which I felt we're reasonably priced. We took a picnic. Went down to the lake, played ball on the field. Great place to spend an afternoon. Easy access via Metrolink from where we live",
+                                  username: "grumpy19",
                                   land_id: 2,
                                   created_at: "2023-08-10T11:00:00.000Z"
                                 }
@@ -715,7 +922,7 @@ describe.skip("GET /api/lands/:land_id/comments",()=>{
   })
 })
 
-describe.skip("POST /api/lands/:land_id/comments",()=>{
+describe("POST /api/lands/:land_id/comments",()=>{
   test("POST- status: 203- responds with error because username does not exist",()=>{
     const newComment = {
                         "body": "this is my test_add_comment body",
@@ -730,7 +937,7 @@ describe.skip("POST /api/lands/:land_id/comments",()=>{
     })
   })
 
-  test("POST- status: 203- responds with error because not sending correct information",()=>{
+  test("POST- status: 400- responds with error because not sending correct information",()=>{
     const newComment = {
                         "body": "this is my test_add_comment body"
                        }
@@ -743,7 +950,7 @@ describe.skip("POST /api/lands/:land_id/comments",()=>{
     })
   })
 
-  test("POST- status: 203- responds with error because not sending correct information",()=>{
+  test("POST- status: 400- responds with error because not sending correct information",()=>{
     const newComment = {
                         "text": "this is my test_add_comment body",
                         "username": "username1"
@@ -760,7 +967,7 @@ describe.skip("POST /api/lands/:land_id/comments",()=>{
   test("POST- status: 201- responds with the added comment",()=>{
     const newComment = {
                         "body": "this is my test_add_comment body",
-                        "username": "username1"
+                        "username": "happyamy2016"
                        }
   return request(app)
   .post('/api/lands/3/comments')
@@ -769,22 +976,27 @@ describe.skip("POST /api/lands/:land_id/comments",()=>{
   .then(( response : Response ) => {
     const responseBody: AddedCommentResponseBody = response.body;
         const comment: CommentSample = responseBody.addedComment;
-        expect(comment.username).toBe("username1");
+        expect(comment.username).toBe("happyamy2016");
         expect(comment.body).toBe(newComment.body);
         expect(comment.land_id).toBe(3);
       })
   })
 })
 
-describe.skip("POST /api/land",()=>{
+describe("POST /api/land",()=>{
   test("POST- status: 203- responds with error because username does not exist",()=>{
     const newLand = {
-                      landname: 'Forth land',
-                      city: 'Cityexample1',
-                      country: 'countryexample1',
-                      description: 'test description',
-                      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-                      username: 'username500'
+      landname: 'Forth land',
+      city: 'Cityexample1',
+      country: 'countryexample1',
+      postcode: "M11 M11",
+      description: 'test description',
+      cost: 'free',
+      is_public: true,
+      has_rink: false,
+      suitabile_for: 'Skateboarding',
+      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+      username: 'username500'
                     }
   return request(app)
   .post('/api/land')
@@ -795,14 +1007,19 @@ describe.skip("POST /api/land",()=>{
     })
   })
 
-  test("POST- status: 203- responds with error because not sending correct information",()=>{
-    const newLand = {
-                      name: 'Forth land',
-                      city: 'Cityexample1',
-                      country: 'countryexample1',
-                      description: 'test description',
-                      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-                      username: 'username500'
+  test("POST- status: 400- responds with error because not sending correct information",()=>{
+    const newLand = {                
+      name: 'Forth land',
+      city: 'Cityexample1',
+      country: 'countryexample1',
+      postcode: "M11 M11",
+      description: 'test description',
+      cost: 'free',
+      is_public: true,
+      has_rink: false,
+      suitabile_for: 'Skateboarding',
+      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+      username: 'weegembump'
                     }
   return request(app)
   .post('/api/land')
@@ -834,9 +1051,14 @@ describe.skip("POST /api/land",()=>{
                       landname: 'Forth land',
                       city: 'Cityexample1',
                       country: 'countryexample1',
+                      postcode: "M11 M11",
                       description: 'test description',
+                      cost: 'free',
+                      is_public: true,
+                      has_rink: false,
+                      suitabile_for: 'Skateboarding',
                       land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-                      username: 'username1'
+                      username: 'happyamy2016'
                     }
   return request(app)
   .post('/api/land')
@@ -845,7 +1067,7 @@ describe.skip("POST /api/land",()=>{
   .then(( response : Response ) => {
     const responseBody: AddedLandsResponseBody = response.body;
         const land: LandSample = responseBody.addedLand;
-        expect(land.username).toBe("username1");
+        expect(land.username).toBe("happyamy2016");
         expect(land.city).toBe(newLand.city);
         expect(land.country).toBe('countryexample1');
         expect(land.land_img_url).toBe(newLand.land_img_url);
@@ -855,9 +1077,9 @@ describe.skip("POST /api/land",()=>{
   })
 })
 
-describe.skip("PATCH /api/lands/:land_id", ()=>{
+describe("PATCH /api/lands/:land_id", ()=>{
   test("PATCH- status: 202- responds with the updated land",()=>{
-    const votesUpdate = { inc_votes : 1 };
+    const votesUpdate = { votes_update : 1 };
     return request(app)
     .patch('/api/lands/2')
     .send(votesUpdate)
@@ -868,7 +1090,7 @@ describe.skip("PATCH /api/lands/:land_id", ()=>{
   })
 
   test("PATCH- status: 202- responds with the updated land",()=>{
-    const votesUpdate = { inc_votes : -1 };
+    const votesUpdate = { "votes_update" : -1 };
     return request(app)
     .patch('/api/lands/2')
     .send(votesUpdate)
@@ -878,9 +1100,33 @@ describe.skip("PATCH /api/lands/:land_id", ()=>{
         })
   })
 
+  test("PATCH- status: 202- responds with the updated land",()=>{
+    const safety_ratingUpdate = { safety_rating_update : 4 };
+    return request(app)
+    .patch('/api/lands/2')
+    .send(safety_ratingUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+          expect(body.updatedLand.safety_rating_total).toBe(19);
+          expect(body.updatedLand.safety_rating_count).toBe(7);
+        })
+  })
+
+  test("PATCH- status: 202- responds with the updated land",()=>{
+    const suitability_ratingUpdate = { "suitability_rating_update" : 3 };
+    return request(app)
+    .patch('/api/lands/2')
+    .send(suitability_ratingUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+          expect(body.updatedLand.suitability_rating_total).toBe(28);
+          expect(body.updatedLand.suitability_rating_count).toBe(6);
+        })
+  })
+
 })
 
-describe.skip("DELETE - /api/lands/:land_id", ()=>{
+describe("DELETE - /api/lands/:land_id", ()=>{
   test("DELETE - status: 204 , respond with no content",()=>{
     return request(app)
     .delete("/api/lands/2")
@@ -888,7 +1134,7 @@ describe.skip("DELETE - /api/lands/:land_id", ()=>{
   })
 })
 
-describe.skip("DELETE - /api/comments/:comment_id", ()=>{
+describe("DELETE - /api/comments/:comment_id", ()=>{
   test("DELETE - status: 204 , respond with no content",()=>{
     return request(app)
     .delete("/api/comments/1")

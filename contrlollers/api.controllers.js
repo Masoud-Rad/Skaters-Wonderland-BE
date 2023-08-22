@@ -44,8 +44,8 @@ exports.postLand = (req, res, next) => {
 };
 exports.patchLand = (req, res, next) => {
     const landId = req.params.land_id;
-    const votesUpdate = req.body.inc_votes;
-    updateLand(landId, votesUpdate)
+    const { votes_update, safety_rating_update, suitability_rating_update } = req.body;
+    updateLand(landId, votes_update, safety_rating_update, suitability_rating_update)
         .then((updatedLand) => {
         res.status(202).send({ updatedLand });
     })

@@ -11,8 +11,12 @@ interface Land {
     description: string;
     created_at: Date;
     vote: number;
-    safety_rating: number;
-    suitability_rating: number;
+    safety_rating_total: number;
+    safety_rating_count: number;
+    safety_rating_ave: number;
+    suitability_rating_total: number;
+    suitability_rating_count: number;
+    suitability_rating_ave: number;
     cost: string;
     is_public: boolean;
     has_rink: boolean;
@@ -67,12 +71,26 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
             postcode  VARCHAR NOT NULL,
             description VARCHAR NOT NULL,
             created_at TIMESTAMP DEFAULT NOW(),
-            vote INT DEFAULT 0 NOT NULL,
-            safety_rating INT,
-            suitability_rating INT,
-            cost VARCHAR,
-            is_public BOOL,
-            has_rink BOOL,
+            vote INT DEFAULT 0,
+            safety_rating_total INT DEFAULT 0,
+            safety_rating_count INT DEFAULT 0,
+            safety_rating_ave NUMERIC GENERATED ALWAYS AS (
+                CASE
+                  WHEN safety_rating_count > 0 THEN (safety_rating_total::NUMERIC / safety_rating_count)::NUMERIC(10, 2)
+                  ELSE 0
+                END
+            ) STORED,
+            suitability_rating_total INT DEFAULT 0,
+            suitability_rating_count INT DEFAULT 0,
+            suitability_rating_ave NUMERIC GENERATED ALWAYS AS (
+                CASE
+                  WHEN suitability_rating_count > 0 THEN (suitability_rating_total::NUMERIC / suitability_rating_count)::NUMERIC(10, 2)
+                  ELSE 0
+                END
+            ) STORED,
+            cost VARCHAR NOT NULL,
+            is_public BOOL NOT NULL,
+            has_rink BOOL NOT NULL,
             suitabile_for VARCHAR NOT NULL,
             land_img_url VARCHAR DEFAULT 'https://tse2.mm.bing.net/th?id=OIP.0G5ekV-kpF__IG0wQRRDGQHaFj&pid=Api&P=0&h=180',
             username VARCHAR REFERENCES users(username) NOT NULL
@@ -89,7 +107,7 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
         `);
         const insertUsersQueryStr = format(`INSERT INTO users (username, name, avatar_url, email, password, location) VALUES %L;`, userData.map(({ username, name, avatar_url, email, password, location }) => [username, name, avatar_url, email, password, location]));
         await db.query(insertUsersQueryStr);
-        const insertLandsQueryStr = format(`INSERT INTO lands (landname, city, country, postcode, description, vote, safety_rating, suitability_rating, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landname, city, country, postcode, description, vote, safety_rating, suitability_rating, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username }) => [landname, city, country, postcode, description, vote, safety_rating, suitability_rating, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username]));
+        const insertLandsQueryStr = format(`INSERT INTO lands (landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username }) => [landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username]));
         const result = await db.query(insertLandsQueryStr);
         const formatedCommentsData = formatComments(commentData, result.rows);
         const insertCommentsQueryStr = format(`INSERT INTO comments (body, land_id, username, created_at) VALUES %L;`, formatedCommentsData.map((formatedComment: FormatedComment) => [formatedComment.body, formatedComment.land_id, formatedComment.username, formatedComment.created_at]));

@@ -1,23 +1,28 @@
 const {formatComments} = require ('../db/seeds/utils.ts')
 
 interface LandTemple {
-    land_id: number;
-    landname: string;
-    city: string;
-    country: string;
-    postcode: string;
-    description: string;
-    created_at: Date;
-    vote: number;
-    safety_rating: number;
-    suitability_rating: number;
-    cost: string;
-    is_public: boolean;
-    has_rink: boolean;
-    suitabile_for: string;
-    land_img_url: string;
-    username: string;
+  land_id: number;
+  landname: string;
+  city: string;
+  country: string;
+  postcode: string;
+  description: string;
+  created_at: Date;
+  vote: number;
+  safety_rating_total: number;
+  safety_rating_count: number;
+  safety_rating_ave: number;
+  suitability_rating_total: number;
+  suitability_rating_count: number;
+  suitability_rating_ave: number;
+  cost: string;
+  is_public: boolean;
+  has_rink: boolean;
+  suitabile_for: string;
+  land_img_url: string;
+  username: string;
 }
+
 interface CommentTemple {
     body: string;
     landname: string;
@@ -36,42 +41,30 @@ type resultCommentTemple = {
 describe("formatComments", ()=>{
     test("if the function takes expty array should return empty array",()=>{
         const comments : CommentTemple[] = [];
-        const lands : LandTemple[] = [{
-            land_id: 1,
-            landname: 'Media City Salford Quays',
-            city: 'Salford',
-            country: 'England',
-            postcode: 'M50 2NT',
-            description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
-            created_at: new Date("2023-08-10T12:00:00Z"),
-            vote: 8,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
-            is_public: true,
-            has_rink: false,
-            suitabile_for: "Skateboarding , Roller skating ",
-            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-            username: 'tickle122'
-        },
-        {
-            land_id: 2,
-            landname: 'Heaton Park',
-            city: 'Manchester',
-            country: 'England',
-            postcode: 'M25 2SW',
-            description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
-            created_at: new Date("2023-08-10T12:00:00Z"),
-            vote: 8,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
-            is_public: true,
-            has_rink: false,
-            suitabile_for: "Roller skating",
-            land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
-            username: 'cooljmessy'
-        }];
+        const lands =  [  
+          {
+          land_id: 1,
+          landname: 'Media City Salford Quays',
+          city: 'Salford',
+          country: 'England',
+          postcode: 'M50 2NT',
+          description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 8,
+          safety_rating_total: 15,
+          safety_rating_count: 4,
+          safety_rating_ave: '3.75',
+          suitability_rating_total: 25,
+          suitability_rating_count: 5,
+          suitability_rating_ave: '5.00',
+          cost: 'Free',
+          is_public: true,
+          has_rink: false,
+          suitabile_for: 'Skateboarding , Roller skating ',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+          username: 'tickle122'
+        }
+        ];
         expect(formatComments(comments, lands)).toEqual([])
     })
 
@@ -100,42 +93,51 @@ describe("formatComments", ()=>{
             landname: 'Media City Salford Quays',
             created_at: new Date("2023-08-10T12:00:00Z")
           }];
-        const lands : LandTemple[] = [{
+        const lands  = [
+          {
             land_id: 1,
             landname: 'Media City Salford Quays',
             city: 'Salford',
             country: 'England',
             postcode: 'M50 2NT',
             description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
-            created_at: new Date("2023-08-10T12:00:00Z"),
+            created_at: '2023-08-10T11:00:00.000Z',
             vote: 8,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
+            safety_rating_total: 15,
+            safety_rating_count: 4,
+            safety_rating_ave: '3.75',
+            suitability_rating_total: 25,
+            suitability_rating_count: 5,
+            suitability_rating_ave: '5.00',
+            cost: 'Free',
             is_public: true,
             has_rink: false,
-            suitabile_for: "Skateboarding , Roller skating ",
+            suitabile_for: 'Skateboarding , Roller skating ',
             land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'tickle122'
-        },
-        {
+          },
+          {
             land_id: 2,
             landname: 'Heaton Park',
             city: 'Manchester',
             country: 'England',
             postcode: 'M25 2SW',
             description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
-            created_at: new Date("2023-08-10T12:00:00Z"),
+            created_at: '2023-08-10T11:00:00.000Z',
             vote: 8,
-            safety_rating: 4,
-            suitability_rating: 5,
-            cost: "Free",
+            safety_rating_total: 15,
+            safety_rating_count: 6,
+            safety_rating_ave: '2.50',
+            suitability_rating_total: 25,
+            suitability_rating_count: 5,
+            suitability_rating_ave: '5.00',
+            cost: 'Free',
             is_public: true,
             has_rink: false,
-            suitabile_for: "Roller skating",
+            suitabile_for: 'Roller skating',
             land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
             username: 'cooljmessy'
-        }];
+          }];
         const result : resultCommentTemple[] =[{
             body: "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
             username: "tickle122",

@@ -1,7 +1,7 @@
 # SKATERS-WONDERLAND
 
 
-SKATERS-WONDERLAND is a platform that brings together skaters, trainers, and skate enthusiasts to explore and share great skating spots, connect with like-minded individuals, and discover local skate businesses and second-hand skating gear.
+SKATERS-WONDERLAND is a platform that brings together skaters, trainers, and skate enthusiasts to explore and share great skating spots, connect with like-minded individuals, and discover local skate businesses and sell your second-hand skating gear.
 
 
 ## Features

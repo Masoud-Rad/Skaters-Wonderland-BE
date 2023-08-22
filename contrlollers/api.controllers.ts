@@ -25,8 +25,12 @@ interface LandSample {
     description: string;
     created_at: Date;
     vote: number;
-    safety_rating: number;
-    suitability_rating: number;
+    safety_rating_total: number;
+    safety_rating_count: number;
+    safety_rating_ave: number;
+    suitability_rating_total: number;
+    suitability_rating_count: number;
+    suitability_rating_ave: number;
     cost: string;
     is_public: boolean;
     has_rink: boolean;
@@ -97,9 +101,10 @@ exports.postLand =(req : Request , res : Response, next : NextFunction)=>{
 
 exports.patchLand= (req : Request , res : Response, next : NextFunction)=>{
   const landId = req.params.land_id;
-  const votesUpdate = req.body.inc_votes;
+  
+  const {votes_update, safety_rating_update, suitability_rating_update } = req.body; 
 
-  updateLand(landId, votesUpdate)
+  updateLand(landId, votes_update, safety_rating_update, suitability_rating_update)
   .then((updatedLand: LandSample)=>{
     res.status(202).send({updatedLand})
   })

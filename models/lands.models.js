@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var db = require('../db/connection');
 exports.selectLands = function (city, has_rink, cost, sort_by, order_by) {
     if (sort_by === void 0) { sort_by = "land_id"; }
@@ -68,21 +66,27 @@ exports.selectSingleLand = function (landId) {
     });
 };
 exports.addLand = function (newLand) {
+    var landname = newLand.landname, city = newLand.city, country = newLand.country, postcode = newLand.postcode, description = newLand.description, cost = newLand.cost, is_public = newLand.is_public, has_rink = newLand.has_rink, suitabile_for = newLand.suitabile_for, land_img_url = newLand.land_img_url, username = newLand.username;
     if (typeof newLand === "object" &&
         newLand.hasOwnProperty("landname") &&
         newLand.hasOwnProperty("city") &&
         newLand.hasOwnProperty("country") &&
+        newLand.hasOwnProperty("postcode") &&
         newLand.hasOwnProperty("description") &&
+        newLand.hasOwnProperty("cost") &&
+        newLand.hasOwnProperty("is_public") &&
+        newLand.hasOwnProperty("has_rink") &&
+        newLand.hasOwnProperty("suitabile_for") &&
         newLand.hasOwnProperty("username")) {
         if (newLand.land_img_url) {
-            return db.query("INSERT INTO lands (landname, city, country, description, land_img_url, username) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *;", [newLand.landname, newLand.city, newLand.country, newLand.description, newLand.land_img_url, newLand.username])
+            return db.query("INSERT INTO lands (landname, city, country, postcode, description, cost, is_public, has_rink, suitabile_for, land_img_url, username) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *;", [landname, city, country, postcode, description, cost, is_public, has_rink, suitabile_for, land_img_url, username])
                 .then(function (_a) {
                 var rows = _a.rows;
                 return rows[0];
             });
         }
         else {
-            return db.query("INSERT INTO lands (landname, city, country, description, username) VALUES ($1,$2,$3,$4,$5) RETURNING *;", [newLand.landname, newLand.city, newLand.country, newLand.description, newLand.username])
+            return db.query("INSERT INTO lands (landname, city, country, postcode, description, safety_rating, suitability_rating, cost, is_public, has_rink, suitabile_for, username) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *;", [landname, city, country, postcode, description, cost, is_public, has_rink, suitabile_for, username])
                 .then(function (_a) {
                 var rows = _a.rows;
                 return rows[0];
@@ -93,17 +97,35 @@ exports.addLand = function (newLand) {
         return Promise.reject({ status: 400, msg: "BAD REQUEST!" });
     }
 };
-exports.updateLand = function (landId, votesUpdate) {
+exports.updateLand = function (landId, votes_update, safety_rating_update, suitability_rating_update) {
     return db.query("\n        SELECT * FROM lands WHERE land_id= $1;\n        ", [landId])
         .then(function (_a) {
         var rows = _a.rows;
         var land = rows[0];
-        var currentVotes = land.vote;
-        var updatedVotes = currentVotes + votesUpdate;
-        return db.query("\n            UPDATE lands\n            SET\n            vote= $1\n            WHERE land_id = $2\n            RETURNING *;\n            ", [updatedVotes, landId]).then(function (_a) {
-            var rows = _a.rows;
-            return (rows[0]);
-        });
+        if (votes_update) {
+            var currentVotes = land.vote;
+            var updatedVotes = currentVotes + votes_update;
+            return db.query("\n                              UPDATE lands\n                              SET\n                              vote= $1\n                              WHERE land_id = $2\n                              RETURNING *;\n                              ", [updatedVotes, landId]).then(function (_a) {
+                var rows = _a.rows;
+                return (rows[0]);
+            });
+        }
+        if (safety_rating_update) {
+            var currentSafety_rating_total = land.safety_rating_total;
+            var updatedSafety_rating_total = currentSafety_rating_total + safety_rating_update;
+            return db.query("\n                              UPDATE lands\n                              SET\n                              safety_rating_total= $1,\n                              safety_rating_count=$2\n                              WHERE land_id = $3\n                              RETURNING *;\n                              ", [updatedSafety_rating_total, land.safety_rating_count + 1, landId]).then(function (_a) {
+                var rows = _a.rows;
+                return (rows[0]);
+            });
+        }
+        if (suitability_rating_update) {
+            var currentSuitability_rating_total = land.suitability_rating_total;
+            var updatedSuitability_rating_total = currentSuitability_rating_total + suitability_rating_update;
+            return db.query("\n                              UPDATE lands\n                              SET\n                              Suitability_rating_total= $1,\n                              suitability_rating_count= $2\n                              WHERE land_id = $3\n                              RETURNING *;\n                              ", [updatedSuitability_rating_total, land.suitability_rating_count + 1, landId]).then(function (_a) {
+                var rows = _a.rows;
+                return (rows[0]);
+            });
+        }
     });
 };
 exports.delLand = function (landId) {
