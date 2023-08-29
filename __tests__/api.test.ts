@@ -99,6 +99,17 @@ describe("GET WRONG END-POINT",()=>{
     })
 })
 
+describe('/api/getEndpoints', () => {
+  test("GET - status: 200 - respond with all the properties", () => {
+    return request(app)
+      .get("/api/getEndpoints")
+      .expect(200)
+      .then((response: Response) => { 
+        expect(typeof response.body).toBe('object');
+      });
+  });
+})
+
 describe("GET /api/users",()=>{
     
     test("GET - status: 200 - respond with all the properties",()=>{

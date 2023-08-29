@@ -3,6 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const { selectLands, selectSingleLand, addLand, updateLand, delLand } = require('../models/lands.models');
 const { selectUsers } = require('../models/users.models');
 const { selectComments, addComment, delComment } = require('../models/comment.models');
+const { selectEndpoints } = require('../models/api.models');
+exports.getEndpoints = (_req, res, next) => {
+    selectEndpoints().then((endpoints) => {
+        res.status(200).send({ endpoints });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
 exports.getUsers = (req, res, next) => {
     const { username } = req.query;
     selectUsers(username).then((users) => {

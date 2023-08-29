@@ -2,6 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
 const { selectUsers }= require ('../models/users.models')
 const {selectComments, addComment, delComment}= require('../models/comment.models')
+const {selectEndpoints} = require ('../models/api.models')
+
+
 
 //-------------------------------Types----------------------------
 
@@ -47,6 +50,33 @@ interface CommentSample{
   username: string;
   created_at: Date;
 }
+
+interface EndpointData {
+  [key: string]: {
+      description: string;
+      queries?: string[];
+      parametr?: string[];
+      exampleResponse: {
+          users?: UsersSample[];
+          Lands?: LandSample[];
+          Land?: LandSample;
+          comments?: CommentSample[];
+          comment?: CommentSample;
+      };
+  };
+}
+
+//------------------------------Api-------------------------------
+
+exports.getEndpoints = (_req : Request , res : Response, next : NextFunction)=>{
+  selectEndpoints().then((endpoints: EndpointData)=>{
+    res.status(200).send({endpoints})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
+
 //------------------------------Users-----------------------------
 
 exports.getUsers = (req : Request , res : Response, next : NextFunction)=>{
@@ -61,6 +91,7 @@ exports.getUsers = (req : Request , res : Response, next : NextFunction)=>{
 
 
 //------------------------------Lands------------------------------
+
 
 exports.getLands= (req : Request , res : Response, next : NextFunction)=>{
   const {city, has_rink, cost, sort_by, order_by} = req.query; 
