@@ -105,6 +105,86 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
             created_at TIMESTAMP DEFAULT NOW()
             );
         `);
+        await db.query(`
+            CREATE TABLE businesses (
+                business_id SERIAL PRIMARY KEY, 
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                businessname VARCHAR NOT NULL,
+                city VARCHAR NOT NULL,
+                country VARCHAR NOT NULL,
+                postcode  VARCHAR NOT NULL,
+                description VARCHAR NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                website VARCHAR,
+                email VARCHAR,
+                instagram VARCHAR,
+                facebook VARCHAR,
+                contact_number VARCHAR
+            );
+        `)
+        await db.query (`
+            CREATE TABLE businessesreview (
+                review_id SERIAL PRIMARY KEY,
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                business_id INTEGER REFERENCES businesses(business_id) NOT NULL,
+                body VARCHAR NOT NULL,
+                rating INT DEFAULT 0,
+                created_at TIMESTAMP DEFAULT NOW()
+            );
+        `)
+        await db.query(`
+            CREATE TABLE personaltrainers (
+                pt_id SERIAL PRIMARY KEY, 
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                ptname VARCHAR NOT NULL,
+                city VARCHAR NOT NULL,
+                country VARCHAR NOT NULL,
+                postcode  VARCHAR NOT NULL,
+                description VARCHAR NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                website VARCHAR,
+                email VARCHAR,
+                instagram VARCHAR,
+                facebook VARCHAR,
+                contact_number VARCHAR
+            );
+        `)
+        await db.query (`
+            CREATE TABLE ptsreview (
+                review_id SERIAL PRIMARY KEY,
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                pt_id INTEGER REFERENCES personaltrainers(pt_id) NOT NULL,
+                body VARCHAR NOT NULL,
+                rating INT DEFAULT 0,
+                created_at TIMESTAMP DEFAULT NOW()
+            );
+        `)
+        await db.query (`
+            CREATE TABLE sales (
+                item_id SERIAL PRIMARY KEY,
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                itemname VARCHAR NOT NULL,
+                description VARCHAR NOT NULL,
+                price VARCHAR NOT NULL,
+                city VARCHAR NOT NULL,
+                country VARCHAR NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                website VARCHAR,
+                email VARCHAR,
+                instagram VARCHAR,
+                facebook VARCHAR,
+                contact_number VARCHAR
+            );
+        `)
+        await db.query (`
+            CREATE TABLE messages (
+                message_id SERIAL PRIMARY KEY,
+                sender_username VARCHAR REFERENCES users(username) NOT NULL,
+                receiver_username VARCHAR REFERENCES users(username) NOT NULL,
+                body VARCHAR NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW()
+            );
+        `)
         const insertUsersQueryStr = format(`INSERT INTO users (username, name, avatar_url, email, password, location) VALUES %L;`, userData.map(({ username, name, avatar_url, email, password, location }) => [username, name, avatar_url, email, password, location]));
         await db.query(insertUsersQueryStr);
         const insertLandsQueryStr = format(`INSERT INTO lands (landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username }) => [landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username]));
