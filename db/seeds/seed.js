@@ -11,7 +11,7 @@ async function seed(landData, commentData, userData) {
         await db.query(`CREATE TABLE users (
             username VARCHAR PRIMARY KEY,
             name VARCHAR NOT NULL,
-            avatar_url VARCHAR,
+            avatar_url VARCHAR  DEFAULT 'https://vectorified.com/images/unknown-avatar-icon-7.jpg',
             email VARCHAR,
             password VARCHAR NOT NULL,
             location VARCHAR
@@ -57,6 +57,84 @@ async function seed(landData, commentData, userData) {
             land_id INTEGER REFERENCES lands(land_id) NOT NULL,
             username VARCHAR REFERENCES users(username) NOT NULL,
             created_at TIMESTAMP DEFAULT NOW()
+            );
+        `);
+        await db.query(`
+            CREATE TABLE businesses (
+                business_id SERIAL PRIMARY KEY, 
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                businessname VARCHAR NOT NULL,
+                city VARCHAR NOT NULL,
+                country VARCHAR NOT NULL,
+                postcode  VARCHAR NOT NULL,
+                description VARCHAR NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                website VARCHAR,
+                business_img_url VARCHAR DEFAULT 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzc33XS9klYYR7JzdNkT2ryvg22j79wh4rxfIJciN-WQ&s',
+                contact_number VARCHAR
+            );
+        `);
+        await db.query(`
+            CREATE TABLE businessesreview (
+                review_id SERIAL PRIMARY KEY,
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                business_id INTEGER REFERENCES businesses(business_id) NOT NULL,
+                body VARCHAR NOT NULL,
+                rating INT DEFAULT 0,
+                created_at TIMESTAMP DEFAULT NOW()
+            );
+        `);
+        await db.query(`
+            CREATE TABLE personaltrainers (
+                pt_id SERIAL PRIMARY KEY, 
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                ptname VARCHAR REFERENCES users(name) NOT NULL,,
+                city VARCHAR NOT NULL,
+                country VARCHAR NOT NULL,
+                postcode  VARCHAR NOT NULL,
+                description VARCHAR NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                website VARCHAR,
+                email VARCHAR,
+                instagram VARCHAR,
+                facebook VARCHAR,
+                contact_number VARCHAR
+                avatar_url VARCHAR REFERENCES users(avatar_url),
+            );
+        `);
+        await db.query(`
+            CREATE TABLE ptsreview (
+                review_id SERIAL PRIMARY KEY,
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                pt_id INTEGER REFERENCES personaltrainers(pt_id) NOT NULL,
+                body VARCHAR NOT NULL,
+                rating INT DEFAULT 0,
+                created_at TIMESTAMP DEFAULT NOW()
+            );
+        `);
+        await db.query(`
+            CREATE TABLE sales (
+                item_id SERIAL PRIMARY KEY,
+                username VARCHAR REFERENCES users(username) NOT NULL,
+                itemname VARCHAR NOT NULL,
+                description VARCHAR NOT NULL,
+                price VARCHAR NOT NULL,
+                city VARCHAR NOT NULL,
+                country VARCHAR NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                email VARCHAR,
+                facebook VARCHAR,
+                contact_number VARCHAR
+                gear_avatar_url VARCHAR  DEFAULT 'http://rlv.zcache.com/az_sunset_series_by_unknown_skateboards-r339c69a8681444aeb08080977bf89165_xw0k0_8byvr_324.jpg'
+            );
+        `);
+        await db.query(`
+            CREATE TABLE messages (
+                message_id SERIAL PRIMARY KEY,
+                sender_username VARCHAR REFERENCES users(username) NOT NULL,
+                receiver_username VARCHAR REFERENCES users(username) NOT NULL,
+                body VARCHAR NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW()
             );
         `);
         const insertUsersQueryStr = format(`INSERT INTO users (username, name, avatar_url, email, password, location) VALUES %L;`, userData.map(({ username, name, avatar_url, email, password, location }) => [username, name, avatar_url, email, password, location]));

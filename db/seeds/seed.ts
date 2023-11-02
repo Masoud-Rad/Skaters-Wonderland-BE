@@ -57,7 +57,7 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
         await db.query(`CREATE TABLE users (
             username VARCHAR PRIMARY KEY,
             name VARCHAR NOT NULL,
-            avatar_url VARCHAR,
+            avatar_url VARCHAR  DEFAULT 'https://vectorified.com/images/unknown-avatar-icon-7.jpg',
             email VARCHAR,
             password VARCHAR NOT NULL,
             location VARCHAR
@@ -116,9 +116,7 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
                 description VARCHAR NOT NULL,
                 created_at TIMESTAMP DEFAULT NOW(),
                 website VARCHAR,
-                email VARCHAR,
-                instagram VARCHAR,
-                facebook VARCHAR,
+                business_img_url VARCHAR DEFAULT 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzc33XS9klYYR7JzdNkT2ryvg22j79wh4rxfIJciN-WQ&s',
                 contact_number VARCHAR
             );
         `)
@@ -136,7 +134,7 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
             CREATE TABLE personaltrainers (
                 pt_id SERIAL PRIMARY KEY, 
                 username VARCHAR REFERENCES users(username) NOT NULL,
-                ptname VARCHAR NOT NULL,
+                ptname VARCHAR REFERENCES users(name) NOT NULL,,
                 city VARCHAR NOT NULL,
                 country VARCHAR NOT NULL,
                 postcode  VARCHAR NOT NULL,
@@ -147,6 +145,7 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
                 instagram VARCHAR,
                 facebook VARCHAR,
                 contact_number VARCHAR
+                avatar_url VARCHAR REFERENCES users(avatar_url),
             );
         `)
         await db.query (`
@@ -169,11 +168,10 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
                 city VARCHAR NOT NULL,
                 country VARCHAR NOT NULL,
                 created_at TIMESTAMP DEFAULT NOW(),
-                website VARCHAR,
                 email VARCHAR,
-                instagram VARCHAR,
                 facebook VARCHAR,
                 contact_number VARCHAR
+                gear_avatar_url VARCHAR  DEFAULT 'http://rlv.zcache.com/az_sunset_series_by_unknown_skateboards-r339c69a8681444aeb08080977bf89165_xw0k0_8byvr_324.jpg'
             );
         `)
         await db.query (`
