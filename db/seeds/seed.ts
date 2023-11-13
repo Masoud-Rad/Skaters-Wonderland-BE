@@ -59,7 +59,7 @@ interface Business{
     business_img_url: string;
 }
 
-interface businessesreview{
+interface Businessesreview{
     username: string;
     business_id: number;
     body : string;
@@ -67,8 +67,52 @@ interface businessesreview{
     created_at: Date;
 }
 
+interface Personaltrainer{
+    username: string; 
+    ptname: string;
+    city: string;
+    country: string;
+    postcode: string;
+    description: string;
+    created_at: Date;
+    website: string;
+    email: string;
+    instagram: string;
+    facebook: string;
+    contact_number : string;
+    avatar_url: string;
+}
 
-async function seed(businessesreviewData: businessesreview[], businessesData: Business[], landData: Land[], commentData: Comment[], userData: User[]) {
+interface Ptsreview{
+    username: string;
+    pt_id: number;
+    body: string;rating: string;
+    created_at: Date;
+}
+
+interface Sale{
+    username: string;
+    itemname : string;
+    description: string;
+    price: string;
+    city: string;
+    country: string;
+    created_at: Date;
+    email: string;
+    facebook: string;
+    contact_number: string;
+    gear_avatar_url: string;
+}
+
+interface Message{
+    message_id: string;
+    sender_username: string;
+    receiver_username: string;
+    body: string;
+    created_at: Date;
+}
+
+async function seed(messagesData: Message[], salesData: Sale[], ptsreviewData: Ptsreview[], personaltrainersData: Personaltrainer[], businessesreviewData: Businessesreview[], businessesData: Business[], landData: Land[], commentData: Comment[], userData: User[]) {
     try {
         
         await db.query(`DROP TABLE IF EXISTS comments;`);
@@ -154,7 +198,7 @@ async function seed(businessesreviewData: businessesreview[], businessesData: Bu
             CREATE TABLE personaltrainers (
                 pt_id SERIAL PRIMARY KEY, 
                 username VARCHAR REFERENCES users(username) NOT NULL,
-                ptname VARCHAR REFERENCES users(name) NOT NULL,,
+                ptname VARCHAR REFERENCES users(name) NOT NULL,
                 city VARCHAR NOT NULL,
                 country VARCHAR NOT NULL,
                 postcode  VARCHAR NOT NULL,
@@ -164,7 +208,7 @@ async function seed(businessesreviewData: businessesreview[], businessesData: Bu
                 email VARCHAR,
                 instagram VARCHAR,
                 facebook VARCHAR,
-                contact_number VARCHAR
+                contact_number VARCHAR,
                 avatar_url VARCHAR REFERENCES users(avatar_url),
             );
         `)
@@ -214,7 +258,14 @@ async function seed(businessesreviewData: businessesreview[], businessesData: Bu
         await db.query(insertBusinessesQueryStr);
         const insertBusinessesreviewQueryStr = format(`INSERT INTO businessesreview (username, business_id, body, rating, created_at) VALUES %L;`, businessesreviewData.map(({username, business_id, body, rating, created_at})=>[username, business_id, body, rating, created_at]))
         await db.query(insertBusinessesreviewQueryStr);
-
+        const insertPersonaltrainersQueryStr = format (`INSERT INTO personaltrainers (username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url) VALUES %L;`, personaltrainersData.map(({username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url})=>[username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url]) )
+        await db.query(insertPersonaltrainersQueryStr);
+        const insertPtsreviewQueryStr = format (`INSERT INTO ptsreview (username, pt_id, body, rating, created_at) VALUES %L;`, ptsreviewData.map(({username, pt_id, body, rating, created_at})=>[username, pt_id, body, rating, created_at]))
+        await db.query(insertPtsreviewQueryStr);
+        const insertSalesQueryStr = format (`INSERT INTO sales(username, itemname , description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url) VALUES %L;`, salesData.map(({username, itemname , description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url})=>[username, itemname , description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url]));
+        await db.query(insertSalesQueryStr);
+        const insertMessagesQueryStr = format (`INSERT INTO messages(message_id, sender_username, receiver_username, body, created_at) VALUES %L`, messagesData.map(({message_id, sender_username, receiver_username, body, created_at})=>[message_id, sender_username, receiver_username, body, created_at]));
+        await db.query(insertMessagesQueryStr)
     }
     catch (error) {
         console.error('Error executing queries:', error);

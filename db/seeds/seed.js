@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const format = require('pg-format');
 const db = require('../connection');
 const { formatComments } = require('./utils');
-async function seed(businessesreviewData, businessesData, landData, commentData, userData) {
+async function seed(messagesData, salesData, ptsreviewData, personaltrainersData, businessesreviewData, businessesData, landData, commentData, userData) {
     try {
         await db.query(`DROP TABLE IF EXISTS comments;`);
         await db.query(`DROP TABLE IF EXISTS lands;`);
@@ -88,7 +88,7 @@ async function seed(businessesreviewData, businessesData, landData, commentData,
             CREATE TABLE personaltrainers (
                 pt_id SERIAL PRIMARY KEY, 
                 username VARCHAR REFERENCES users(username) NOT NULL,
-                ptname VARCHAR REFERENCES users(name) NOT NULL,,
+                ptname VARCHAR REFERENCES users(name) NOT NULL,
                 city VARCHAR NOT NULL,
                 country VARCHAR NOT NULL,
                 postcode  VARCHAR NOT NULL,
@@ -98,7 +98,7 @@ async function seed(businessesreviewData, businessesData, landData, commentData,
                 email VARCHAR,
                 instagram VARCHAR,
                 facebook VARCHAR,
-                contact_number VARCHAR
+                contact_number VARCHAR,
                 avatar_url VARCHAR REFERENCES users(avatar_url),
             );
         `);
@@ -148,6 +148,14 @@ async function seed(businessesreviewData, businessesData, landData, commentData,
         await db.query(insertBusinessesQueryStr);
         const insertBusinessesreviewQueryStr = format(`INSERT INTO businessesreview (username, business_id, body, rating, created_at) VALUES %L;`, businessesreviewData.map(({ username, business_id, body, rating, created_at }) => [username, business_id, body, rating, created_at]));
         await db.query(insertBusinessesreviewQueryStr);
+        const insertPersonaltrainersQueryStr = format(`INSERT INTO personaltrainers (username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url) VALUES %L;`, personaltrainersData.map(({ username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number, avatar_url }) => [username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number, avatar_url]));
+        await db.query(insertPersonaltrainersQueryStr);
+        const insertPtsreviewQueryStr = format(`INSERT INTO ptsreview (username, pt_id, body, rating, created_at) VALUES %L;`, ptsreviewData.map(({ username, pt_id, body, rating, created_at }) => [username, pt_id, body, rating, created_at]));
+        await db.query(insertPtsreviewQueryStr);
+        const insertSalesQueryStr = format(`INSERT INTO sales(username, itemname , description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url) VALUES %L;`, salesData.map(({ username, itemname, description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url }) => [username, itemname, description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url]));
+        await db.query(insertSalesQueryStr);
+        const insertMessagesQueryStr = format(`INSERT INTO messages(message_id, sender_username, receiver_username, body, created_at) VALUES %L`, messagesData.map(({ message_id, sender_username, receiver_username, body, created_at }) => [message_id, sender_username, receiver_username, body, created_at]));
+        await db.query(insertMessagesQueryStr);
     }
     catch (error) {
         console.error('Error executing queries:', error);
