@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const format = require('pg-format');
 const db = require('../connection');
 const { formatComments } = require('./utils');
-async function seed(landData, commentData, userData) {
+async function seed(businessesreviewData, businessesData, landData, commentData, userData) {
     try {
         await db.query(`DROP TABLE IF EXISTS comments;`);
         await db.query(`DROP TABLE IF EXISTS lands;`);
@@ -144,6 +144,10 @@ async function seed(landData, commentData, userData) {
         const formatedCommentsData = formatComments(commentData, result.rows);
         const insertCommentsQueryStr = format(`INSERT INTO comments (body, land_id, username, created_at) VALUES %L;`, formatedCommentsData.map((formatedComment) => [formatedComment.body, formatedComment.land_id, formatedComment.username, formatedComment.created_at]));
         await db.query(insertCommentsQueryStr);
+        const insertBusinessesQueryStr = format(`INSERT INTO businesses (username, businessname, city, country, postcode, description, created_at, website, business_img_url) VALUES %L;`, businessesData.map(({ username, businessname, city, country, postcode, description, created_at, website, business_img_url }) => [username, businessname, city, country, postcode, description, created_at, website, business_img_url]));
+        await db.query(insertBusinessesQueryStr);
+        const insertBusinessesreviewQueryStr = format(`INSERT INTO businessesreview (username, business_id, body, rating, created_at) VALUES %L;`, businessesreviewData.map(({ username, business_id, body, rating, created_at }) => [username, business_id, body, rating, created_at]));
+        await db.query(insertBusinessesreviewQueryStr);
     }
     catch (error) {
         console.error('Error executing queries:', error);

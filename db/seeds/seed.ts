@@ -47,8 +47,28 @@ interface FormatedComment{
     created_at: Date;
 }
 
+interface Business{
+    username: string;
+    businessname: string;
+    city: string;
+    country: string;
+    postcode: string;
+    description: string;
+    created_at: Date;
+    website: string;
+    business_img_url: string;
+}
 
-async function seed(landData: Land[], commentData: Comment[], userData: User[]) {
+interface businessesreview{
+    username: string;
+    business_id: number;
+    body : string;
+    rating: number;
+    created_at: Date;
+}
+
+
+async function seed(businessesreviewData: businessesreview[], businessesData: Business[], landData: Land[], commentData: Comment[], userData: User[]) {
     try {
         
         await db.query(`DROP TABLE IF EXISTS comments;`);
@@ -190,6 +210,11 @@ async function seed(landData: Land[], commentData: Comment[], userData: User[]) 
         const formatedCommentsData = formatComments(commentData, result.rows);
         const insertCommentsQueryStr = format(`INSERT INTO comments (body, land_id, username, created_at) VALUES %L;`, formatedCommentsData.map((formatedComment: FormatedComment) => [formatedComment.body, formatedComment.land_id, formatedComment.username, formatedComment.created_at]));
         await db.query(insertCommentsQueryStr);
+        const insertBusinessesQueryStr = format (`INSERT INTO businesses (username, businessname, city, country, postcode, description, created_at, website, business_img_url) VALUES %L;`, businessesData.map(({username, businessname, city, country, postcode, description, created_at, website, business_img_url})=> [username, businessname, city, country, postcode, description, created_at, website, business_img_url]));
+        await db.query(insertBusinessesQueryStr);
+        const insertBusinessesreviewQueryStr = format(`INSERT INTO businessesreview (username, business_id, body, rating, created_at) VALUES %L;`, businessesreviewData.map(({username, business_id, body, rating, created_at})=>[username, business_id, body, rating, created_at]))
+        await db.query(insertBusinessesreviewQueryStr);
+
     }
     catch (error) {
         console.error('Error executing queries:', error);
