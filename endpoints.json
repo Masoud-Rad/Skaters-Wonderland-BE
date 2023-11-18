@@ -3,8 +3,25 @@
       "description": "serves up a json representation of all the available endpoints of the api"
     },
   
-  "GET /api/users": {
+   "GET /api/users": {
       "description": "serves an array of all users",
+      "queries": [],
+      "exampleResponse": {
+        "users": [
+          {
+            "username": "tickle122",
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "password": "hashed_password",
+            "avatar_url": "data:image/jpeg;base64,/9j/Wuf7aUqx",
+            "location": "Los Angeles, CA"
+          }
+        ]
+      }
+    },
+
+    "GET /api/users/?username": {
+      "description": "serves a specific user",
       "queries": ["username"],
       "exampleResponse": {
         "users": [
@@ -50,7 +67,7 @@
     },
   
     "Get /api/lands/:land_id": {
-      "description": "serves an array of an land by ID ",
+      "description": "serves a land by ID ",
       "parametr": ["land_id"],
       "exampleResponse": {
         "Land": {
@@ -77,8 +94,8 @@
     },
   
     "Get /api/lands/:land_id/comments": {
-      "description": "serves an array of a specefic article's comments ",
-      "parametr": ["article_id"],
+      "description": "serves an array of a specefic land's comments ",
+      "parametr": ["land_id"],
       "exampleResponse": {
         "comments": [
           {
@@ -91,12 +108,180 @@
         ]
       }
     },
+
+    "Get /api/businesses":{
+      "description": "serves an array of all businesses",
+      "queries": [],
+      "exampleResponse": {
+        "businesses": [
+          {
+            "business_id": 443687,
+            "businessname": "Welcome Skate Store",
+            "city": "Leeds",
+            "country": "England",
+            "created_at": "2023-08-10T12:00:00Z",
+            "business_img_url": "https://lh5.googleusercontent.com/p/AF1QipMklaYHqep6XvI34GVqzrXchhFNE4X5Xh3Xe9ha=w260-h175-n-k-no"
+        }
+        ]
+      }
+    },
+
+    "Get /api/businesses/:business_id":{
+      "description": "serves an businesse by ID",
+      "parametr": ["business_id"],
+      "queries": [],
+      "exampleResponse": {
+        "businesse": {
+            "business_id": 443687,
+            "businessname": "Welcome Skate Store",
+            "city": "Leeds",
+            "country": "England",
+            "postcode": "LS1 6LQ",
+            "description": "One of the most renowned skateboard stores in the UK, situated in the independent retail hub Thornton’s Arcade, owned and run by skateboarders.",
+            "created_at": "2023-08-10T12:00:00Z",
+            "website": "https://welcomeleeds.com",
+            "contact_number": "094853459",
+            "business_img_url": "https://lh5.googleusercontent.com/p/AF1QipMklaYHqep6XvI34GVqzrXchhFNE4X5Xh3Xe9ha=w260-h175-n-k-no",
+            "username": "tickle122"
+        }
+      }
+    },
+
+    "Get /api/businesses/:business_id/businessereviews":{
+      "description": "serves an array of a specefic business's reviews ",
+      "parametr": ["business_id"],
+      "exampleResponse": {
+        "reviews": [
+          {
+            "review_id": 76896986,
+            "body": "I like it because it is trustable",
+            "username": "Mas",
+            "business_id": 18,
+            "created_at": 1590103140000,
+            "rating": 7
+          }
+        ]
+      }
+    },
+
+    "Get /api/personaltrainers":{
+      "description": "serves an array of all personaltrainers",
+      "queries": [],
+      "exampleResponse": {
+        "personaltrainers": [
+          {
+            "pt_id": 870709,
+            "username": "user44",
+            "ptname": "John Doe",
+            "city": "London",
+            "country": "England",
+            "avatar_url": "data:image/jpeg;base64,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"
+        }
+        ]
+      }
+    },
+
+    "Get /api/personaltrainers/:pt_id":{
+      "description": "serves a personaltrainer by id",
+      "parametr": ["pt_id"],
+      "queries": [],
+      "exampleResponse": {
+        "personaltrainer":{
+            "pt_id": 870709,
+            "username": "user44",
+            "ptname": "John Doe",
+            "city": "London",
+            "country": "England",
+            "postcode":  "xxx xxx",
+            "description": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+            "created_at": "2023-08-10T12:00:00Z",
+            "website": "www.xxx.com",
+            "email": "john@example.com",
+            "instagram": "instauser",
+            "facebook": "faceuser",
+            "contact_number": "001111",
+            "avatar_url": "data:image/jpeg;base64,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"
+        }
+      }
+    },
+
+    "Get /api/personaltrainers/:pt_id/ptreviews":{
+      "description": "serves an array of a specefic pt's reviews ",
+      "parametr": ["pt_id"],
+      "exampleResponse": {
+        "reviews": [
+          {
+            "review_id": 76896986,
+            "body": "I like it because it is trustable",
+            "username": "Mas",
+            "pt_id": 18,
+            "created_at": 1590103140000
+          }
+        ]
+      }
+    },
+
+    "Get /api/sales":{
+      "description": "serves an array of all Items for sale",
+      "queries": [],
+      "exampleResponse": {
+        "SaleItems": [
+          {
+            "itemname": "Trendy Roller Skates",
+            "price": "69",
+            "city": "New York",
+            "created_at": "2023-08-10T12:00:00Z",
+            "gear_avatar_url": "https://img.kwcdn.com/product/1e19d463b64/c0ce0e38-6fd3-40af-a34d-520d7189cbb6_800x800.jpeg?imageView2/2/w/800/q/70/format/webp"
+        }
+        ]
+      }
+    },
+
+    "Get /api/sales/item_id":{
+      "description": "serves an item for sale",
+      "parametr": ["item_id"],
+      "exampleResponse": {
+        "saleItem": [
+          {
+            "username": "grumpy19",
+            "itemname": "Trendy Roller Skates",
+            "description": "Boys And Girls Four-Wheel Roller Skates Trendy Roller Skates With Graffiti Print For Spring And Autumn",
+            "price": "69",
+            "city": "New York",
+            "country": "USA",
+            "created_at": "2023-08-10T12:00:00Z",
+            "email": "john@example.com",
+            "facebook": "faceuser",
+            "contact_number": "001111",
+            "availability": "available",
+            "gear_avatar_url": "https://img.kwcdn.com/product/1e19d463b64/c0ce0e38-6fd3-40af-a34d-520d7189cbb6_800x800.jpeg?imageView2/2/w/800/q/70/format/webp"
+        }
+        ]
+      }
+    },
+
+    
+
+    "Post /api/user": {
+      "description": "Post a user ",
+      "parametr": [],
+      "exampleResponse": {
+        "addedUser":{
+          "username": "tickle122",
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "password": "hashed_password",
+            "avatar_url": "data:image/jpeg;base64,/9j/Wuf7aUqx",
+            "location": "Los Angeles, CA"
+          }
+    }
+    },
   
     "Post /api/land": {
-      "description": "Post an comment for specific article ",
-      "parametr": ["article_id"],
+      "description": "Post a land ",
+      "parametr": [],
       "exampleResponse": {
-        "land":   {
+        "addedLand":{
           "land_id": 87612457,
           "landname": "Heaton Park",
           "city": "Manchester",
@@ -117,26 +302,99 @@
           "username": "cooljmessy"
           }
     }
-  }, 
+    }, 
+
     "Post /api/lands/:land_id/comments": {
-      "description": "Post an comment for specific article ",
-      "parametr": ["article_id"],
+      "description": "Post an comment for specific land ",
+      "parametr": ["land_id"],
       "exampleResponse": {
-        "comment":   {
+        "addedComment":{
           "body": "I like it because it is smooth and easy for amateur, nice view",
-         "username": "Mas",
+          "username": "Mas",
           "land_id": 18,
           "created_at": 1590103140000
         }
       }
-  
+    },
+
+    "Post /api/personaltrainer": {
+      "description": "Post a personaltrainer ",
+      "parametr": [],
+      "exampleResponse": {
+        "addedPersonaltrainer":{
+          "pt_id": 870709,
+          "username": "user44",
+          "ptname": "John Doe",
+          "city": "London",
+          "country": "England",
+          "postcode":  "xxx xxx",
+          "description": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+          "created_at": "2023-08-10T12:00:00Z",
+          "website": "www.xxx.com",
+          "email": "john@example.com",
+          "instagram": "instauser",
+          "facebook": "faceuser",
+          "contact_number": "001111",
+          "avatar_url": "data:image/jpeg;base64,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"
+      }
+    }
+    },
+
+    "Post /api/personaltrainers/:pt_id/ptreview": {
+      "description": "Post a pt_id for specific PT ",
+      "parametr": ["pt_id"],
+      "exampleResponse": {
+        "addedPT_id":{
+          "body": "I like it because it is smooth and easy for amateur, nice view",
+          "username": "Mas",
+          "pt_id": 18,
+          "created_at": 1590103140000
+        }
+      }
+    },
+
+    "Post /api/saleItem": {
+      "description": "Post a item for sale ",
+      "parametr": [],
+      "exampleResponse": {
+        "addedItem":{
+          "username": "grumpy19",
+          "itemname": "Trendy Roller Skates",
+          "description": "Boys And Girls Four-Wheel Roller Skates Trendy Roller Skates With Graffiti Print For Spring And Autumn",
+          "price": "69",
+          "city": "New York",
+          "country": "USA",
+          "created_at": "2023-08-10T12:00:00Z",
+          "email": "john@example.com",
+          "facebook": "faceuser",
+          "contact_number": "001111",
+          "availability": "available",
+          "gear_avatar_url": "https://img.kwcdn.com/product/1e19d463b64/c0ce0e38-6fd3-40af-a34d-520d7189cbb6_800x800.jpeg?imageView2/2/w/800/q/70/format/webp"
+      }
+     }
+    },
+
+    "Patch /api/users/?username": {
+      "description": "Patch a specific user ",
+      "parametr": [],
+      "queries": ["username"],
+      "exampleResponse": {
+        "editedUser": {
+            "username": "tickle122",
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "password": "hashed_password",
+            "avatar_url": "data:image/jpeg;base64,/9j/Wuf7aUqx",
+            "location": "Los Angeles, CA"
+          }
+        }
     },
   
     "Patch /api/lands/:land_id": {
       "description": "Patch specific land ",
       "parametr": ["land_id"],
       "exampleResponse": {
-        "land": {
+        "editedLand": {
           "land_id": 87612457,
           "landname": "Heaton Park",
           "city": "Manchester",
@@ -158,8 +416,83 @@
           }
         }
     },
+
+    "Patch /api/businesses/:business_id": {
+      "description": "Patch a specific business ",
+      "parametr": ["business_id"],
+      "queries": [],
+      "exampleResponse": {
+        "editedBusiness": {
+          "business_id": 443687,
+          "businessname": "Welcome Skate Store",
+          "city": "Leeds",
+          "country": "England",
+          "postcode": "LS1 6LQ",
+          "description": "One of the most renowned skateboard stores in the UK, situated in the independent retail hub Thornton’s Arcade, owned and run by skateboarders.",
+          "created_at": "2023-08-10T12:00:00Z",
+          "website": "https://welcomeleeds.com",
+          "contact_number": "094853459",
+          "business_img_url": "https://lh5.googleusercontent.com/p/AF1QipMklaYHqep6XvI34GVqzrXchhFNE4X5Xh3Xe9ha=w260-h175-n-k-no",
+          "username": "tickle122"
+      }
+      }
+    },
+
+    "Patch /api/personaltrainers/:pt_id": {
+      "description": "Patch a specific PT ",
+      "parametr": ["pt_id"],
+      "queries": [],
+      "exampleResponse": {
+        "editedPT": {
+          "pt_id": 870709,
+          "username": "user44",
+          "ptname": "John Doe",
+          "city": "London",
+          "country": "England",
+          "postcode":  "xxx xxx",
+          "description": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+          "created_at": "2023-08-10T12:00:00Z",
+          "website": "www.xxx.com",
+          "email": "john@example.com",
+          "instagram": "instauser",
+          "facebook": "faceuser",
+          "contact_number": "001111",
+          "avatar_url": "data:image/jpeg;base64,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"
+       }
+      }
+    },
+
+    "Patch /api/sales/item_id": {
+      "description": "Patch a specific Item for sale ",
+      "parametr": ["item_id"],
+      "queries": [],
+      "exampleResponse": {
+        "editedItem":{
+          "username": "grumpy19",
+          "itemname": "Trendy Roller Skates",
+          "description": "Boys And Girls Four-Wheel Roller Skates Trendy Roller Skates With Graffiti Print For Spring And Autumn",
+          "price": "69",
+          "city": "New York",
+          "country": "USA",
+          "created_at": "2023-08-10T12:00:00Z",
+          "email": "john@example.com",
+          "facebook": "faceuser",
+          "contact_number": "001111",
+          "availability": "available",
+          "gear_avatar_url": "https://img.kwcdn.com/product/1e19d463b64/c0ce0e38-6fd3-40af-a34d-520d7189cbb6_800x800.jpeg?imageView2/2/w/800/q/70/format/webp"
+       }
+      }
+    },
+
+
   
     "Delete /api/comments/:comment_id":{},
-    "Delete land. /api/lands/:land_id":{}   
+    "Delete /api/lands/:land_id":{},   
+    "Delete /api/businesses/:business_id":{},
+    "Delete /api/businessereviews/:review_id":{}, 
+    "Delete /api/personaltrainers/:pt_id":{},
+    "Delete /api/ptreviews/:review_id":{},
+    "Delete /api/sales/:item_id":{}
+
   
   }

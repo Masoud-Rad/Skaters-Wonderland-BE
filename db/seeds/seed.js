@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const format = require('pg-format');
 const db = require('../connection');
 const { formatComments } = require('./utils');
-async function seed(messagesData, salesData, ptsreviewData, personaltrainersData, businessesreviewData, businessesData, landData, commentData, userData) {
+async function seed(salesData, ptsreviewData, personaltrainersData, businessesreviewData, businessesData, landData, commentData, userData) {
     try {
         await db.query(`DROP TABLE IF EXISTS comments;`);
         await db.query(`DROP TABLE IF EXISTS lands;`);
@@ -125,16 +125,8 @@ async function seed(messagesData, salesData, ptsreviewData, personaltrainersData
                 email VARCHAR,
                 facebook VARCHAR,
                 contact_number VARCHAR
+                availability VARCHAR,
                 gear_avatar_url VARCHAR  DEFAULT 'http://rlv.zcache.com/az_sunset_series_by_unknown_skateboards-r339c69a8681444aeb08080977bf89165_xw0k0_8byvr_324.jpg'
-            );
-        `);
-        await db.query(`
-            CREATE TABLE messages (
-                message_id SERIAL PRIMARY KEY,
-                sender_username VARCHAR REFERENCES users(username) NOT NULL,
-                receiver_username VARCHAR REFERENCES users(username) NOT NULL,
-                body VARCHAR NOT NULL,
-                created_at TIMESTAMP DEFAULT NOW()
             );
         `);
         const insertUsersQueryStr = format(`INSERT INTO users (username, name, avatar_url, email, password, location) VALUES %L;`, userData.map(({ username, name, avatar_url, email, password, location }) => [username, name, avatar_url, email, password, location]));
@@ -152,10 +144,8 @@ async function seed(messagesData, salesData, ptsreviewData, personaltrainersData
         await db.query(insertPersonaltrainersQueryStr);
         const insertPtsreviewQueryStr = format(`INSERT INTO ptsreview (username, pt_id, body, rating, created_at) VALUES %L;`, ptsreviewData.map(({ username, pt_id, body, rating, created_at }) => [username, pt_id, body, rating, created_at]));
         await db.query(insertPtsreviewQueryStr);
-        const insertSalesQueryStr = format(`INSERT INTO sales(username, itemname , description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url) VALUES %L;`, salesData.map(({ username, itemname, description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url }) => [username, itemname, description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url]));
+        const insertSalesQueryStr = format(`INSERT INTO sales(username, itemname , description, price, city, country, created_at, email, facebook, contact_number,availability ,gear_avatar_url) VALUES %L;`, salesData.map(({ username, itemname, description, price, city, country, created_at, email, facebook, contact_number, availability, gear_avatar_url }) => [username, itemname, description, price, city, country, created_at, email, facebook, contact_number, availability, gear_avatar_url]));
         await db.query(insertSalesQueryStr);
-        const insertMessagesQueryStr = format(`INSERT INTO messages(message_id, sender_username, receiver_username, body, created_at) VALUES %L`, messagesData.map(({ message_id, sender_username, receiver_username, body, created_at }) => [message_id, sender_username, receiver_username, body, created_at]));
-        await db.query(insertMessagesQueryStr);
     }
     catch (error) {
         console.error('Error executing queries:', error);

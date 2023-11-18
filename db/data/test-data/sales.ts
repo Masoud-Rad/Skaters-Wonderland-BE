@@ -10,6 +10,7 @@
         email: "john@example.com",
         facebook: "faceuser",
         contact_number: "001111",
+        availability: "SOLD",
         gear_avatar_url: "https://img.kwcdn.com/product/1e19d463b64/c0ce0e38-6fd3-40af-a34d-520d7189cbb6_800x800.jpeg?imageView2/2/w/800/q/70/format/webp"
     },
     {
@@ -23,6 +24,7 @@
         email: "john@example.com",
         facebook: "faceuser",
         contact_number: "004478111",
+        availability: "available",
         gear_avatar_url: "https://cdn.erowz.com/images/ebay/thumbs/images/g/lZ0AAOSwzyZlHZr5/s-l225.jpg"
     }
 ]

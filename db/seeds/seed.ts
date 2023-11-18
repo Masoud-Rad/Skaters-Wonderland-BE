@@ -40,6 +40,7 @@ interface Comment{
     username: string;
     created_at: Date;
 }
+
 interface FormatedComment{
     body: string;
     land_id: number;
@@ -101,18 +102,13 @@ interface Sale{
     email: string;
     facebook: string;
     contact_number: string;
+    availability: string;
     gear_avatar_url: string;
 }
 
-interface Message{
-    message_id: string;
-    sender_username: string;
-    receiver_username: string;
-    body: string;
-    created_at: Date;
-}
 
-async function seed(messagesData: Message[], salesData: Sale[], ptsreviewData: Ptsreview[], personaltrainersData: Personaltrainer[], businessesreviewData: Businessesreview[], businessesData: Business[], landData: Land[], commentData: Comment[], userData: User[]) {
+
+async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrainersData: Personaltrainer[], businessesreviewData: Businessesreview[], businessesData: Business[], landData: Land[], commentData: Comment[], userData: User[]) {
     try {
         
         await db.query(`DROP TABLE IF EXISTS comments;`);
@@ -235,18 +231,11 @@ async function seed(messagesData: Message[], salesData: Sale[], ptsreviewData: P
                 email VARCHAR,
                 facebook VARCHAR,
                 contact_number VARCHAR
+                availability VARCHAR,
                 gear_avatar_url VARCHAR  DEFAULT 'http://rlv.zcache.com/az_sunset_series_by_unknown_skateboards-r339c69a8681444aeb08080977bf89165_xw0k0_8byvr_324.jpg'
             );
         `)
-        await db.query (`
-            CREATE TABLE messages (
-                message_id SERIAL PRIMARY KEY,
-                sender_username VARCHAR REFERENCES users(username) NOT NULL,
-                receiver_username VARCHAR REFERENCES users(username) NOT NULL,
-                body VARCHAR NOT NULL,
-                created_at TIMESTAMP DEFAULT NOW()
-            );
-        `)
+       
         const insertUsersQueryStr = format(`INSERT INTO users (username, name, avatar_url, email, password, location) VALUES %L;`, userData.map(({ username, name, avatar_url, email, password, location }) => [username, name, avatar_url, email, password, location]));
         await db.query(insertUsersQueryStr);
         const insertLandsQueryStr = format(`INSERT INTO lands (landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username }) => [landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username]));
@@ -262,10 +251,8 @@ async function seed(messagesData: Message[], salesData: Sale[], ptsreviewData: P
         await db.query(insertPersonaltrainersQueryStr);
         const insertPtsreviewQueryStr = format (`INSERT INTO ptsreview (username, pt_id, body, rating, created_at) VALUES %L;`, ptsreviewData.map(({username, pt_id, body, rating, created_at})=>[username, pt_id, body, rating, created_at]))
         await db.query(insertPtsreviewQueryStr);
-        const insertSalesQueryStr = format (`INSERT INTO sales(username, itemname , description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url) VALUES %L;`, salesData.map(({username, itemname , description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url})=>[username, itemname , description, price, city, country, created_at, email, facebook, contact_number, gear_avatar_url]));
-        await db.query(insertSalesQueryStr);
-        const insertMessagesQueryStr = format (`INSERT INTO messages(message_id, sender_username, receiver_username, body, created_at) VALUES %L`, messagesData.map(({message_id, sender_username, receiver_username, body, created_at})=>[message_id, sender_username, receiver_username, body, created_at]));
-        await db.query(insertMessagesQueryStr)
+        const insertSalesQueryStr = format (`INSERT INTO sales(username, itemname , description, price, city, country, created_at, email, facebook, contact_number,availability ,gear_avatar_url) VALUES %L;`, salesData.map(({username, itemname , description, price, city, country, created_at, email, facebook, contact_number, availability, gear_avatar_url})=>[username, itemname , description, price, city, country, created_at, email, facebook, contact_number, availability, gear_avatar_url]));
+        await db.query(insertSalesQueryStr);     
     }
     catch (error) {
         console.error('Error executing queries:', error);

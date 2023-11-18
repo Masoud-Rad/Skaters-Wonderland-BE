@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.messagesData = require('./messages.js');
 exports.salesData = require('./sales.js');
 exports.ptsreviewData = require('./ptsreview.js');
 exports.personaltrainerData = require('./personaltrainers.js');
