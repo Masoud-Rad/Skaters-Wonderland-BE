@@ -5,7 +5,7 @@ const seed = require('../db/seeds/seed')
 const devData = require('../db/data/test-data/index')
 
 
-beforeEach(() => seed(devData.landData, devData.commentData, devData.userData))
+beforeEach(() => seed(devData.salesData, devData.ptsreviewData, devData.personaltrainerData, devData.businessesreviewData, devData.businessesData, devData.landData, devData.commentData, devData.userData))
 afterAll(() => connection.end())
 
 //-------------------------Tyoes---------------------------------

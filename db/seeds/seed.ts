@@ -110,7 +110,11 @@ interface Sale{
 
 async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrainersData: Personaltrainer[], businessesreviewData: Businessesreview[], businessesData: Business[], landData: Land[], commentData: Comment[], userData: User[]) {
     try {
-        
+        await db.query(`DROP TABLE IF EXISTS sales;`);
+        await db.query(`DROP TABLE IF EXISTS ptsreview;`);
+        await db.query(`DROP TABLE IF EXISTS personaltrainers;`);
+        await db.query(`DROP TABLE IF EXISTS businessesreview;`);
+        await db.query(`DROP TABLE IF EXISTS businesses;`);
         await db.query(`DROP TABLE IF EXISTS comments;`);
         await db.query(`DROP TABLE IF EXISTS lands;`);
         await db.query(`DROP TABLE IF EXISTS users;`);
@@ -191,22 +195,22 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
             );
         `)
         await db.query(`
-            CREATE TABLE personaltrainers (
-                pt_id SERIAL PRIMARY KEY, 
-                username VARCHAR REFERENCES users(username) NOT NULL,
-                ptname VARCHAR REFERENCES users(name) NOT NULL,
-                city VARCHAR NOT NULL,
-                country VARCHAR NOT NULL,
-                postcode  VARCHAR NOT NULL,
-                description VARCHAR NOT NULL,
-                created_at TIMESTAMP DEFAULT NOW(),
-                website VARCHAR,
-                email VARCHAR,
-                instagram VARCHAR,
-                facebook VARCHAR,
-                contact_number VARCHAR,
-                avatar_url VARCHAR REFERENCES users(avatar_url),
-            );
+                CREATE TABLE personaltrainers(
+                    pt_id SERIAL PRIMARY KEY,
+                    username VARCHAR REFERENCES users(username) NOT NULL,
+                    ptname VARCHAR NOT NULL,
+                    city VARCHAR NOT NULL,
+                    country VARCHAR NOT NULL,
+                    postcode VARCHAR NOT NULL,
+                    description VARCHAR NOT NULL,
+                    created_at TIMESTAMP DEFAULT NOW(),
+                    website VARCHAR,
+                    email VARCHAR NOT NULL,
+                    instagram VARCHAR,
+                    facebook VARCHAR,
+                    contact_number VARCHAR,
+                    avatar_url VARCHAR DEFAULT 'https://vectorified.com/images/unknown-avatar-icon-7.jpg'
+                );
         `)
         await db.query (`
             CREATE TABLE ptsreview (
@@ -230,7 +234,7 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
                 created_at TIMESTAMP DEFAULT NOW(),
                 email VARCHAR,
                 facebook VARCHAR,
-                contact_number VARCHAR
+                contact_number VARCHAR,
                 availability VARCHAR,
                 gear_avatar_url VARCHAR  DEFAULT 'http://rlv.zcache.com/az_sunset_series_by_unknown_skateboards-r339c69a8681444aeb08080977bf89165_xw0k0_8byvr_324.jpg'
             );
@@ -251,7 +255,7 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
         await db.query(insertPersonaltrainersQueryStr);
         const insertPtsreviewQueryStr = format (`INSERT INTO ptsreview (username, pt_id, body, rating, created_at) VALUES %L;`, ptsreviewData.map(({username, pt_id, body, rating, created_at})=>[username, pt_id, body, rating, created_at]))
         await db.query(insertPtsreviewQueryStr);
-        const insertSalesQueryStr = format (`INSERT INTO sales(username, itemname , description, price, city, country, created_at, email, facebook, contact_number,availability ,gear_avatar_url) VALUES %L;`, salesData.map(({username, itemname , description, price, city, country, created_at, email, facebook, contact_number, availability, gear_avatar_url})=>[username, itemname , description, price, city, country, created_at, email, facebook, contact_number, availability, gear_avatar_url]));
+        const insertSalesQueryStr = format (`INSERT INTO sales (username, itemname, description, price, city, country, created_at, email, facebook, contact_number, availability, gear_avatar_url) VALUES %L;`, salesData.map(({username, itemname, description, price, city, country, created_at, email, facebook, contact_number, availability, gear_avatar_url})=>[username, itemname, description, price, city, country, created_at, email, facebook, contact_number, availability, gear_avatar_url]))
         await db.query(insertSalesQueryStr);     
     }
     catch (error) {

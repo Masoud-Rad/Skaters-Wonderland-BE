@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-[
+module.exports = [
     {
         username: "grumpy19",
         itemname: 'Trendy Roller Skates',
@@ -30,4 +28,3 @@ Object.defineProperty(exports, "__esModule", { value: true });
         gear_avatar_url: "https://cdn.erowz.com/images/ebay/thumbs/images/g/lZ0AAOSwzyZlHZr5/s-l225.jpg"
     }
 ];
-//# sourceMappingURL=sales.js.map

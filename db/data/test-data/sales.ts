@@ -1,4 +1,4 @@
-[
+module.exports = [
     {
         username: "grumpy19",
         itemname: 'Trendy Roller Skates',
