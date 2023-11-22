@@ -58,6 +58,7 @@ interface Business{
     created_at: Date;
     website: string;
     business_img_url: string;
+    contact_number: string;
 }
 
 interface Businessesreview{
@@ -247,11 +248,11 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
         const formatedCommentsData = formatComments(commentData, result.rows);
         const insertCommentsQueryStr = format(`INSERT INTO comments (body, land_id, username, created_at) VALUES %L;`, formatedCommentsData.map((formatedComment: FormatedComment) => [formatedComment.body, formatedComment.land_id, formatedComment.username, formatedComment.created_at]));
         await db.query(insertCommentsQueryStr);
-        const insertBusinessesQueryStr = format (`INSERT INTO businesses (username, businessname, city, country, postcode, description, created_at, website, business_img_url) VALUES %L;`, businessesData.map(({username, businessname, city, country, postcode, description, created_at, website, business_img_url})=> [username, businessname, city, country, postcode, description, created_at, website, business_img_url]));
+        const insertBusinessesQueryStr = format (`INSERT INTO businesses (username, businessname, city, country, postcode, description, created_at, website, business_img_url, contact_number) VALUES %L;`, businessesData.map(({username, businessname, city, country, postcode, description, created_at, website, business_img_url, contact_number})=> [username, businessname, city, country, postcode, description, created_at, website, business_img_url, contact_number]));
         await db.query(insertBusinessesQueryStr);
         const insertBusinessesreviewQueryStr = format(`INSERT INTO businessesreview (username, business_id, body, rating, created_at) VALUES %L;`, businessesreviewData.map(({username, business_id, body, rating, created_at})=>[username, business_id, body, rating, created_at]))
         await db.query(insertBusinessesreviewQueryStr);
-        const insertPersonaltrainersQueryStr = format (`INSERT INTO personaltrainers (username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url) VALUES %L;`, personaltrainersData.map(({username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url})=>[username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url]) )
+        const insertPersonaltrainersQueryStr = format (`INSERT INTO personaltrainers (username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number, avatar_url) VALUES %L;`, personaltrainersData.map(({username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url})=>[username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url]) )
         await db.query(insertPersonaltrainersQueryStr);
         const insertPtsreviewQueryStr = format (`INSERT INTO ptsreview (username, pt_id, body, rating, created_at) VALUES %L;`, ptsreviewData.map(({username, pt_id, body, rating, created_at})=>[username, pt_id, body, rating, created_at]))
         await db.query(insertPtsreviewQueryStr);

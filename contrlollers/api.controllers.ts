@@ -1,12 +1,30 @@
 import { Request, Response, NextFunction } from 'express';
-const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
-const { selectUsers }= require ('../models/users.models')
-const {selectComments, addComment, delComment}= require('../models/comment.models')
+
 const {selectEndpoints} = require ('../models/api.models')
+const { selectUsers }= require ('../models/users.models')
+const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
+const {selectComments, addComment, delComment}= require('../models/comments.models')
+const {selectBusinesses} = require ('../models/businesses.models')
 
 
 
 //-------------------------------Types----------------------------
+
+
+interface EndpointData {
+  [key: string]: {
+      description: string;
+      queries?: string[];
+      parametr?: string[];
+      exampleResponse: {
+          users?: UsersSample[];
+          Lands?: LandSample[];
+          Land?: LandSample;
+          comments?: CommentSample[];
+          comment?: CommentSample;
+      };
+  };
+}
 
 //**** usersType
 interface UsersSample {
@@ -51,19 +69,18 @@ interface CommentSample{
   created_at: Date;
 }
 
-interface EndpointData {
-  [key: string]: {
-      description: string;
-      queries?: string[];
-      parametr?: string[];
-      exampleResponse: {
-          users?: UsersSample[];
-          Lands?: LandSample[];
-          Land?: LandSample;
-          comments?: CommentSample[];
-          comment?: CommentSample;
-      };
-  };
+//****  businessesType
+interface BusinessSample {
+  business_id: number;
+  username: string;
+  businessname: string;
+  city: string;
+  country: string;
+  postcode: string;
+  description: string;
+  created_at: Date;
+  website: string;
+  business_img_url: string;
 }
 
 //------------------------------Api-------------------------------
@@ -194,6 +211,17 @@ exports.deleteComment= (req : Request , res : Response, next : NextFunction)=>{
   })
 }
 
+//------------------------------Businesses------------------------------
+
+exports.getBusinesses = (_req: Request, res: Response, next: NextFunction)=>{
+
+  selectBusinesses().then((businesses: BusinessSample[])=>{
+    res.status(200).send({businesses})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
 
 
 

@@ -111,9 +111,9 @@ function seed(salesData, ptsreviewData, personaltrainersData, businessesreviewDa
                     return [4 /*yield*/, db.query(insertCommentsQueryStr)];
                 case 19:
                     _a.sent();
-                    insertBusinessesQueryStr = format("INSERT INTO businesses (username, businessname, city, country, postcode, description, created_at, website, business_img_url) VALUES %L;", businessesData.map(function (_a) {
-                        var username = _a.username, businessname = _a.businessname, city = _a.city, country = _a.country, postcode = _a.postcode, description = _a.description, created_at = _a.created_at, website = _a.website, business_img_url = _a.business_img_url;
-                        return [username, businessname, city, country, postcode, description, created_at, website, business_img_url];
+                    insertBusinessesQueryStr = format("INSERT INTO businesses (username, businessname, city, country, postcode, description, created_at, website, business_img_url, contact_number) VALUES %L;", businessesData.map(function (_a) {
+                        var username = _a.username, businessname = _a.businessname, city = _a.city, country = _a.country, postcode = _a.postcode, description = _a.description, created_at = _a.created_at, website = _a.website, business_img_url = _a.business_img_url, contact_number = _a.contact_number;
+                        return [username, businessname, city, country, postcode, description, created_at, website, business_img_url, contact_number];
                     }));
                     return [4 /*yield*/, db.query(insertBusinessesQueryStr)];
                 case 20:
@@ -125,7 +125,7 @@ function seed(salesData, ptsreviewData, personaltrainersData, businessesreviewDa
                     return [4 /*yield*/, db.query(insertBusinessesreviewQueryStr)];
                 case 21:
                     _a.sent();
-                    insertPersonaltrainersQueryStr = format("INSERT INTO personaltrainers (username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number , avatar_url) VALUES %L;", personaltrainersData.map(function (_a) {
+                    insertPersonaltrainersQueryStr = format("INSERT INTO personaltrainers (username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number, avatar_url) VALUES %L;", personaltrainersData.map(function (_a) {
                         var username = _a.username, ptname = _a.ptname, city = _a.city, country = _a.country, postcode = _a.postcode, description = _a.description, created_at = _a.created_at, website = _a.website, email = _a.email, instagram = _a.instagram, facebook = _a.facebook, contact_number = _a.contact_number, avatar_url = _a.avatar_url;
                         return [username, ptname, city, country, postcode, description, created_at, website, email, instagram, facebook, contact_number, avatar_url];
                     }));
