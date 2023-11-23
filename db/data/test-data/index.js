@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.salesData = require('./sales.js');
 exports.ptsreviewData = require('./ptsreview.js');
 exports.personaltrainerData = require('./personaltrainers.js');
@@ -6,3 +8,4 @@ exports.businessesData = require('./businesses.js');
 exports.landData = require('./lands.js');
 exports.commentData = require('./comments.js');
 exports.userData = require('./users.js');
+//# sourceMappingURL=index.js.map

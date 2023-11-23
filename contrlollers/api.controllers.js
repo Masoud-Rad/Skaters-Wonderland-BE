@@ -1,117 +1,123 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var selectEndpoints = require('../models/api.models').selectEndpoints;
-var selectUsers = require('../models/users.models').selectUsers;
-var _a = require('../models/lands.models'), selectLands = _a.selectLands, selectSingleLand = _a.selectSingleLand, addLand = _a.addLand, updateLand = _a.updateLand, delLand = _a.delLand;
-var _b = require('../models/comments.models'), selectComments = _b.selectComments, addComment = _b.addComment, delComment = _b.delComment;
-var selectBusinesses = require('../models/businesses.models').selectBusinesses;
-//------------------------------Api-------------------------------
-exports.getEndpoints = function (_req, res, next) {
-    selectEndpoints().then(function (endpoints) {
-        res.status(200).send({ endpoints: endpoints });
+const { selectEndpoints } = require('../models/api.models');
+const { selectUsers } = require('../models/users.models');
+const { selectLands, selectSingleLand, addLand, updateLand, delLand } = require('../models/lands.models');
+const { selectComments, addComment, delComment } = require('../models/comments.models');
+const { selectBusinesses, selectSingleBusiness } = require('../models/businesses.models');
+exports.getEndpoints = (_req, res, next) => {
+    selectEndpoints().then((endpoints) => {
+        res.status(200).send({ endpoints });
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-//------------------------------Users-----------------------------
-exports.getUsers = function (req, res, next) {
-    var username = req.query.username;
-    selectUsers(username).then(function (users) {
-        res.status(200).send({ users: users });
+exports.getUsers = (req, res, next) => {
+    const { username } = req.query;
+    selectUsers(username).then((users) => {
+        res.status(200).send({ users });
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-//------------------------------Lands------------------------------
-exports.getLands = function (req, res, next) {
-    var _a = req.query, city = _a.city, has_rink = _a.has_rink, cost = _a.cost, sort_by = _a.sort_by, order_by = _a.order_by;
+exports.getLands = (req, res, next) => {
+    const { city, has_rink, cost, sort_by, order_by } = req.query;
     selectLands(city, has_rink, cost, sort_by, order_by)
-        .then(function (lands) {
+        .then((lands) => {
         res.status(200).send({ "lands": lands });
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-exports.getLandById = function (req, res, next) {
-    var landId = req.params.land_id;
+exports.getLandById = (req, res, next) => {
+    const landId = req.params.land_id;
     selectSingleLand(landId)
-        .then(function (land) {
-        res.status(200).send({ land: land });
+        .then((land) => {
+        res.status(200).send({ land });
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-exports.postLand = function (req, res, next) {
-    var newLand = req.body;
+exports.postLand = (req, res, next) => {
+    const newLand = req.body;
     addLand(newLand)
-        .then(function (addedLand) {
-        res.status(201).send({ addedLand: addedLand });
+        .then((addedLand) => {
+        res.status(201).send({ addedLand });
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-exports.patchLand = function (req, res, next) {
-    var landId = req.params.land_id;
-    var _a = req.body, votes_update = _a.votes_update, safety_rating_update = _a.safety_rating_update, suitability_rating_update = _a.suitability_rating_update;
+exports.patchLand = (req, res, next) => {
+    const landId = req.params.land_id;
+    const { votes_update, safety_rating_update, suitability_rating_update } = req.body;
     updateLand(landId, votes_update, safety_rating_update, suitability_rating_update)
-        .then(function (updatedLand) {
-        res.status(202).send({ updatedLand: updatedLand });
+        .then((updatedLand) => {
+        res.status(202).send({ updatedLand });
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-exports.deleteLand = function (req, res, next) {
-    var landId = req.params.land_id;
-    delLand(landId).then(function () {
+exports.deleteLand = (req, res, next) => {
+    const landId = req.params.land_id;
+    delLand(landId).then(() => {
         res.status(204).send();
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-//------------------------------Comments------------------------------
-exports.getComments = function (req, res, next) {
-    var landId = req.params.land_id;
+exports.getComments = (req, res, next) => {
+    const landId = req.params.land_id;
     selectComments(landId)
-        .then(function (comments) {
-        res.status(200).send({ comments: comments });
+        .then((comments) => {
+        res.status(200).send({ comments });
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-exports.postComment = function (req, res, next) {
-    var newComment = req.body;
-    var landId = req.params.land_id;
+exports.postComment = (req, res, next) => {
+    const newComment = req.body;
+    const landId = req.params.land_id;
     addComment(landId, newComment)
-        .then(function (addedComment) {
-        res.status(201).send({ addedComment: addedComment });
+        .then((addedComment) => {
+        res.status(201).send({ addedComment });
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-exports.deleteComment = function (req, res, next) {
-    var commentId = req.params.comment_id;
-    delComment(commentId).then(function () {
+exports.deleteComment = (req, res, next) => {
+    const commentId = req.params.comment_id;
+    delComment(commentId).then(() => {
         res.status(204).send();
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
-//------------------------------Businesses------------------------------
-exports.getBusinesses = function (_req, res, next) {
-    selectBusinesses().then(function (businesses) {
-        res.status(200).send({ businesses: businesses });
+exports.getBusinesses = (_req, res, next) => {
+    selectBusinesses().then((businesses) => {
+        res.status(200).send({ businesses });
     })
-        .catch(function (err) {
+        .catch((err) => {
         next(err);
     });
 };
+exports.getBusinessById = (req, res, next) => {
+    const businessId = req.params.business_id;
+    selectSingleBusiness(businessId)
+        .then((business) => {
+        res.status(200).send({ business });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+//# sourceMappingURL=api.controllers.js.map

@@ -4,7 +4,7 @@ const {selectEndpoints} = require ('../models/api.models')
 const { selectUsers }= require ('../models/users.models')
 const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
 const {selectComments, addComment, delComment}= require('../models/comments.models')
-const {selectBusinesses} = require ('../models/businesses.models')
+const {selectBusinesses, selectSingleBusiness} = require ('../models/businesses.models')
 
 
 
@@ -223,5 +223,16 @@ exports.getBusinesses = (_req: Request, res: Response, next: NextFunction)=>{
   })
 }
 
+exports.getBusinessById = (req: Request, res: Response, next: NextFunction)=>{
 
+  const businessId = req.params.business_id;
+  
+  selectSingleBusiness(businessId)
+  .then((business: BusinessSample)=>{
+    res.status(200).send({business})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
 

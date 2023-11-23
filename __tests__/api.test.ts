@@ -96,6 +96,10 @@ interface BusinessSample {
 interface BusinessResposeBody{
   businesses: BusinessSample[];
 }
+
+interface SingleBusinessResposeBody{
+  business: BusinessSample;
+}
   //------------------------------------GET------------------------------------
 describe("GET WRONG END-POINT",()=>{
     test("GET - status: 404 - not exist", ()=>{
@@ -950,7 +954,7 @@ describe("GET /api/lands/:land_id/comments",()=>{
   })
 })
 
-describe.only("Get /api/businesses",()=>{
+describe("Get /api/businesses",()=>{
     
   test("GET - status: 200 - respond with an array of all the businesses",()=>{
       return request(app)
@@ -1002,6 +1006,52 @@ describe.only("Get /api/businesses",()=>{
         ];
         
           expect(businesses).toEqual(expectedResult);
+
+      })
+  })
+})
+describe("Get /api/businesses/:business_id",()=>{
+  
+  test("GET - status: 400 - when add NON integer id should recive error", ()=>{
+    return request(app)
+    .get("/api/businesses/any_id")
+    .expect(400)
+    .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("invalid input syntax or type!")
+    })
+  })
+
+  test("GET - status: 404 - not exist", ()=>{
+    return request(app)
+    .get("/api/businesses/5342200")
+    .expect(404)
+    .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("Not Found!")
+    })
+  })
+  
+  test("GET - status: 200 - respond with a specific business info",()=>{
+      return request(app)
+      .get("/api/businesses/2")
+      .expect(200)
+      .then((response : Response)=>{
+          const responseBody: SingleBusinessResposeBody = response.body;
+          const business: BusinessSample = responseBody.business;
+          const expectedResult = {
+                business_id:2,  
+                businessname: 'NOTE skateboard shop',
+                city: 'Manchester',
+                country: 'England',
+                postcode: 'M4 1LA',
+                description: `NOTE skate shop is one of the UK's leading skate stores supplying a broad range of skateboard hardware, footwear and apparel from exclusive brands.`,
+                created_at: "2023-08-10T11:00:00.000Z",
+                website: 'https://www.noteshop.co.uk/',
+                contact_number: '01618397077',
+                business_img_url: 'https://lh5.googleusercontent.com/p/AF1QipMcnhm5_OfGWIb-D0FacZRNl4JOzncECVNuZ-m7=w86-h87-n-k-no',
+                username: 'cooljmessy'
+            }
+        
+          expect(business).toEqual(expectedResult);
 
       })
   })

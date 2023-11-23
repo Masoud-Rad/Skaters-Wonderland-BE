@@ -30,3 +30,16 @@ interface BusinessSample {
                       }
                 })
   }
+
+
+  exports.selectSingleBusiness =(businessId : string)=>{
+
+    return db.query(`SELECT * FROM businesses WHERE business_id=$1;`,[businessId])
+                .then(({rows}: Result)=>{
+                    if(rows.length===0){
+                        return Promise.reject({ status: 404 , msg: 'Not Found!'})
+                      }else{
+                        return rows[0];
+                      }
+                })
+  }
