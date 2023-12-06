@@ -5,6 +5,7 @@ const { selectUsers }= require ('../models/users.models')
 const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
 const {selectComments, addComment, delComment}= require('../models/comments.models')
 const {selectBusinesses, selectSingleBusiness} = require ('../models/businesses.models')
+const {selectBusinessesReviews} = require ('../models/businessesReviews.models')
 
 
 
@@ -81,6 +82,16 @@ interface BusinessSample {
   created_at: Date;
   website: string;
   business_img_url: string;
+}
+
+//**** businessesReviewsType
+interface BusinessesReviewsSample{
+  review_id: number;
+  username: string;
+  business_id: number;
+  body : string;
+  rating: number;
+  created_at: Date;
 }
 
 //------------------------------Api-------------------------------
@@ -236,3 +247,16 @@ exports.getBusinessById = (req: Request, res: Response, next: NextFunction)=>{
   })
 }
 
+//------------------------------BusinessesReviews------------------------------
+
+exports.getBusinessesReviews = (req: Request, res: Response, next: NextFunction)=>{
+
+  const businessId = req.params.business_id;
+
+  selectBusinessesReviews(businessId).then((businessesReviews: BusinessesReviewsSample[])=>{
+    res.status(200).send({businessesReviews})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}

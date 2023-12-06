@@ -63,6 +63,7 @@ interface SingleLandsResponseBody {
 interface AddedLandsResponseBody {
     addedLand: LandSample;
   }
+
 //**** commentsType
 interface CommentSample{
   comment_id: number;
@@ -79,6 +80,7 @@ interface CommentResponseBody {
 interface AddedCommentResponseBody {
   addedComment: CommentSample;
 }
+
 //**** businessType
 interface BusinessSample {
   business_id: number;
@@ -100,6 +102,21 @@ interface BusinessResposeBody{
 interface SingleBusinessResposeBody{
   business: BusinessSample;
 }
+
+//**** businessesReviewsType
+interface BusinessesReviewsSample{
+  review_id: number;
+  username: string;
+  business_id: number;
+  body : string;
+  rating: number;
+  created_at: Date;
+}
+interface BusinessesReviewsResponseBody{
+  businessesReviews: BusinessesReviewsSample[];
+}
+
+
   //------------------------------------GET------------------------------------
 describe("GET WRONG END-POINT",()=>{
     test("GET - status: 404 - not exist", ()=>{
@@ -931,7 +948,7 @@ describe("GET /api/lands/:land_id/comments",()=>{
         expect(response.body.msg).toBe("Not Found!")
     })
   })
-  test("GET - status: 200 - respond with a specific land's info",()=>{
+  test("GET - status: 200 - respond with an array of specific land's comments",()=>{
     return request(app)
     .get("/api/lands/2/comments")
     .expect(200)
@@ -1010,6 +1027,7 @@ describe("Get /api/businesses",()=>{
       })
   })
 })
+
 describe("Get /api/businesses/:business_id",()=>{
   
   test("GET - status: 400 - when add NON integer id should recive error", ()=>{
@@ -1054,6 +1072,62 @@ describe("Get /api/businesses/:business_id",()=>{
           expect(business).toEqual(expectedResult);
 
       })
+  })
+})
+
+describe("GET /api/businesses/:business_id/businessesreviews",()=>{
+  test("GET - status: 400 - when add NON integer id should recive error", ()=>{
+    return request(app)
+    .get("/api/businesses/any_id/businessesreviews")
+    .expect(400)
+    .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("invalid input syntax or type!")
+    })
+  })
+  test("GET - status: 404 - not exist", ()=>{
+    return request(app)
+    .get("/api/businesses/5868900/businessesreviews")
+    .expect(404)
+    .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("Not Found!")
+    })
+  })
+  test("GET - status: 200 - respond with an array of specific business's reviews",()=>{
+    return request(app)
+    .get("/api/businesses/2/businessesreviews")
+    .expect(200)
+    .then((response : Response)=>{
+        const responseBody: BusinessesReviewsResponseBody = response.body;
+        const businessesReviews: BusinessesReviewsSample[] = responseBody.businessesReviews;
+        const expectedResult =[
+          {
+            "body": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+            "business_id": 2,
+            "created_at": "2023-08-10T11:00:00.000Z",
+            "rating": null,
+            "review_id": 1,
+            "username": "tickle122",
+          },
+          {
+            "body": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+            "business_id": 2,
+            "created_at": "2023-08-10T11:00:00.000Z",
+            "rating": null,
+            "review_id": 2,
+            "username": "cooljmessy",
+          },
+          {
+            "body": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+            "business_id": 2,
+            "created_at": "2023-08-10T11:00:00.000Z",
+            "rating": null,
+            "review_id": 3,
+            "username": "tickle122",
+          }
+         ]
+        expect(businessesReviews).toEqual(expectedResult);
+
+    })
   })
 })
 

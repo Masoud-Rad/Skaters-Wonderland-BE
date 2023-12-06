@@ -5,6 +5,7 @@ const { selectUsers } = require('../models/users.models');
 const { selectLands, selectSingleLand, addLand, updateLand, delLand } = require('../models/lands.models');
 const { selectComments, addComment, delComment } = require('../models/comments.models');
 const { selectBusinesses, selectSingleBusiness } = require('../models/businesses.models');
+const { selectBusinessesReviews } = require('../models/businessesReviews.models');
 exports.getEndpoints = (_req, res, next) => {
     selectEndpoints().then((endpoints) => {
         res.status(200).send({ endpoints });
@@ -115,6 +116,15 @@ exports.getBusinessById = (req, res, next) => {
     selectSingleBusiness(businessId)
         .then((business) => {
         res.status(200).send({ business });
+    })
+        .catch((err) => {
+        next(err);
+    });
+};
+exports.getBusinessesReviews = (req, res, next) => {
+    const businessId = req.params.business_id;
+    selectBusinessesReviews(businessId).then((businessesReviews) => {
+        res.status(200).send({ businessesReviews });
     })
         .catch((err) => {
         next(err);
