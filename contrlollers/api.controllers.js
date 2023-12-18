@@ -6,7 +6,7 @@ var _a = require('../models/lands.models'), selectLands = _a.selectLands, select
 var _b = require('../models/comments.models'), selectComments = _b.selectComments, addComment = _b.addComment, delComment = _b.delComment;
 var _c = require('../models/businesses.models'), selectBusinesses = _c.selectBusinesses, selectSingleBusiness = _c.selectSingleBusiness;
 var selectBusinessesReviews = require('../models/businessesReviews.models').selectBusinessesReviews;
-var selectPersonalTrainers = require('../models/personalTrainers.models').selectPersonalTrainers;
+var _d = require('../models/personalTrainers.models'), selectPersonalTrainers = _d.selectPersonalTrainers, selectSinglePersonalTrainer = _d.selectSinglePersonalTrainer;
 //------------------------------Api-------------------------------
 exports.getEndpoints = function (_req, res, next) {
     selectEndpoints().then(function (endpoints) {
@@ -141,6 +141,16 @@ exports.getBusinessesReviews = function (req, res, next) {
 exports.getPersonaltrainers = function (_req, res, next) {
     selectPersonalTrainers().then(function (personalTrainers) {
         res.status(200).send({ personalTrainers: personalTrainers });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.getPersonalTrainerById = function (req, res, next) {
+    var pt_id = req.params.pt_id;
+    selectSinglePersonalTrainer(pt_id)
+        .then(function (pt) {
+        res.status(200).send({ pt: pt });
     })
         .catch(function (err) {
         next(err);
