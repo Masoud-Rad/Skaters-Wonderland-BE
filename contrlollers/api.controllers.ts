@@ -6,7 +6,7 @@ const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('.
 const {selectComments, addComment, delComment}= require('../models/comments.models')
 const {selectBusinesses, selectSingleBusiness} = require ('../models/businesses.models')
 const {selectBusinessesReviews} = require ('../models/businessesReviews.models')
-const {selectPersonalTrainers} = require ('../models/personalTrainers.models')
+const {selectPersonalTrainers, selectSinglePersonalTrainer} = require ('../models/personalTrainers.models')
 
 
 
@@ -285,6 +285,20 @@ exports.getBusinessesReviews = (req: Request, res: Response, next: NextFunction)
 exports.getPersonaltrainers = (_req: Request, res: Response, next: NextFunction)=>{
   selectPersonalTrainers().then((personalTrainers: PtSample[])=>{
     res.status(200).send({personalTrainers})
+  })
+  .catch((err:Error)=>{
+    next(err);
+  })
+}
+
+
+exports.getPersonalTrainerById = (req: Request, res: Response, next: NextFunction)=>{
+
+  const pt_id = req.params.pt_id;
+  
+  selectSinglePersonalTrainer(pt_id)
+  .then((pt: PtSample)=>{
+    res.status(200).send({pt})
   })
   .catch((err:Error)=>{
     next(err);

@@ -31,3 +31,14 @@ exports.selectPersonalTrainers = ()=>{
         }
     })
 }
+
+exports.selectSinglePersonalTrainer =  (pt_id: string)=>{
+    return db.query(`SELECT * FROM personaltrainers WHERE pt_id=$1`, [pt_id])
+    .then(({rows}: Result)=>{
+        if(rows.length === 0){
+            return Promise.reject({status: 404, msg: 'Not Found!'})
+        } else {
+            return rows[0]; 
+        }
+    })
+}
