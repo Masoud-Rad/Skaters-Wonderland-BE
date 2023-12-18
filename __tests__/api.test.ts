@@ -143,6 +143,23 @@ interface PtsreviewSample{
   created_at: Date;
 }
 
+//**** salesType
+interface SaleSample{
+  item_id: number;
+  username: string;
+  itemname : string;
+  description: string;
+  price: string;
+  city: string;
+  country: string;
+  created_at: Date;
+  email: string;
+  facebook: string;
+  contact_number: string;
+  availability: string;
+  gear_avatar_url: string;
+}
+
   //------------------------------------GET------------------------------------
 describe("GET WRONG END-POINT",()=>{
     test("GET - status: 404 - not exist", ()=>{
@@ -1292,7 +1309,82 @@ describe("GET api/personaltrainers/:pt_id/ptreviews",()=>{
     })
   })
 })
+describe("Get /api/sales",()=>{
+  test("GET - status: 200 - respond with an array of all Items for sale",()=>{
+    return request(app)
+    .get("/api/sales")
+    .expect(200)
+    .then((response : Response)=>{
+      const salesItems: SaleSample[] = response.body.salesItems;
+      const expectedResult = [
+        {
+          item_id: 1,
+          username: 'grumpy19',
+          itemname: 'Trendy Roller Skates',
+          description: 'Boys And Girls Four-Wheel Roller Skates Trendy Roller Skates With Graffiti Print For Spring And Autumn',
+          price: '50',
+          city: 'New York',
+          country: 'USA',
+          created_at: '2023-08-10T11:00:00.000Z',
+          email: 'john@example.com',
+          facebook: 'faceuser',
+          contact_number: '001111',
+          availability: 'SOLD',
+          gear_avatar_url: 'https://img.kwcdn.com/product/1e19d463b64/c0ce0e38-6fd3-40af-a34d-520d7189cbb6_800x800.jpeg?imageView2/2/w/800/q/70/format/webp'
+        },
+        {
+          item_id: 2,
+          username: 'jessjelly',
+          itemname: 'Razors shima aggressive',
+          description: 'Razors Shima 3 Aggressive Inline Skate (Remastered)- White Size 13',
+          price: '130',
+          city: 'Manchester',
+          country: 'Ingland',
+          created_at: '2023-08-10T11:00:00.000Z',
+          email: 'john@example.com',
+          facebook: 'faceuser',
+          contact_number: '004478111',
+          availability: 'available',
+          gear_avatar_url: 'https://cdn.erowz.com/images/ebay/thumbs/images/g/lZ0AAOSwzyZlHZr5/s-l225.jpg'
+        }
+      ]
 
+    expect(salesItems).toEqual(expectedResult);
+
+    })
+  })
+})
+
+describe("Get /api/sales/item_id",()=>{
+  test("GET - status: 200 - respond with an Item information with spesefic id",()=>{
+    return request(app)
+    .get("/api/sales/2")
+    .expect(200)
+    .then((response : Response)=>{
+      const salesItem: SaleSample = response.body.item;
+      const expectedResult = 
+      {
+        item_id: 2,
+        username: 'jessjelly',
+        itemname: 'Razors shima aggressive',
+        description: 'Razors Shima 3 Aggressive Inline Skate (Remastered)- White Size 13',
+        price: '130',
+        city: 'Manchester',
+        country: 'Ingland',
+        created_at: '2023-08-10T11:00:00.000Z',
+        email: 'john@example.com',
+        facebook: 'faceuser',
+        contact_number: '004478111',
+        availability: 'available',
+        gear_avatar_url: 'https://cdn.erowz.com/images/ebay/thumbs/images/g/lZ0AAOSwzyZlHZr5/s-l225.jpg'
+      }
+    
+
+    expect(salesItem).toEqual(expectedResult);
+
+    })
+  })
+})
 //------------------------------------POST------------------------------------
 
 describe("POST /api/lands/:land_id/comments",()=>{

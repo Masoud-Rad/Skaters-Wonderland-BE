@@ -8,6 +8,7 @@ var _c = require('../models/businesses.models'), selectBusinesses = _c.selectBus
 var selectBusinessesReviews = require('../models/businessesReviews.models').selectBusinessesReviews;
 var _d = require('../models/personalTrainers.models'), selectPersonalTrainers = _d.selectPersonalTrainers, selectSinglePersonalTrainer = _d.selectSinglePersonalTrainer;
 var selectPersonalTrainersReviews = require("../models/personalTrainersReviews.models").selectPersonalTrainersReviews;
+var _e = require('../models/sales.models'), selectsalesItems = _e.selectsalesItems, selectSingleSalesItem = _e.selectSingleSalesItem;
 //------------------------------Api-------------------------------
 exports.getEndpoints = function (_req, res, next) {
     selectEndpoints().then(function (endpoints) {
@@ -163,6 +164,25 @@ exports.getPersonalTrainersReviews = function (req, res, next) {
     selectPersonalTrainersReviews(pt_id)
         .then(function (ptReviews) {
         res.status(200).send({ ptReviews: ptReviews });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+//------------------------------sales----------------------------------
+exports.getSalesItems = function (_req, res, next) {
+    selectsalesItems().then(function (salesItems) {
+        res.status(200).send({ salesItems: salesItems });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.getSalesItemById = function (req, res, next) {
+    var item_id = req.params.item_id;
+    selectSingleSalesItem(item_id)
+        .then(function (item) {
+        res.status(200).send({ item: item });
     })
         .catch(function (err) {
         next(err);

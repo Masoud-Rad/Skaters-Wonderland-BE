@@ -8,7 +8,7 @@ const {selectBusinesses, selectSingleBusiness} = require ('../models/businesses.
 const {selectBusinessesReviews} = require ('../models/businessesReviews.models')
 const {selectPersonalTrainers, selectSinglePersonalTrainer} = require ('../models/personalTrainers.models')
 const {selectPersonalTrainersReviews} = require (`../models/personalTrainersReviews.models`)
-
+const {selectsalesItems, selectSingleSalesItem} = require('../models/sales.models')
 
 //-------------------------------Types----------------------------
 
@@ -120,6 +120,23 @@ interface PtsreviewSample{
   pt_id: number;
   body: string;rating: string;
   created_at: Date;
+}
+
+//**** salesType
+interface SaleSample{
+  item_id: number;
+  username: string;
+  itemname : string;
+  description: string;
+  price: string;
+  city: string;
+  country: string;
+  created_at: Date;
+  email: string;
+  facebook: string;
+  contact_number: string;
+  availability: string;
+  gear_avatar_url: string;
 }
 
 //------------------------------Api-------------------------------
@@ -322,6 +339,31 @@ exports.getPersonalTrainersReviews = (req: Request, res: Response, next: NextFun
     res.status(200).send({ptReviews})
   })
   .catch((err: Error)=>{
+    next(err);
+  })
+}
+
+//------------------------------sales----------------------------------
+
+exports.getSalesItems = (_req: Request, res: Response, next: NextFunction)=>{
+  
+  selectsalesItems().then((salesItems: SaleSample[])=>{
+    res.status(200).send({salesItems})
+  })
+  .catch((err:Error)=>{
+    next(err);
+  })
+}
+
+exports.getSalesItemById = (req: Request, res: Response, next: NextFunction)=>{
+
+  const item_id = req.params.item_id;
+  
+  selectSingleSalesItem(item_id)
+  .then((item: SaleSample)=>{
+    res.status(200).send({item})
+  })
+  .catch((err:Error)=>{
     next(err);
   })
 }
