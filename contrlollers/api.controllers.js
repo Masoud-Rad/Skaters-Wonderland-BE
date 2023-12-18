@@ -7,6 +7,7 @@ var _b = require('../models/comments.models'), selectComments = _b.selectComment
 var _c = require('../models/businesses.models'), selectBusinesses = _c.selectBusinesses, selectSingleBusiness = _c.selectSingleBusiness;
 var selectBusinessesReviews = require('../models/businessesReviews.models').selectBusinessesReviews;
 var _d = require('../models/personalTrainers.models'), selectPersonalTrainers = _d.selectPersonalTrainers, selectSinglePersonalTrainer = _d.selectSinglePersonalTrainer;
+var selectPersonalTrainersReviews = require("../models/personalTrainersReviews.models").selectPersonalTrainersReviews;
 //------------------------------Api-------------------------------
 exports.getEndpoints = function (_req, res, next) {
     selectEndpoints().then(function (endpoints) {
@@ -151,6 +152,17 @@ exports.getPersonalTrainerById = function (req, res, next) {
     selectSinglePersonalTrainer(pt_id)
         .then(function (pt) {
         res.status(200).send({ pt: pt });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+//------------------------------PersonaltrainerReviews------------------------------
+exports.getPersonalTrainersReviews = function (req, res, next) {
+    var pt_id = req.params.pt_id;
+    selectPersonalTrainersReviews(pt_id)
+        .then(function (ptReviews) {
+        res.status(200).send({ ptReviews: ptReviews });
     })
         .catch(function (err) {
         next(err);

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var app = express();
 app.use(express.json());
-var _a = require('./contrlollers/api.controllers'), getBusinessesReviews = _a.getBusinessesReviews, getEndpoints = _a.getEndpoints, getUsers = _a.getUsers, getLands = _a.getLands, getLandById = _a.getLandById, getComments = _a.getComments, postLand = _a.postLand, postComment = _a.postComment, patchLand = _a.patchLand, deleteLand = _a.deleteLand, deleteComment = _a.deleteComment, getBusinesses = _a.getBusinesses, getBusinessById = _a.getBusinessById, getPersonaltrainers = _a.getPersonaltrainers, getPersonalTrainerById = _a.getPersonalTrainerById;
+var _a = require('./contrlollers/api.controllers'), getBusinessesReviews = _a.getBusinessesReviews, getEndpoints = _a.getEndpoints, getUsers = _a.getUsers, getLands = _a.getLands, getLandById = _a.getLandById, getComments = _a.getComments, postLand = _a.postLand, postComment = _a.postComment, patchLand = _a.patchLand, deleteLand = _a.deleteLand, deleteComment = _a.deleteComment, getBusinesses = _a.getBusinesses, getBusinessById = _a.getBusinessById, getPersonaltrainers = _a.getPersonaltrainers, getPersonalTrainerById = _a.getPersonalTrainerById, getPersonalTrainersReviews = _a.getPersonalTrainersReviews;
 //----------------------------------------------Get-------------------------------------------------
 app.get('/api/getEndpoints', getEndpoints);
 app.get('/api/users', getUsers);
@@ -15,6 +15,7 @@ app.get('/api/businesses/:business_id', getBusinessById);
 app.get('/api/businesses/:business_id/businessesreviews', getBusinessesReviews);
 app.get('/api/personaltrainers', getPersonaltrainers);
 app.get('/api/personaltrainers/:pt_id', getPersonalTrainerById);
+app.get('/api/personaltrainers/:pt_id/ptreviews', getPersonalTrainersReviews);
 //----------------------------------------------Post-------------------------------------------------
 app.post('/api/land', postLand);
 app.post('/api/lands/:land_id/comments', postComment);

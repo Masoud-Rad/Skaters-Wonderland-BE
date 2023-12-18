@@ -7,7 +7,7 @@ const {selectComments, addComment, delComment}= require('../models/comments.mode
 const {selectBusinesses, selectSingleBusiness} = require ('../models/businesses.models')
 const {selectBusinessesReviews} = require ('../models/businessesReviews.models')
 const {selectPersonalTrainers, selectSinglePersonalTrainer} = require ('../models/personalTrainers.models')
-
+const {selectPersonalTrainersReviews} = require (`../models/personalTrainersReviews.models`)
 
 
 //-------------------------------Types----------------------------
@@ -111,6 +111,15 @@ interface PtSample{
   facebook: string;
   contact_number : string;
   avatar_url: string;
+}
+
+//**** personalTrainersReviewType
+interface PtsreviewSample{
+  review_id: number;
+  username: string;
+  pt_id: number;
+  body: string;rating: string;
+  created_at: Date;
 }
 
 //------------------------------Api-------------------------------
@@ -301,6 +310,18 @@ exports.getPersonalTrainerById = (req: Request, res: Response, next: NextFunctio
     res.status(200).send({pt})
   })
   .catch((err:Error)=>{
+    next(err);
+  })
+}
+
+//------------------------------PersonaltrainerReviews------------------------------
+exports.getPersonalTrainersReviews = (req: Request, res: Response, next: NextFunction)=>{
+  const pt_id = req.params.pt_id; 
+  selectPersonalTrainersReviews(pt_id)
+  .then((ptReviews: PtsreviewSample)=>{
+    res.status(200).send({ptReviews})
+  })
+  .catch((err: Error)=>{
     next(err);
   })
 }
