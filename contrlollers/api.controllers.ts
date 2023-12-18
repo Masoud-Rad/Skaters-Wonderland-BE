@@ -6,6 +6,7 @@ const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('.
 const {selectComments, addComment, delComment}= require('../models/comments.models')
 const {selectBusinesses, selectSingleBusiness} = require ('../models/businesses.models')
 const {selectBusinessesReviews} = require ('../models/businessesReviews.models')
+const {selectPersonalTrainers} = require ('../models/personalTrainers.models')
 
 
 
@@ -92,6 +93,24 @@ interface BusinessesReviewsSample{
   body : string;
   rating: number;
   created_at: Date;
+}
+
+//**** personalTrainersType
+interface PtSample{
+  pt_id: number; 
+  username: string; 
+  ptname: string;
+  city: string;
+  country: string;
+  postcode: string;
+  description: string;
+  created_at: Date;
+  website: string;
+  email: string;
+  instagram: string;
+  facebook: string;
+  contact_number : string;
+  avatar_url: string;
 }
 
 //------------------------------Api-------------------------------
@@ -257,6 +276,17 @@ exports.getBusinessesReviews = (req: Request, res: Response, next: NextFunction)
     res.status(200).send({businessesReviews})
   })
   .catch((err: Error)=>{
+    next(err);
+  })
+}
+
+//------------------------------Personaltrainers------------------------------
+
+exports.getPersonaltrainers = (_req: Request, res: Response, next: NextFunction)=>{
+  selectPersonalTrainers().then((personalTrainers: PtSample[])=>{
+    res.status(200).send({personalTrainers})
+  })
+  .catch((err:Error)=>{
     next(err);
   })
 }

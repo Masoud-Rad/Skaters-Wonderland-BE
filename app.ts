@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import createError from 'http-errors'; // Import the Error type
+//I tried to use "import createError from 'http-errors'" but I hade this error: " This module is declared with 'export =', and can only be used with a default import when using the 'esModuleInterop' flag.", so I used the following method to requier createError; 
+import * as createError from 'http-errors'; // Import the Error type
+
 const express = require("express");
 const app = express();
 app.use(express.json());
 
-const {getBusinessesReviews, getEndpoints, getUsers, getLands, getLandById, getComments, postLand, postComment, patchLand, deleteLand, deleteComment, getBusinesses, getBusinessById} = require('./contrlollers/api.controllers')
+const {getBusinessesReviews, getEndpoints, getUsers, getLands, getLandById, getComments, postLand, postComment, patchLand, deleteLand, deleteComment, getBusinesses, getBusinessById, getPersonaltrainers} = require('./contrlollers/api.controllers')
 
 //----------------------------------------------Get-------------------------------------------------
 app.get('/api/getEndpoints', getEndpoints)
@@ -21,6 +23,8 @@ app.get('/api/businesses/:business_id', getBusinessById)
 
 
 app.get('/api/businesses/:business_id/businessesreviews', getBusinessesReviews)
+
+app.get('/api/personaltrainers', getPersonaltrainers)
 //----------------------------------------------Post-------------------------------------------------
 
 app.post('/api/land', postLand)
