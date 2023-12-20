@@ -123,7 +123,7 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
             username VARCHAR PRIMARY KEY,
             name VARCHAR NOT NULL,
             avatar_url VARCHAR  DEFAULT 'https://vectorified.com/images/unknown-avatar-icon-7.jpg',
-            email VARCHAR,
+            email VARCHAR NOT NULL,
             password VARCHAR NOT NULL,
             location VARCHAR
         );`);

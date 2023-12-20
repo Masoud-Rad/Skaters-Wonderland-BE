@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 const {selectEndpoints} = require ('../models/api.models')
-const { selectUsers }= require ('../models/users.models')
+const { selectUsers, addUser }= require ('../models/users.models')
 const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
 const {selectComments, addComment, delComment}= require('../models/comments.models')
 const {selectBusinesses, selectSingleBusiness} = require ('../models/businesses.models')
@@ -19,7 +19,7 @@ interface EndpointData {
       queries?: string[];
       parametr?: string[];
       exampleResponse: {
-          users?: UsersSample[];
+          users?: UserSample[];
           Lands?: LandSample[];
           Land?: LandSample;
           comments?: CommentSample[];
@@ -29,7 +29,7 @@ interface EndpointData {
 }
 
 //**** usersType
-interface UsersSample {
+interface UserSample {
     username: string;
     name: string;
     email: string;
@@ -154,7 +154,7 @@ exports.getEndpoints = (_req : Request , res : Response, next : NextFunction)=>{
 
 exports.getUsers = (req : Request , res : Response, next : NextFunction)=>{
   const {username}= req.query;
-  selectUsers(username).then((users: UsersSample[])=>{
+  selectUsers(username).then((users: UserSample[])=>{
     res.status(200).send({users})
   })
   .catch((err: Error)=>{
@@ -162,6 +162,17 @@ exports.getUsers = (req : Request , res : Response, next : NextFunction)=>{
   })
 }
 
+exports.postUser =(req : Request , res : Response, next : NextFunction)=>{
+  const newUser= req.body;
+  
+  addUser(newUser)
+  .then((addedUser: UserSample)=>{ 
+    res.status(201).send({addedUser})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
 
 //------------------------------Lands------------------------------
 
@@ -367,3 +378,4 @@ exports.getSalesItemById = (req: Request, res: Response, next: NextFunction)=>{
     next(err);
   })
 }
+

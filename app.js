@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var app = express();
 app.use(express.json());
-var _a = require('./contrlollers/api.controllers'), getBusinessesReviews = _a.getBusinessesReviews, getEndpoints = _a.getEndpoints, getUsers = _a.getUsers, getLands = _a.getLands, getLandById = _a.getLandById, getComments = _a.getComments, postLand = _a.postLand, postComment = _a.postComment, patchLand = _a.patchLand, deleteLand = _a.deleteLand, deleteComment = _a.deleteComment, getBusinesses = _a.getBusinesses, getBusinessById = _a.getBusinessById, getPersonaltrainers = _a.getPersonaltrainers, getPersonalTrainerById = _a.getPersonalTrainerById, getPersonalTrainersReviews = _a.getPersonalTrainersReviews, getSalesItems = _a.getSalesItems, getSalesItemById = _a.getSalesItemById;
+var _a = require('./contrlollers/api.controllers'), getBusinessesReviews = _a.getBusinessesReviews, getEndpoints = _a.getEndpoints, getUsers = _a.getUsers, getLands = _a.getLands, getLandById = _a.getLandById, getComments = _a.getComments, postLand = _a.postLand, postComment = _a.postComment, patchLand = _a.patchLand, deleteLand = _a.deleteLand, deleteComment = _a.deleteComment, getBusinesses = _a.getBusinesses, getBusinessById = _a.getBusinessById, getPersonaltrainers = _a.getPersonaltrainers, getPersonalTrainerById = _a.getPersonalTrainerById, getPersonalTrainersReviews = _a.getPersonalTrainersReviews, getSalesItems = _a.getSalesItems, getSalesItemById = _a.getSalesItemById, postUser = _a.postUser;
 //----------------------------------------------Get-------------------------------------------------
 app.get('/api/getEndpoints', getEndpoints);
 app.get('/api/users', getUsers);
@@ -19,6 +19,7 @@ app.get('/api/personaltrainers/:pt_id/ptreviews', getPersonalTrainersReviews);
 app.get('/api/sales', getSalesItems);
 app.get('/api/sales/:item_id', getSalesItemById);
 //----------------------------------------------Post-------------------------------------------------
+app.post('/api/user', postUser);
 app.post('/api/land', postLand);
 app.post('/api/lands/:land_id/comments', postComment);
 //----------------------------------------------Patch-------------------------------------------------
