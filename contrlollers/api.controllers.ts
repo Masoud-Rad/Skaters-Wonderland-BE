@@ -4,7 +4,7 @@ const {selectEndpoints} = require ('../models/api.models')
 const { selectUsers, addUser }= require ('../models/users.models')
 const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
 const {selectComments, addComment, delComment}= require('../models/comments.models')
-const {selectBusinesses, selectSingleBusiness} = require ('../models/businesses.models')
+const {selectBusinesses, selectSingleBusiness, addBusiness} = require ('../models/businesses.models')
 const {selectBusinessesReviews} = require ('../models/businessesReviews.models')
 const {selectPersonalTrainers, selectSinglePersonalTrainer} = require ('../models/personalTrainers.models')
 const {selectPersonalTrainersReviews} = require (`../models/personalTrainersReviews.models`)
@@ -83,6 +83,7 @@ interface BusinessSample {
   created_at: Date;
   website: string;
   business_img_url: string;
+  contact_number: string;
 }
 
 //**** businessesReviewsType
@@ -303,6 +304,17 @@ exports.getBusinessById = (req: Request, res: Response, next: NextFunction)=>{
   })
 }
 
+exports.postBusiness =(req : Request , res : Response, next : NextFunction)=>{
+
+  const newBusiness= req.body;
+  addBusiness(newBusiness)
+  .then((addedBusiness: BusinessSample)=>{ 
+    res.status(201).send({addedBusiness})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
 //------------------------------BusinessesReviews------------------------------
 
 exports.getBusinessesReviews = (req: Request, res: Response, next: NextFunction)=>{

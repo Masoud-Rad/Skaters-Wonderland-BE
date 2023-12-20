@@ -322,6 +322,26 @@
       }
     },
 
+    "Post /api/business": {
+      "description": "Post a specific business",
+      "parametr": [],
+      "queries": [],
+      "exampleResponse": {
+          "business_id": 443687,
+          "businessname": "Welcome Skate Store",
+          "city": "Leeds",
+          "country": "England",
+          "postcode": "LS1 6LQ",
+          "description": "One of the most renowned skateboard stores in the UK, situated in the independent retail hub Thornton’s Arcade, owned and run by skateboarders.",
+          "created_at": "2023-08-10T12:00:00Z",
+          "website": "https://welcomeleeds.com",
+          "contact_number": "094853459",
+          "business_img_url": "https://lh5.googleusercontent.com/p/AF1QipMklaYHqep6XvI34GVqzrXchhFNE4X5Xh3Xe9ha=w260-h175-n-k-no",
+          "username": "tickle122"
+      }
+      
+    },
+
     "Post /api/personaltrainer": {
       "description": "Post a personaltrainer ",
       "parametr": [],
