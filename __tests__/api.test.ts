@@ -1309,6 +1309,7 @@ describe("GET api/personaltrainers/:pt_id/ptreviews",()=>{
     })
   })
 })
+
 describe("Get /api/sales",()=>{
   test("GET - status: 200 - respond with an array of all Items for sale",()=>{
     return request(app)
@@ -1386,6 +1387,78 @@ describe("Get /api/sales/item_id",()=>{
   })
 })
 //------------------------------------POST------------------------------------
+
+describe("POST /api/user",()=>{
+  test("POST- status: 400- responds with error because not sending correct information",()=>{
+    const newUser = {
+      landname: 'Forth land',
+      description: 'test description',
+      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+      username: 'username500'
+    }
+  return request(app)
+  .post('/api/land')
+  .send(newUser)
+  .expect(400)
+  .then((response : ErrorResponse)=>{
+    expect(response.body.msg).toBe("BAD REQUEST!")
+    })
+  })
+
+  test("POST- status: 409- responds with error because username already exist",()=>{
+    const newUser = {
+          "username": "tickle122",
+          "name": "Mas Pitt",
+          "email": "alloc@example.com",
+          "password": "hashed99_password",
+        }
+  return request(app)
+  .post('/api/user')
+  .send(newUser)
+  .expect(409)
+  .then((response : ErrorResponse)=>{
+    expect(response.body.msg).toBe("The username is already taken! Choose a different username please.")
+    })
+  })
+
+  test("POST- status: 409- responds with error because Email already exist in data base",()=>{
+    const newUser = {
+          "username": "MrMass7676345",
+          "name": "Mas Pitt",
+          "email": "jane@example.com",
+          "password": "hashed99_password",
+        }
+  return request(app)
+  .post('/api/user')
+  .send(newUser)
+  .expect(409)
+  .then((response : ErrorResponse)=>{
+    expect(response.body.msg).toBe("Email address already in use! Choose a different email or LOG_IN.")
+    })
+  })
+
+  test("POST- status: 201- responds with the added user",()=>{
+    const newUser = {
+        "username": "MrMass767698908",
+        "name": "Mas Pitt",
+        "email": "matttt6869@example.com",
+        "password": "hashed99_password",
+      }
+  return request(app)
+  .post('/api/user')
+  .send(newUser)
+  .expect(201)
+  .then(( response : Response ) => {
+        const user: UsersSample = response.body.addedUser;
+        
+        expect(user.username).toBe(newUser.username);
+        expect(user.email).toBe(newUser.email);
+        expect(user.name).toBe(newUser.name);
+        expect(user.password).toBe(newUser.password);
+        expect(Object.keys(user).length).toBe(6);
+      })
+  })
+})
 
 describe("POST /api/lands/:land_id/comments",()=>{
   test("POST- status: 203- responds with error because username does not exist",()=>{
@@ -1495,7 +1568,7 @@ describe("POST /api/land",()=>{
     })
   })
 
-  test("POST- status: 203- responds with error because not sending correct information",()=>{
+  test("POST- status: 400- responds with error because not sending correct information",()=>{
     const newLand = {
       landname: 'Forth land',
       description: 'test description',
@@ -1511,7 +1584,7 @@ describe("POST /api/land",()=>{
     })
   })
 
-  test("POST- status: 201- responds with the added comment",()=>{
+  test("POST- status: 201- responds with the added land",()=>{
     const newLand = {
                       landname: 'Forth land',
                       city: 'Cityexample1',
@@ -1539,8 +1612,11 @@ describe("POST /api/land",()=>{
         expect(land.landname).toBe(newLand.landname);
 
       })
+    })
   })
-})
+  
+  
+//------------------------------------PATCH------------------------------
 
 describe("PATCH /api/lands/:land_id", ()=>{
   test("PATCH- status: 202- responds with the updated land",()=>{

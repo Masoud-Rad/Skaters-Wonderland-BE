@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var selectEndpoints = require('../models/api.models').selectEndpoints;
-var selectUsers = require('../models/users.models').selectUsers;
-var _a = require('../models/lands.models'), selectLands = _a.selectLands, selectSingleLand = _a.selectSingleLand, addLand = _a.addLand, updateLand = _a.updateLand, delLand = _a.delLand;
-var _b = require('../models/comments.models'), selectComments = _b.selectComments, addComment = _b.addComment, delComment = _b.delComment;
-var _c = require('../models/businesses.models'), selectBusinesses = _c.selectBusinesses, selectSingleBusiness = _c.selectSingleBusiness;
+var _a = require('../models/users.models'), selectUsers = _a.selectUsers, addUser = _a.addUser;
+var _b = require('../models/lands.models'), selectLands = _b.selectLands, selectSingleLand = _b.selectSingleLand, addLand = _b.addLand, updateLand = _b.updateLand, delLand = _b.delLand;
+var _c = require('../models/comments.models'), selectComments = _c.selectComments, addComment = _c.addComment, delComment = _c.delComment;
+var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBusinesses, selectSingleBusiness = _d.selectSingleBusiness;
 var selectBusinessesReviews = require('../models/businessesReviews.models').selectBusinessesReviews;
-var _d = require('../models/personalTrainers.models'), selectPersonalTrainers = _d.selectPersonalTrainers, selectSinglePersonalTrainer = _d.selectSinglePersonalTrainer;
+var _e = require('../models/personalTrainers.models'), selectPersonalTrainers = _e.selectPersonalTrainers, selectSinglePersonalTrainer = _e.selectSinglePersonalTrainer;
 var selectPersonalTrainersReviews = require("../models/personalTrainersReviews.models").selectPersonalTrainersReviews;
-var _e = require('../models/sales.models'), selectsalesItems = _e.selectsalesItems, selectSingleSalesItem = _e.selectSingleSalesItem;
+var _f = require('../models/sales.models'), selectsalesItems = _f.selectsalesItems, selectSingleSalesItem = _f.selectSingleSalesItem;
 //------------------------------Api-------------------------------
 exports.getEndpoints = function (_req, res, next) {
     selectEndpoints().then(function (endpoints) {
@@ -23,6 +23,16 @@ exports.getUsers = function (req, res, next) {
     var username = req.query.username;
     selectUsers(username).then(function (users) {
         res.status(200).send({ users: users });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.postUser = function (req, res, next) {
+    var newUser = req.body;
+    addUser(newUser)
+        .then(function (addedUser) {
+        res.status(201).send({ addedUser: addedUser });
     })
         .catch(function (err) {
         next(err);
