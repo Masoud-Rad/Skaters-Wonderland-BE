@@ -265,8 +265,6 @@
       }
     },
 
-    
-
     "Post /api/user": {
       "description": "Post a user ",
       "parametr": [],
@@ -340,6 +338,23 @@
           "username": "tickle122"
       }
       
+    },
+
+    "Post /api/businesses/:business_id/businessereviews":{
+      "description": "Post a review for a specefic business ",
+      "parametr": ["business_id"],
+      "exampleResponse": {
+        "reviews": [
+          {
+            "review_id": 76896986,
+            "body": "I like it because it is trustable",
+            "username": "Mas",
+            "business_id": 18,
+            "created_at": 1590103140000,
+            "rating": 7
+          }
+        ]
+      }
     },
 
     "Post /api/personaltrainer": {
