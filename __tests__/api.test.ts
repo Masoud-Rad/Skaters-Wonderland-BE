@@ -93,6 +93,7 @@ interface BusinessSample {
   created_at: Date;
   website: string;
   business_img_url: string;
+  contact_number: string;
 }
 
 interface BusinessResponseBody{
@@ -1615,6 +1616,105 @@ describe("POST /api/land",()=>{
     })
   })
   
+  describe("POST /api/business",()=>{
+  
+    test("POST- status: 400- responds with error because not sending correct information",()=>{
+      const newBusiness = {                
+        name: 'Forth land',
+        city: 'Cityexample1',
+        country: 'countryexample1',
+        postcode: "M11 M11",
+        description: 'test description',
+        cost: 'free',
+        is_public: true,
+        has_rink: false,
+        suitabile_for: 'Skateboarding',
+        land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+        username: 'weegembump'
+                      }
+    return request(app)
+    .post('/api/business')
+    .send(newBusiness)
+    .expect(400)
+    .then((response : ErrorResponse)=>{
+      expect(response.body.msg).toBe("BAD REQUEST!")
+      })
+    })
+  
+    test("POST- status: 400- responds with error because not sending correct information",()=>{
+      const newBusiness = {
+        landname: 'Forth land',
+        description: 'test description',
+        land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+        username: 'username500'
+      }
+    return request(app)
+    .post('/api/business')
+    .send(newBusiness)
+    .expect(400)
+    .then((response : ErrorResponse)=>{
+      expect(response.body.msg).toBe("BAD REQUEST!")
+      })
+    })
+  
+    test("POST- status: 201- responds with the added business",()=>{
+      const newBusiness = {
+        "businessname": "Bee shope",
+        "city": "Salford",
+        "country": "England",
+        "postcode": "M27 6LQ",
+        "description": "One of the most renowned skateboard stores in the UK, situated in the independent retail hub Thornton’s Arcade, owned and run by skateboarders.",
+        "website": "https://Beeshop.com",
+        "contact_number": "09485000000",
+        "business_img_url": "https://lh5.googleusercontent.com/p/AF1QipMklaYHqep6XvI34GVqzrXchhFNE4X5Xh3Xe9ha=w260-h175-n-k-no",
+        "username":'happyamy2016'
+                      }
+    return request(app)
+    .post('/api/business')
+    .send(newBusiness)
+    .expect(201)
+    .then(( response : Response ) => {
+          const business: BusinessSample = response.body.addedBusiness;
+        
+          expect(business.username).toBe(newBusiness.username);
+          expect(business.city).toBe(newBusiness.city);
+          expect(business.country).toBe(newBusiness.country);
+          expect(business.business_img_url).toBe(newBusiness.business_img_url);
+          expect(business.businessname).toBe(newBusiness.businessname);
+          expect(business.description).toBe(newBusiness.description);
+          expect(business.postcode).toBe(newBusiness.postcode);
+          expect(Object.keys(business).length).toBe(11);
+  
+        })
+      })
+
+    test("POST- status: 201- responds with the added business",()=>{
+        const newBusiness = {
+          "businessname": "Bee shope",
+          "city": "Salford",
+          "country": "England",
+          "postcode": "M27 6LQ",
+          "description": "One of the most renowned skateboard stores in the UK, situated in the independent retail hub Thornton’s Arcade, owned and run by skateboarders.",
+          "username":'happyamy2016'
+                        }
+      return request(app)
+      .post('/api/business')
+      .send(newBusiness)
+      .expect(201)
+      .then(( response : Response ) => {
+            const business: BusinessSample = response.body.addedBusiness;
+          
+            expect(business.username).toBe(newBusiness.username);
+            expect(business.city).toBe(newBusiness.city);
+            expect(business.country).toBe(newBusiness.country);
+            expect(business.businessname).toBe(newBusiness.businessname);
+            expect(business.description).toBe(newBusiness.description);
+            expect(business.postcode).toBe(newBusiness.postcode);
+            expect(Object.keys(business).length).toBe(11);
+    
+          })
+        })
+    })
   
 //------------------------------------PATCH------------------------------
 
