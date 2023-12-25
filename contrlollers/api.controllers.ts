@@ -5,7 +5,7 @@ const { selectUsers, addUser }= require ('../models/users.models')
 const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
 const {selectComments, addComment, delComment}= require('../models/comments.models')
 const {selectBusinesses, selectSingleBusiness, addBusiness} = require ('../models/businesses.models')
-const {selectBusinessesReviews} = require ('../models/businessesReviews.models')
+const {selectBusinessesReviews, addBusinessReview} = require ('../models/businessesReviews.models')
 const {selectPersonalTrainers, selectSinglePersonalTrainer} = require ('../models/personalTrainers.models')
 const {selectPersonalTrainersReviews} = require (`../models/personalTrainersReviews.models`)
 const {selectsalesItems, selectSingleSalesItem} = require('../models/sales.models')
@@ -323,6 +323,19 @@ exports.getBusinessesReviews = (req: Request, res: Response, next: NextFunction)
 
   selectBusinessesReviews(businessId).then((businessesReviews: BusinessesReviewsSample[])=>{
     res.status(200).send({businessesReviews})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
+
+exports.postBusinessReview = (req : Request , res : Response, next : NextFunction)=>{
+  const newBusinessReview= req.body;
+  const businessId = req.params.business_id;
+
+  addBusinessReview(businessId , newBusinessReview)
+  .then((addedBusinessReview: BusinessesReviewsSample)=>{ 
+    res.status(201).send({addedBusinessReview})
   })
   .catch((err: Error)=>{
     next(err);

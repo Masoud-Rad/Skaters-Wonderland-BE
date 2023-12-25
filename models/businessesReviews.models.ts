@@ -14,6 +14,10 @@ interface BusinessesReviewsSample{
     [key: string]: unknown;
   }
 
+  interface AddNewBusinessReviewSample{
+    body: string;
+    username: string;
+  }
 
   exports.selectBusinessesReviews=(businessId : string)=>{
 
@@ -27,3 +31,18 @@ interface BusinessesReviewsSample{
                 })
   }
 
+  exports.addBusinessReview=(businessId: string, newBusinessReview: AddNewBusinessReviewSample)=>{
+    if (typeof newBusinessReview === "object" && newBusinessReview.hasOwnProperty("body") && newBusinessReview.hasOwnProperty("username")) {
+         const username= newBusinessReview.username;
+         const body= newBusinessReview.body;
+        
+        return db.query(`INSERT INTO businessesreview (body, business_id, username) VALUES ($1,$2,$3) RETURNING *;`
+            , [body, businessId, username])
+            .then(({rows}: Result) => { 
+              return rows[0]
+            })      
+    }
+    else {
+        return Promise.reject({ status: 400, msg: "BAD REQUEST!" })
+    }
+  }

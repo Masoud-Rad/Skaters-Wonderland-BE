@@ -117,6 +117,8 @@ interface BusinessesReviewsResponseBody{
   businessesReviews: BusinessesReviewsSample[];
 }
 
+
+
 //**** personalTrainersType
 interface PtSample{
   pt_id: number; 
@@ -1616,7 +1618,7 @@ describe("POST /api/land",()=>{
     })
   })
   
-  describe("POST /api/business",()=>{
+describe("POST /api/business",()=>{
   
     test("POST- status: 400- responds with error because not sending correct information",()=>{
       const newBusiness = {                
@@ -1715,6 +1717,63 @@ describe("POST /api/land",()=>{
           })
         })
     })
+
+describe("Post /api/businesses/:business_id/businessreview",()=>{
+  
+  test("POST- status: 400- responds with error because not sending correct information",()=>{
+        const newBusinessReview = {                
+          name: 'anyName',
+          city: 'Cityexample1',
+          country: 'countryexample1',
+          username: 'weegembump'
+                        }
+      return request(app)
+      .post('/api/businesses/2/businessreview')
+      .send(newBusinessReview)
+      .expect(400)
+      .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("BAD REQUEST!")
+        })
+      })
+    
+      test("POST- status: 400- responds with error because not sending correct information",()=>{
+        const newBusinessReview = {
+          landname: 'Forth land',
+          description: 'test description',
+          username: 'username500'
+        }
+      return request(app)
+      .post('/api/businesses/2/businessreview')
+      .send(newBusinessReview)
+      .expect(400)
+      .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("BAD REQUEST!")
+        })
+      })
+    
+      testgit ("POST- status: 201- responds with the added business'review",()=>{
+        const newBusinessReview = {
+          "body": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+          "username": "tickle122",
+         }
+      return request(app)
+      .post('/api/businesses/2/businessreview')
+      .send(newBusinessReview)
+      .expect(201)
+      .then(( response : Response ) => {
+            const businessReview: BusinessesReviewsSample = response.body.addedBusinessReview;
+
+            expect(businessReview.body).toBe(newBusinessReview.body);
+            expect(businessReview.username).toBe(newBusinessReview.username);
+            expect(Object.keys(businessReview).length).toBe(6);
+            expect(businessReview.hasOwnProperty('review_id')).toBe(true);
+            expect(businessReview.hasOwnProperty('created_at')).toBe(true);
+            expect(businessReview.hasOwnProperty('rating')).toBe(true);
+            expect(businessReview.hasOwnProperty('business_id')).toBe(true);
+          })
+        })
+  
+      })
   
 //------------------------------------PATCH------------------------------
 

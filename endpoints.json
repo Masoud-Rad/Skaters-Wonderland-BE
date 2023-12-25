@@ -340,7 +340,7 @@
       
     },
 
-    "Post /api/businesses/:business_id/businessereviews":{
+    "Post /api/businesses/:business_id/businessreview":{
       "description": "Post a review for a specefic business ",
       "parametr": ["business_id"],
       "exampleResponse": {

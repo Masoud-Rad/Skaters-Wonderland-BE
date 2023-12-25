@@ -1,202 +1,221 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const { selectEndpoints } = require('../models/api.models');
-const { selectUsers, addUser } = require('../models/users.models');
-const { selectLands, selectSingleLand, addLand, updateLand, delLand } = require('../models/lands.models');
-const { selectComments, addComment, delComment } = require('../models/comments.models');
-const { selectBusinesses, selectSingleBusiness, addBusiness } = require('../models/businesses.models');
-const { selectBusinessesReviews } = require('../models/businessesReviews.models');
-const { selectPersonalTrainers, selectSinglePersonalTrainer } = require('../models/personalTrainers.models');
-const { selectPersonalTrainersReviews } = require(`../models/personalTrainersReviews.models`);
-const { selectsalesItems, selectSingleSalesItem } = require('../models/sales.models');
-exports.getEndpoints = (_req, res, next) => {
-    selectEndpoints().then((endpoints) => {
-        res.status(200).send({ endpoints });
+var selectEndpoints = require('../models/api.models').selectEndpoints;
+var _a = require('../models/users.models'), selectUsers = _a.selectUsers, addUser = _a.addUser;
+var _b = require('../models/lands.models'), selectLands = _b.selectLands, selectSingleLand = _b.selectSingleLand, addLand = _b.addLand, updateLand = _b.updateLand, delLand = _b.delLand;
+var _c = require('../models/comments.models'), selectComments = _c.selectComments, addComment = _c.addComment, delComment = _c.delComment;
+var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBusinesses, selectSingleBusiness = _d.selectSingleBusiness, addBusiness = _d.addBusiness;
+var _e = require('../models/businessesReviews.models'), selectBusinessesReviews = _e.selectBusinessesReviews, addBusinessReview = _e.addBusinessReview;
+var _f = require('../models/personalTrainers.models'), selectPersonalTrainers = _f.selectPersonalTrainers, selectSinglePersonalTrainer = _f.selectSinglePersonalTrainer;
+var selectPersonalTrainersReviews = require("../models/personalTrainersReviews.models").selectPersonalTrainersReviews;
+var _g = require('../models/sales.models'), selectsalesItems = _g.selectsalesItems, selectSingleSalesItem = _g.selectSingleSalesItem;
+//------------------------------Api-------------------------------
+exports.getEndpoints = function (_req, res, next) {
+    selectEndpoints().then(function (endpoints) {
+        res.status(200).send({ endpoints: endpoints });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getUsers = (req, res, next) => {
-    const { username } = req.query;
-    selectUsers(username).then((users) => {
-        res.status(200).send({ users });
+//------------------------------Users-----------------------------
+exports.getUsers = function (req, res, next) {
+    var username = req.query.username;
+    selectUsers(username).then(function (users) {
+        res.status(200).send({ users: users });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.postUser = (req, res, next) => {
-    const newUser = req.body;
+exports.postUser = function (req, res, next) {
+    var newUser = req.body;
     addUser(newUser)
-        .then((addedUser) => {
-        res.status(201).send({ addedUser });
+        .then(function (addedUser) {
+        res.status(201).send({ addedUser: addedUser });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getLands = (req, res, next) => {
-    const { city, has_rink, cost, sort_by, order_by } = req.query;
+//------------------------------Lands------------------------------
+exports.getLands = function (req, res, next) {
+    var _a = req.query, city = _a.city, has_rink = _a.has_rink, cost = _a.cost, sort_by = _a.sort_by, order_by = _a.order_by;
     selectLands(city, has_rink, cost, sort_by, order_by)
-        .then((lands) => {
+        .then(function (lands) {
         res.status(200).send({ "lands": lands });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getLandById = (req, res, next) => {
-    const landId = req.params.land_id;
+exports.getLandById = function (req, res, next) {
+    var landId = req.params.land_id;
     selectSingleLand(landId)
-        .then((land) => {
-        res.status(200).send({ land });
+        .then(function (land) {
+        res.status(200).send({ land: land });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.postLand = (req, res, next) => {
-    const newLand = req.body;
+exports.postLand = function (req, res, next) {
+    var newLand = req.body;
     addLand(newLand)
-        .then((addedLand) => {
-        res.status(201).send({ addedLand });
+        .then(function (addedLand) {
+        res.status(201).send({ addedLand: addedLand });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.patchLand = (req, res, next) => {
-    const landId = req.params.land_id;
-    const { votes_update, safety_rating_update, suitability_rating_update } = req.body;
+exports.patchLand = function (req, res, next) {
+    var landId = req.params.land_id;
+    var _a = req.body, votes_update = _a.votes_update, safety_rating_update = _a.safety_rating_update, suitability_rating_update = _a.suitability_rating_update;
     updateLand(landId, votes_update, safety_rating_update, suitability_rating_update)
-        .then((updatedLand) => {
-        res.status(202).send({ updatedLand });
+        .then(function (updatedLand) {
+        res.status(202).send({ updatedLand: updatedLand });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.deleteLand = (req, res, next) => {
-    const landId = req.params.land_id;
-    delLand(landId).then(() => {
+exports.deleteLand = function (req, res, next) {
+    var landId = req.params.land_id;
+    delLand(landId).then(function () {
         res.status(204).send();
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getComments = (req, res, next) => {
-    const landId = req.params.land_id;
+//------------------------------Comments------------------------------
+exports.getComments = function (req, res, next) {
+    var landId = req.params.land_id;
     selectComments(landId)
-        .then((comments) => {
-        res.status(200).send({ comments });
+        .then(function (comments) {
+        res.status(200).send({ comments: comments });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.postComment = (req, res, next) => {
-    const newComment = req.body;
-    const landId = req.params.land_id;
+exports.postComment = function (req, res, next) {
+    var newComment = req.body;
+    var landId = req.params.land_id;
     addComment(landId, newComment)
-        .then((addedComment) => {
-        res.status(201).send({ addedComment });
+        .then(function (addedComment) {
+        res.status(201).send({ addedComment: addedComment });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.deleteComment = (req, res, next) => {
-    const commentId = req.params.comment_id;
-    delComment(commentId).then(() => {
+exports.deleteComment = function (req, res, next) {
+    var commentId = req.params.comment_id;
+    delComment(commentId).then(function () {
         res.status(204).send();
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getBusinesses = (_req, res, next) => {
-    selectBusinesses().then((businesses) => {
-        res.status(200).send({ businesses });
+//------------------------------Businesses------------------------------
+exports.getBusinesses = function (_req, res, next) {
+    selectBusinesses().then(function (businesses) {
+        res.status(200).send({ businesses: businesses });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getBusinessById = (req, res, next) => {
-    const businessId = req.params.business_id;
+exports.getBusinessById = function (req, res, next) {
+    var businessId = req.params.business_id;
     selectSingleBusiness(businessId)
-        .then((business) => {
-        res.status(200).send({ business });
+        .then(function (business) {
+        res.status(200).send({ business: business });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.postBusiness = (req, res, next) => {
-    const newBusiness = req.body;
+exports.postBusiness = function (req, res, next) {
+    var newBusiness = req.body;
     addBusiness(newBusiness)
-        .then((addedBusiness) => {
-        res.status(201).send({ addedBusiness });
+        .then(function (addedBusiness) {
+        res.status(201).send({ addedBusiness: addedBusiness });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getBusinessesReviews = (req, res, next) => {
-    const businessId = req.params.business_id;
-    selectBusinessesReviews(businessId).then((businessesReviews) => {
-        res.status(200).send({ businessesReviews });
+//------------------------------BusinessesReviews------------------------------
+exports.getBusinessesReviews = function (req, res, next) {
+    var businessId = req.params.business_id;
+    selectBusinessesReviews(businessId).then(function (businessesReviews) {
+        res.status(200).send({ businessesReviews: businessesReviews });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getPersonaltrainers = (_req, res, next) => {
-    selectPersonalTrainers().then((personalTrainers) => {
-        res.status(200).send({ personalTrainers });
+exports.postBusinessReview = function (req, res, next) {
+    var newBusinessReview = req.body;
+    var businessId = req.params.business_id;
+    addBusinessReview(businessId, newBusinessReview)
+        .then(function (addedBusinessReview) {
+        res.status(201).send({ addedBusinessReview: addedBusinessReview });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getPersonalTrainerById = (req, res, next) => {
-    const pt_id = req.params.pt_id;
+//------------------------------Personaltrainers------------------------------
+exports.getPersonaltrainers = function (_req, res, next) {
+    selectPersonalTrainers().then(function (personalTrainers) {
+        res.status(200).send({ personalTrainers: personalTrainers });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.getPersonalTrainerById = function (req, res, next) {
+    var pt_id = req.params.pt_id;
     selectSinglePersonalTrainer(pt_id)
-        .then((pt) => {
-        res.status(200).send({ pt });
+        .then(function (pt) {
+        res.status(200).send({ pt: pt });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getPersonalTrainersReviews = (req, res, next) => {
-    const pt_id = req.params.pt_id;
+//------------------------------PersonaltrainerReviews------------------------------
+exports.getPersonalTrainersReviews = function (req, res, next) {
+    var pt_id = req.params.pt_id;
     selectPersonalTrainersReviews(pt_id)
-        .then((ptReviews) => {
-        res.status(200).send({ ptReviews });
+        .then(function (ptReviews) {
+        res.status(200).send({ ptReviews: ptReviews });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getSalesItems = (_req, res, next) => {
-    selectsalesItems().then((salesItems) => {
-        res.status(200).send({ salesItems });
+//------------------------------sales----------------------------------
+exports.getSalesItems = function (_req, res, next) {
+    selectsalesItems().then(function (salesItems) {
+        res.status(200).send({ salesItems: salesItems });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-exports.getSalesItemById = (req, res, next) => {
-    const item_id = req.params.item_id;
+exports.getSalesItemById = function (req, res, next) {
+    var item_id = req.params.item_id;
     selectSingleSalesItem(item_id)
-        .then((item) => {
-        res.status(200).send({ item });
+        .then(function (item) {
+        res.status(200).send({ item: item });
     })
-        .catch((err) => {
+        .catch(function (err) {
         next(err);
     });
 };
-//# sourceMappingURL=api.controllers.js.map
