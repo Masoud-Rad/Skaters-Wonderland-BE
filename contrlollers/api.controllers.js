@@ -6,7 +6,7 @@ var _b = require('../models/lands.models'), selectLands = _b.selectLands, select
 var _c = require('../models/comments.models'), selectComments = _c.selectComments, addComment = _c.addComment, delComment = _c.delComment;
 var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBusinesses, selectSingleBusiness = _d.selectSingleBusiness, addBusiness = _d.addBusiness;
 var _e = require('../models/businessesReviews.models'), selectBusinessesReviews = _e.selectBusinessesReviews, addBusinessReview = _e.addBusinessReview;
-var _f = require('../models/personalTrainers.models'), selectPersonalTrainers = _f.selectPersonalTrainers, selectSinglePersonalTrainer = _f.selectSinglePersonalTrainer;
+var _f = require('../models/personalTrainers.models'), selectPersonalTrainers = _f.selectPersonalTrainers, selectSinglePersonalTrainer = _f.selectSinglePersonalTrainer, addPt = _f.addPt;
 var selectPersonalTrainersReviews = require("../models/personalTrainersReviews.models").selectPersonalTrainersReviews;
 var _g = require('../models/sales.models'), selectsalesItems = _g.selectsalesItems, selectSingleSalesItem = _g.selectSingleSalesItem;
 //------------------------------Api-------------------------------
@@ -184,6 +184,16 @@ exports.getPersonalTrainerById = function (req, res, next) {
     selectSinglePersonalTrainer(pt_id)
         .then(function (pt) {
         res.status(200).send({ pt: pt });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.postPersonalTrainer = function (req, res, next) {
+    var newPt = req.body;
+    addPt(newPt)
+        .then(function (addedPt) {
+        res.status(201).send({ addedPt: addedPt });
     })
         .catch(function (err) {
         next(err);

@@ -1751,7 +1751,7 @@ describe("Post /api/businesses/:business_id/businessreview",()=>{
         })
       })
     
-      testgit ("POST- status: 201- responds with the added business'review",()=>{
+      test ("POST- status: 201- responds with the added business'review",()=>{
         const newBusinessReview = {
           "body": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
           "username": "tickle122",
@@ -1774,6 +1774,126 @@ describe("Post /api/businesses/:business_id/businessreview",()=>{
         })
   
       })
+
+describe("POST /api/personaltrainer",()=>{
+  
+    test("POST- status: 400- responds with error because not sending correct information",()=>{
+      const newPersonalTrainer = {                
+        name: 'Forth land',
+        city: 'Cityexample1',
+        country: 'countryexample1',
+        username: 'weegembump'
+                      }
+    return request(app)
+    .post('/api/personaltrainer')
+    .send(newPersonalTrainer)
+    .expect(400)
+    .then((response : ErrorResponse)=>{
+      expect(response.body.msg).toBe("BAD REQUEST!")
+      })
+    })
+
+    test("POST- status: 203- responds with error because username does not exist in data base",()=>{
+      const newPersonalTrainer = {                
+        "username": "uuuuu333333",
+        "ptname": "Alex Bamboe",
+        "city": "London",
+        "country": "England",
+        "postcode":  "xxx xxx",
+        "description": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+        "email": "jooee@example.com",
+        "website": "www.xxx.com",
+        "instagram": "instauser",
+        "facebook": "faceuser",
+        "contact_number": "001111"
+                      }
+    return request(app)
+    .post('/api/personaltrainer')
+    .send(newPersonalTrainer)
+    .expect(203)
+    .then((response : ErrorResponse)=>{
+      expect(response.body.msg).toBe("Non-Authoritative Information!")
+      })
+    })
+  
+    test("POST- status: 201- responds with the added Personal Trainer",()=>{
+      const newPersonalTrainer = {
+        "username": "weegembump",
+        "ptname": "Alex Bamboe",
+        "city": "London",
+        "country": "England",
+        "postcode":  "xxx xxx",
+        "description": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+        "email": "jooee@example.com",
+        "website": "www.xxx.com",
+        "instagram": "instauser",
+        "facebook": "faceuser",
+        "contact_number": "001111"
+    }
+    return request(app)
+    .post('/api/personaltrainer')
+    .send(newPersonalTrainer)
+    .expect(201)
+    .then(( response : Response ) => {
+          const personalTrainer: PtSample = response.body.addedPt;
+        
+          expect(personalTrainer.username).toBe(newPersonalTrainer.username);
+          expect(personalTrainer.ptname).toBe(newPersonalTrainer.ptname);
+          expect(personalTrainer.city).toBe(newPersonalTrainer.city);
+          expect(personalTrainer.country).toBe(newPersonalTrainer.country);
+          expect(personalTrainer.postcode).toBe(newPersonalTrainer.postcode);
+          expect(personalTrainer.description).toBe(newPersonalTrainer.description);
+          expect(personalTrainer.email).toBe(newPersonalTrainer.email);
+          expect(personalTrainer.hasOwnProperty('pt_id')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('created_at')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('website')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('instagram')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('facebook')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('contact_number')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('avatar_url')).toBe(true);
+          expect(Object.keys(personalTrainer).length).toBe(14);
+  
+        })
+      })
+    
+
+    test("POST- status: 201- responds with the added Personal Trainer-",()=>{
+      const newPersonalTrainer = {
+        "username": "weegembump",
+        "ptname": "Mat Daimon",
+        "city": "Manchester",
+        "country": "England",
+        "postcode":  "xxx xxx",
+        "description": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+        "email": "Mat@example.com",
+        "contact_number": "001111554",
+       }
+    return request(app)
+    .post('/api/personaltrainer')
+    .send(newPersonalTrainer)
+    .expect(201)
+    .then(( response : Response ) => {
+          const personalTrainer: PtSample = response.body.addedPt;
+        
+          expect(personalTrainer.username).toBe(newPersonalTrainer.username);
+          expect(personalTrainer.ptname).toBe(newPersonalTrainer.ptname);
+          expect(personalTrainer.city).toBe(newPersonalTrainer.city);
+          expect(personalTrainer.country).toBe(newPersonalTrainer.country);
+          expect(personalTrainer.postcode).toBe(newPersonalTrainer.postcode);
+          expect(personalTrainer.description).toBe(newPersonalTrainer.description);
+          expect(personalTrainer.email).toBe(newPersonalTrainer.email);
+          expect(personalTrainer.hasOwnProperty('pt_id')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('created_at')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('website')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('instagram')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('facebook')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('contact_number')).toBe(true);
+          expect(personalTrainer.hasOwnProperty('avatar_url')).toBe(true);
+          expect(Object.keys(personalTrainer).length).toBe(14);
+  
+        })
+      })
+    })
   
 //------------------------------------PATCH------------------------------
 
