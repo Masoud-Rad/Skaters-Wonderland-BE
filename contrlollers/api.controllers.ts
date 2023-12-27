@@ -7,7 +7,7 @@ const {selectComments, addComment, delComment}= require('../models/comments.mode
 const {selectBusinesses, selectSingleBusiness, addBusiness} = require ('../models/businesses.models')
 const {selectBusinessesReviews, addBusinessReview} = require ('../models/businessesReviews.models')
 const {selectPersonalTrainers, selectSinglePersonalTrainer, addPt} = require ('../models/personalTrainers.models')
-const {selectPersonalTrainersReviews} = require (`../models/personalTrainersReviews.models`)
+const {selectPersonalTrainersReviews, addPtReview} = require (`../models/personalTrainersReviews.models`)
 const {selectsalesItems, selectSingleSalesItem} = require('../models/sales.models')
 
 //-------------------------------Types----------------------------
@@ -390,6 +390,20 @@ exports.getPersonalTrainersReviews = (req: Request, res: Response, next: NextFun
     next(err);
   })
 }
+
+exports.postPtReview = (req : Request , res : Response, next : NextFunction)=>{
+  const newPtReview= req.body;
+  const ptId = req.params.pt_id;
+
+  addPtReview(ptId , newPtReview)
+  .then((addedPtReview: PtsreviewSample)=>{ 
+    res.status(201).send({addedPtReview})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
+
 
 //------------------------------sales----------------------------------
 

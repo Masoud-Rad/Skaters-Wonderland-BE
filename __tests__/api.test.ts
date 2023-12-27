@@ -1895,6 +1895,48 @@ describe("POST /api/personaltrainer",()=>{
       })
     })
   
+    describe("Post /api/personaltrainers/:pt_id/ptreview",()=>{
+  
+      test("POST- status: 400- responds with error because not sending correct information",()=>{
+            const newPtReview = {                
+              name: 'anyName',
+              city: 'Cityexample1',
+              country: 'countryexample1',
+              username: 'weegembump'
+                            }
+          return request(app)
+          .post('/api/personaltrainers/2/ptreview')
+          .send(newPtReview)
+          .expect(400)
+          .then((response : ErrorResponse)=>{
+            expect(response.body.msg).toBe("BAD REQUEST!")
+            })
+          })
+        
+      test ("POST- status: 201- responds with the added PT's review",()=>{
+            const newPtReview = {
+              "body": "Itaque quisquam est similique et est perspiciatis reprehenderit voluptatem autem. Voluptatem accusantium eius error adipisci quibusdam doloribus.",
+              "username": "tickle122",
+             }
+          return request(app)
+          .post('/api/personaltrainers/2/ptreview')
+          .send(newPtReview)
+          .expect(201)
+          .then(( response : Response ) => {
+                const ptReview: PtsreviewSample = response.body.addedPtReview;
+    
+                expect(ptReview.body).toBe(newPtReview.body);
+                expect(ptReview.username).toBe(newPtReview.username);
+                expect(Object.keys(ptReview).length).toBe(6);
+                expect(ptReview.hasOwnProperty('pt_id')).toBe(true);
+                expect(ptReview.hasOwnProperty('created_at')).toBe(true);
+                expect(ptReview.hasOwnProperty('review_id')).toBe(true);
+                expect(ptReview.hasOwnProperty('rating')).toBe(true);
+              })
+            })
+      
+          })
+  
 //------------------------------------PATCH------------------------------
 
 describe("PATCH /api/lands/:land_id", ()=>{
