@@ -416,6 +416,8 @@
      }
     },
 
+
+    
     "Patch /api/users/?username": {
       "description": "Patch a specific user ",
       "parametr": [],

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 const {selectEndpoints} = require ('../models/api.models')
-const { selectUsers, addUser }= require ('../models/users.models')
+const { selectUsers, addUser, updateUser }= require ('../models/users.models')
 const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
 const {selectComments, addComment, delComment}= require('../models/comments.models')
 const {selectBusinesses, selectSingleBusiness, addBusiness} = require ('../models/businesses.models')
@@ -171,6 +171,21 @@ exports.postUser =(req : Request , res : Response, next : NextFunction)=>{
     res.status(201).send({addedUser})
   })
   .catch((err: Error)=>{
+    next(err);
+  })
+}
+
+exports.patchUser= (req : Request , res : Response, next : NextFunction)=>{
+
+  const username = req.query.username;
+  const userUpdate = req.body;
+   
+
+  updateUser( username, userUpdate )
+  .then((updatedUser: UserSample)=>{ 
+    res.status(202).send({updatedUser})
+  })
+  .catch((err: Error)=>{ 
     next(err);
   })
 }

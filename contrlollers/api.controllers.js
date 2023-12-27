@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var selectEndpoints = require('../models/api.models').selectEndpoints;
-var _a = require('../models/users.models'), selectUsers = _a.selectUsers, addUser = _a.addUser;
+var _a = require('../models/users.models'), selectUsers = _a.selectUsers, addUser = _a.addUser, updateUser = _a.updateUser;
 var _b = require('../models/lands.models'), selectLands = _b.selectLands, selectSingleLand = _b.selectSingleLand, addLand = _b.addLand, updateLand = _b.updateLand, delLand = _b.delLand;
 var _c = require('../models/comments.models'), selectComments = _c.selectComments, addComment = _c.addComment, delComment = _c.delComment;
 var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBusinesses, selectSingleBusiness = _d.selectSingleBusiness, addBusiness = _d.addBusiness;
@@ -33,6 +33,17 @@ exports.postUser = function (req, res, next) {
     addUser(newUser)
         .then(function (addedUser) {
         res.status(201).send({ addedUser: addedUser });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.patchUser = function (req, res, next) {
+    var username = req.query.username;
+    var userUpdate = req.body;
+    updateUser(username, userUpdate)
+        .then(function (updatedUser) {
+        res.status(202).send({ updatedUser: updatedUser });
     })
         .catch(function (err) {
         next(err);

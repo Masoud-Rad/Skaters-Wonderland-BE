@@ -55,3 +55,40 @@ exports.addUser = function (newUser) {
         return Promise.reject({ status: 400, msg: "BAD REQUEST!" });
     }
 };
+exports.updateUser = function (username, userUpdate) {
+    var nameUpdate = userUpdate.nameUpdate, emailUpdate = userUpdate.emailUpdate, passwordUpdate = userUpdate.passwordUpdate, avatar_urlUpdate = userUpdate.avatar_urlUpdate, locationUpdate = userUpdate.locationUpdate;
+    return db.query("SELECT * FROM users WHERE username=$1;", [username]).then(function (_a) {
+        var rows = _a.rows;
+        var user = rows[0];
+        if (!user) {
+            return Promise.reject({ status: 404, msg: 'User not found!' });
+        }
+        var updateValues = [];
+        var queryParams = [username];
+        if (nameUpdate) {
+            updateValues.push("name = $".concat(queryParams.length + 1));
+            queryParams.push(nameUpdate);
+        }
+        if (emailUpdate) {
+            updateValues.push("email = $".concat(queryParams.length + 1));
+            queryParams.push(emailUpdate);
+        }
+        if (passwordUpdate) {
+            updateValues.push("password = $".concat(queryParams.length + 1));
+            queryParams.push(passwordUpdate);
+        }
+        if (avatar_urlUpdate) {
+            updateValues.push("avatar_url = $".concat(queryParams.length + 1));
+            queryParams.push(avatar_urlUpdate);
+        }
+        if (locationUpdate) {
+            updateValues.push("location = $".concat(queryParams.length + 1));
+            queryParams.push(locationUpdate);
+        }
+        var updateQuery = "UPDATE users SET ".concat(updateValues.join(', '), " WHERE username = $1 RETURNING *;");
+        return db.query(updateQuery, queryParams).then(function (_a) {
+            var updatedRows = _a.rows;
+            return updatedRows[0];
+        });
+    });
+};
