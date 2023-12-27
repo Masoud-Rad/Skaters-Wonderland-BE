@@ -8,7 +8,7 @@ var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBus
 var _e = require('../models/businessesReviews.models'), selectBusinessesReviews = _e.selectBusinessesReviews, addBusinessReview = _e.addBusinessReview;
 var _f = require('../models/personalTrainers.models'), selectPersonalTrainers = _f.selectPersonalTrainers, selectSinglePersonalTrainer = _f.selectSinglePersonalTrainer, addPt = _f.addPt;
 var _g = require("../models/personalTrainersReviews.models"), selectPersonalTrainersReviews = _g.selectPersonalTrainersReviews, addPtReview = _g.addPtReview;
-var _h = require('../models/sales.models'), selectsalesItems = _h.selectsalesItems, selectSingleSalesItem = _h.selectSingleSalesItem;
+var _h = require('../models/sales.models'), selectsalesItems = _h.selectsalesItems, selectSingleSalesItem = _h.selectSingleSalesItem, addSaleItem = _h.addSaleItem;
 //------------------------------Api-------------------------------
 exports.getEndpoints = function (_req, res, next) {
     selectEndpoints().then(function (endpoints) {
@@ -235,6 +235,16 @@ exports.getSalesItemById = function (req, res, next) {
     selectSingleSalesItem(item_id)
         .then(function (item) {
         res.status(200).send({ item: item });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.postSaleItem = function (req, res, next) {
+    var newSaleItem = req.body;
+    addSaleItem(newSaleItem)
+        .then(function (addedSaleItem) {
+        res.status(201).send({ addedSaleItem: addedSaleItem });
     })
         .catch(function (err) {
         next(err);

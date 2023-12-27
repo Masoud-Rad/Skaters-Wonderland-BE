@@ -233,10 +233,10 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
                 city VARCHAR NOT NULL,
                 country VARCHAR NOT NULL,
                 created_at TIMESTAMP DEFAULT NOW(),
-                email VARCHAR,
+                email VARCHAR NOT NULL,
                 facebook VARCHAR,
                 contact_number VARCHAR,
-                availability VARCHAR,
+                availability VARCHAR NOT NULL,
                 gear_avatar_url VARCHAR  DEFAULT 'http://rlv.zcache.com/az_sunset_series_by_unknown_skateboards-r339c69a8681444aeb08080977bf89165_xw0k0_8byvr_324.jpg'
             );
         `)
