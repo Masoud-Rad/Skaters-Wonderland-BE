@@ -8,7 +8,7 @@ const {selectBusinesses, selectSingleBusiness, addBusiness} = require ('../model
 const {selectBusinessesReviews, addBusinessReview} = require ('../models/businessesReviews.models')
 const {selectPersonalTrainers, selectSinglePersonalTrainer, addPt} = require ('../models/personalTrainers.models')
 const {selectPersonalTrainersReviews, addPtReview} = require (`../models/personalTrainersReviews.models`)
-const {selectsalesItems, selectSingleSalesItem} = require('../models/sales.models')
+const {selectsalesItems, selectSingleSalesItem, addSaleItem} = require('../models/sales.models')
 
 //-------------------------------Types----------------------------
 
@@ -430,3 +430,15 @@ exports.getSalesItemById = (req: Request, res: Response, next: NextFunction)=>{
   })
 }
 
+exports.postSaleItem = (req: Request, res: Response, next: NextFunction)=>{
+
+  const newSaleItem = req.body;
+
+  addSaleItem(newSaleItem)
+  .then((addedSaleItem: SaleSample)=>{
+      res.status(201).send({addedSaleItem})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}

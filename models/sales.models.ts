@@ -21,6 +21,19 @@ interface SaleSample{
     [key: string]: unknown;
   }
 
+  interface AddSaleItemSample{
+    username: string;
+    itemname : string;
+    description: string;
+    price: string;
+    city: string;
+    country: string;
+    email: string;
+    facebook: string;
+    contact_number: string;
+    availability: string;
+    gear_avatar_url: string;
+  }
 exports.selectsalesItems = ()=>{
     return db.query(`SELECT * FROM sales`)
     .then(({rows}: Result)=>{
@@ -43,3 +56,33 @@ exports.selectSingleSalesItem = ((item_id: string)=>{
     })
 })
 
+exports.addSaleItem = (newSaleItem: AddSaleItemSample)=>{
+    const {username, itemname , description, price, city, country, email, facebook, contact_number, availability, gear_avatar_url} = newSaleItem;
+
+    if(typeof newSaleItem === "object" &&  username && itemname  && description && price && city && country && email && availability){
+        const queryValues = [username, itemname , description, price, city, country, email, availability];
+        const queryColumns = ['username', 'itemname', 'description', 'price', 'city', 'country', 'email', 'availability'];
+    
+         if (facebook) {
+          queryValues.push(facebook);
+          queryColumns.push('facebook');
+        }
+
+        if (contact_number) {
+            queryValues.push(contact_number);
+            queryColumns.push('contact_number');
+        }
+
+        if (gear_avatar_url) {
+            queryValues.push(gear_avatar_url);
+            queryColumns.push('gear_avatar_url');
+        }
+  
+      const query = `INSERT INTO sales(${queryColumns.join(', ')}) VALUES (${queryValues.map((_, index) => `$${index + 1}`).join(',')}) RETURNING *;`;
+  
+      return db.query(query, queryValues)
+      .then(({ rows }: Result) => rows[0]);
+    } else {
+      return Promise.reject({ status: 400, msg: 'BAD REQUEST!' });
+    }
+}
