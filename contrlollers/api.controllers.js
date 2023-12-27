@@ -7,8 +7,8 @@ var _c = require('../models/comments.models'), selectComments = _c.selectComment
 var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBusinesses, selectSingleBusiness = _d.selectSingleBusiness, addBusiness = _d.addBusiness;
 var _e = require('../models/businessesReviews.models'), selectBusinessesReviews = _e.selectBusinessesReviews, addBusinessReview = _e.addBusinessReview;
 var _f = require('../models/personalTrainers.models'), selectPersonalTrainers = _f.selectPersonalTrainers, selectSinglePersonalTrainer = _f.selectSinglePersonalTrainer, addPt = _f.addPt;
-var selectPersonalTrainersReviews = require("../models/personalTrainersReviews.models").selectPersonalTrainersReviews;
-var _g = require('../models/sales.models'), selectsalesItems = _g.selectsalesItems, selectSingleSalesItem = _g.selectSingleSalesItem;
+var _g = require("../models/personalTrainersReviews.models"), selectPersonalTrainersReviews = _g.selectPersonalTrainersReviews, addPtReview = _g.addPtReview;
+var _h = require('../models/sales.models'), selectsalesItems = _h.selectsalesItems, selectSingleSalesItem = _h.selectSingleSalesItem;
 //------------------------------Api-------------------------------
 exports.getEndpoints = function (_req, res, next) {
     selectEndpoints().then(function (endpoints) {
@@ -205,6 +205,17 @@ exports.getPersonalTrainersReviews = function (req, res, next) {
     selectPersonalTrainersReviews(pt_id)
         .then(function (ptReviews) {
         res.status(200).send({ ptReviews: ptReviews });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.postPtReview = function (req, res, next) {
+    var newPtReview = req.body;
+    var ptId = req.params.pt_id;
+    addPtReview(ptId, newPtReview)
+        .then(function (addedPtReview) {
+        res.status(201).send({ addedPtReview: addedPtReview });
     })
         .catch(function (err) {
         next(err);

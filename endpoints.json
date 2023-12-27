@@ -385,10 +385,12 @@
       "parametr": ["pt_id"],
       "exampleResponse": {
         "addedPT_id":{
-          "body": "I like it because it is smooth and easy for amateur, nice view",
-          "username": "Mas",
-          "pt_id": 18,
-          "created_at": 1590103140000
+          "review_id": 5,
+        "username": "tickle122",
+        "pt_id": 2,
+        "body": "text text text text",
+        "rating": 0,
+        "created_at": "2023-12-27T19:22:54.642Z"
         }
       }
     },
