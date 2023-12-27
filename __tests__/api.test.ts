@@ -2174,6 +2174,59 @@ describe("POST /api/saleItem",()=>{
 
 //------------------------------------PATCH------------------------------
 
+describe("PATCH /api/users/?username", ()=>{
+
+  test("PATCH- status: 404- responds with an error if username does  not exist",()=>{
+    const userUpdate ={ nameUpdate: "John Doedoe" }
+    return request(app)
+    .patch('/api/users/?username=user45678')
+    .send(userUpdate)
+    .expect(404)
+      .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("User not found!")
+        })
+  })
+
+  test("PATCH- status: 202- responds with the updated User",()=>{
+    const userUpdate ={
+          nameUpdate: "John Doedoe",
+          emailUpdate: "MrJone@example.com",
+          passwordUpdate: "John_password",
+          avatar_urlUpdate: "any-URL",
+          locationUpdate: "Tehran, Iran"
+    }
+    return request(app)
+    .patch('/api/users/?username=tickle122')
+    .send(userUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+          const user = body.updatedUser;
+
+          expect(Object.keys(user).length).toBe(6);
+          expect(user.name).toBe("John Doedoe");
+          expect(user.email).toBe("MrJone@example.com");
+          expect(user.password).toBe("John_password");
+          expect(user.avatar_url).toBe("any-URL");
+          expect(user.location).toBe("Tehran, Iran");
+        })
+  })
+
+  test("PATCH- status: 202- responds with the updated user",()=>{
+    const userUpdate ={ passwordUpdate: "John_password" }
+    return request(app)
+    .patch('/api/users/?username=tickle122')
+    .send(userUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+          const user = body.updatedUser;
+          
+          expect(Object.keys(user).length).toBe(6);
+          expect(user.password).toBe("John_password");
+        })
+})
+
+})
+
 describe("PATCH /api/lands/:land_id", ()=>{
   test("PATCH- status: 202- responds with the updated land",()=>{
     const votesUpdate = { votes_update : 1 };
@@ -2222,6 +2275,10 @@ describe("PATCH /api/lands/:land_id", ()=>{
   })
 
 })
+
+
+//------------------------------------DELETE------------------------------
+
 
 describe("DELETE - /api/lands/:land_id", ()=>{
   test("DELETE - status: 204 , respond with no content",()=>{

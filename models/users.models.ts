@@ -21,6 +21,13 @@ interface Result {
     password: string;
   }
 
+  interface UserUpdateSample{
+    nameUpdate: string;
+    emailUpdate: string;
+    passwordUpdate: string;
+    avatar_urlUpdate: string;
+    locationUpdate: string;
+  }
 
 exports.selectUsers=(userName: string)=>{
   if(!userName){
@@ -80,6 +87,51 @@ if (
 }
 
 
+exports.updateUser = (username: string, userUpdate: UserUpdateSample) => {
+  const { nameUpdate, emailUpdate, passwordUpdate, avatar_urlUpdate, locationUpdate } = userUpdate;
+
+  return db.query(`SELECT * FROM users WHERE username=$1;`, [username]).then(({ rows }: Result) => {
+    const user: UsersSample = rows[0];
+
+    if (!user) {
+      return Promise.reject({ status: 404, msg: 'User not found!' });
+    }
+
+    const updateValues: string[] = [];
+    const queryParams: any[] = [username];
+
+    if (nameUpdate) {
+      updateValues.push(`name = $${queryParams.length + 1}`);
+      queryParams.push(nameUpdate);
+    }
+
+    if (emailUpdate) {
+      updateValues.push(`email = $${queryParams.length + 1}`);
+      queryParams.push(emailUpdate);
+    }
+
+    if (passwordUpdate) {
+      updateValues.push(`password = $${queryParams.length + 1}`);
+      queryParams.push(passwordUpdate);
+    }
+
+    if (avatar_urlUpdate) {
+      updateValues.push(`avatar_url = $${queryParams.length + 1}`);
+      queryParams.push(avatar_urlUpdate);
+    }
+
+    if (locationUpdate) {
+      updateValues.push(`location = $${queryParams.length + 1}`);
+      queryParams.push(locationUpdate);
+    }
+
+    const updateQuery = `UPDATE users SET ${updateValues.join(', ')} WHERE username = $1 RETURNING *;`;
+
+    return db.query(updateQuery, queryParams).then(({ rows: updatedRows }: Result) => {
+      return updatedRows[0];
+    });
+  });
+};
 
 
 
