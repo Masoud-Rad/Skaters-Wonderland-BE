@@ -32,6 +32,17 @@ interface BusinessSample {
     contact_number: string;
   }
 
+  interface BusinessUpdateSample {
+    businessnameUpdate: string;
+    cityUpdate: string;
+    countryUpdate: string;
+    postcodeUpdate: string;
+    descriptionUpdate: string;
+    websiteUpdate: string;
+    contact_numberUpdate: string;
+    business_img_urlUpdate: string;
+}
+
 
   exports.selectBusinesses=()=>{
 
@@ -96,4 +107,66 @@ interface BusinessSample {
     } else {
       return Promise.reject({ status: 400, msg: 'BAD REQUEST!' });
     }
+  };
+
+
+  exports.updateBusiness =  (businessId: string, businessUpdate: BusinessUpdateSample) => {
+    const { businessnameUpdate, cityUpdate, countryUpdate, postcodeUpdate, descriptionUpdate, websiteUpdate, contact_numberUpdate, business_img_urlUpdate } = businessUpdate;
+  
+    return db.query(`SELECT * FROM businesses WHERE business_id=$1;`, [businessId]).then(({ rows }: Result) => {
+      const business: BusinessSample = rows[0];
+      if (!business) {
+        return Promise.reject({ status: 404, msg: 'Business not found!' });
+      }
+  
+      const updateValues: string[] = [];
+      const queryParams: any[] = [businessId];
+  
+      if (businessnameUpdate) {
+        updateValues.push(`businessname = $${queryParams.length + 1}`);
+        queryParams.push(businessnameUpdate);
+      }
+  
+      if (cityUpdate) {
+        updateValues.push(`city = $${queryParams.length + 1}`);
+        queryParams.push(cityUpdate);
+      }
+  
+      if (countryUpdate) {
+        updateValues.push(`country = $${queryParams.length + 1}`);
+        queryParams.push(countryUpdate);
+      }
+  
+      if (postcodeUpdate) {
+        updateValues.push(`postcode = $${queryParams.length + 1}`);
+        queryParams.push(postcodeUpdate);
+      }
+  
+      if (descriptionUpdate) {
+        updateValues.push(`description = $${queryParams.length + 1}`);
+        queryParams.push(descriptionUpdate);
+      }
+
+      if (websiteUpdate) {
+        updateValues.push(`website = $${queryParams.length + 1}`);
+        queryParams.push(websiteUpdate);
+      }
+
+      if (contact_numberUpdate) {
+        updateValues.push(`contact_number = $${queryParams.length + 1}`);
+        queryParams.push(contact_numberUpdate);
+      }
+
+      if (business_img_urlUpdate) {
+        updateValues.push(`business_img_url = $${queryParams.length + 1}`);
+        queryParams.push(business_img_urlUpdate);
+      }
+  
+      const updateQuery = `UPDATE businesses SET ${updateValues.join(', ')} WHERE business_id = $1 RETURNING *;`;
+      
+      return db.query(updateQuery, queryParams).then(({ rows: updatedRows }: Result) => {
+        return updatedRows[0];
+      });
+    })
+    
   };
