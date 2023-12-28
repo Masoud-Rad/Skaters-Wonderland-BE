@@ -8,7 +8,7 @@ const { selectBusinesses, selectSingleBusiness, addBusiness, updateBusiness } = 
 const { selectBusinessesReviews, addBusinessReview } = require ('../models/businessesReviews.models')
 const { selectPersonalTrainers, selectSinglePersonalTrainer, addPt, updatePt } = require ('../models/personalTrainers.models')
 const { selectPersonalTrainersReviews, addPtReview } = require (`../models/personalTrainersReviews.models`)
-const { selectsalesItems, selectSingleSalesItem, addSaleItem } = require('../models/sales.models')
+const { selectsalesItems, selectSingleSalesItem, addSaleItem, updateSaleItem } = require('../models/sales.models')
 
 //-------------------------------Types----------------------------
 
@@ -480,6 +480,20 @@ exports.postSaleItem = (req: Request, res: Response, next: NextFunction)=>{
       res.status(201).send({addedSaleItem})
   })
   .catch((err: Error)=>{
+    next(err);
+  })
+}
+
+
+exports.patchSaleItem = (req : Request , res : Response, next : NextFunction)=>{
+  const itemId = req.params.item_id;
+  const itemUpdate = req.body; 
+
+  updateSaleItem(itemId, itemUpdate)
+  .then((updatedItem: PtSample)=>{ 
+    res.status(202).send({updatedItem})
+  })
+  .catch((err: Error)=>{  
     next(err);
   })
 }

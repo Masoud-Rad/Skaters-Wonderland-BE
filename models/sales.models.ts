@@ -34,6 +34,20 @@ interface SaleSample{
     availability: string;
     gear_avatar_url: string;
   }
+
+  interface ItemUpdateSample  {
+    itemnameUpdate: string;
+    descriptionUpdate: string;
+    priceUpdate: string;
+    emailUpdate: string;
+    facebookUpdate: string;
+    contact_numberUpdate: string;
+    availabilityUpdate: string;
+    gear_avatar_urlUpdate: string;
+  }
+
+  //------------------------------------------------------------
+
 exports.selectsalesItems = ()=>{
     return db.query(`SELECT * FROM sales`)
     .then(({rows}: Result)=>{
@@ -86,3 +100,74 @@ exports.addSaleItem = (newSaleItem: AddSaleItemSample)=>{
       return Promise.reject({ status: 400, msg: 'BAD REQUEST!' });
     }
 }
+
+interface ItemUpdateSample  {
+    itemnameUpdate: string;
+    descriptionUpdate: string;
+    priceUpdate: string;
+    emailUpdate: string;
+    facebookUpdate: string;
+    contact_numberUpdate: string;
+    availabilityUpdate: string;
+    gear_avatar_urlUpdate: string;
+  }
+exports.updateSaleItem =  (itemId: string, itemUpdate: ItemUpdateSample) => {
+    const { itemnameUpdate, descriptionUpdate, priceUpdate, emailUpdate, facebookUpdate, contact_numberUpdate, availabilityUpdate, gear_avatar_urlUpdate } = itemUpdate;
+  
+    return db.query(`SELECT * FROM sales WHERE item_id=$1;`, [itemId]).then(({ rows }: Result) => {
+      const item: SaleSample = rows[0];
+      if (!item) {
+        return Promise.reject({ status: 404, msg: 'Item not found!' });
+      }
+  
+      const updateValues: string[] = [];
+      const queryParams: any[] = [itemId];
+  
+      if (itemnameUpdate) {
+        updateValues.push(`itemname = $${queryParams.length + 1}`);
+        queryParams.push(itemnameUpdate);
+      }
+  
+      if (descriptionUpdate) {
+        updateValues.push(`description = $${queryParams.length + 1}`);
+        queryParams.push(descriptionUpdate);
+      }
+
+      if (priceUpdate) {
+        updateValues.push(`price = $${queryParams.length + 1}`);
+        queryParams.push(priceUpdate);
+      }
+
+      if (emailUpdate) {
+        updateValues.push(`email = $${queryParams.length + 1}`);
+        queryParams.push(emailUpdate);
+      }
+      
+      if (facebookUpdate) {
+          updateValues.push(`facebook = $${queryParams.length + 1}`);
+          queryParams.push(facebookUpdate);
+        }
+        
+      if (contact_numberUpdate) {
+            updateValues.push(`contact_number = $${queryParams.length + 1}`);
+            queryParams.push(contact_numberUpdate);
+        }
+        
+      if (availabilityUpdate) {
+          updateValues.push(`availability = $${queryParams.length + 1}`);
+          queryParams.push(availabilityUpdate);
+        }
+
+      if (gear_avatar_urlUpdate) {
+        updateValues.push(`gear_avatar_url = $${queryParams.length + 1}`);
+        queryParams.push(gear_avatar_urlUpdate);
+      }
+  
+      const updateQuery = `UPDATE sales SET ${updateValues.join(', ')} WHERE item_id = $1 RETURNING *;`;
+      
+      return db.query(updateQuery, queryParams).then(({ rows: updatedRows }: Result) => {
+        return updatedRows[0];
+      });
+    })
+    
+  };

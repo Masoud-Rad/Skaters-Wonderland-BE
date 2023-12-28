@@ -242,7 +242,7 @@
       }
     },
 
-    "Get /api/sales/item_id":{
+    "Get /api/sales/:item_id":{
       "description": "serves an item for sale",
       "parametr": ["item_id"],
       "exampleResponse": {
@@ -506,12 +506,13 @@
       }
     },
 
-    "Patch /api/sales/item_id": {
+    "Patch /api/sales/:item_id": {
       "description": "Patch a specific Item for sale ",
       "parametr": ["item_id"],
       "queries": [],
       "exampleResponse": {
         "editedItem":{
+          "item_id": 1,
           "username": "grumpy19",
           "itemname": "Trendy Roller Skates",
           "description": "Boys And Girls Four-Wheel Roller Skates Trendy Roller Skates With Graffiti Print For Spring And Autumn",

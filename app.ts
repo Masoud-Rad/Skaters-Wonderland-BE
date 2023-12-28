@@ -6,9 +6,10 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const {getBusinessesReviews, getEndpoints, getUsers, getLands, getLandById, getComments, getBusinesses, getBusinessById, getPersonaltrainers, getPersonalTrainerById, getPersonalTrainersReviews, getSalesItems, getSalesItemById, postUser, postLand, postComment, postBusiness, postBusinessReview, postPersonalTrainer, postPtReview, postSaleItem, patchUser, patchLand, patchBusiness, patchPersonalTrainer, deleteLand, deleteComment} = require('./contrlollers/api.controllers')
+const {getBusinessesReviews, getEndpoints, getUsers, getLands, getLandById, getComments, getBusinesses, getBusinessById, getPersonaltrainers, getPersonalTrainerById, getPersonalTrainersReviews, getSalesItems, getSalesItemById, postUser, postLand, postComment, postBusiness, postBusinessReview, postPersonalTrainer, postPtReview, postSaleItem, patchUser, patchLand, patchBusiness, patchPersonalTrainer, patchSaleItem, deleteLand, deleteComment} = require('./contrlollers/api.controllers')
 
 //----------------------------------------------Get-------------------------------------------------
+
 app.get('/api/getEndpoints', getEndpoints)
 
 app.get('/api/users', getUsers);
@@ -31,6 +32,7 @@ app.get('/api/personaltrainers/:pt_id/ptreviews', getPersonalTrainersReviews)
 
 app.get('/api/sales',getSalesItems)
 app.get('/api/sales/:item_id',getSalesItemById)
+
 //----------------------------------------------Post-------------------------------------------------
 
 app.post('/api/user', postUser)
@@ -58,6 +60,8 @@ app.patch('/api/lands/:land_id', patchLand)
 app.patch('/api/businesses/:business_id', patchBusiness)
 
 app.patch('/api/personaltrainers/:pt_id', patchPersonalTrainer)
+
+app.patch('/api/sales/:item_id', patchSaleItem)
 
 //----------------------------------------------Delete-------------------------------------------------
 
