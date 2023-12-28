@@ -59,3 +59,64 @@ exports.addPt = function (newPt) {
         return Promise.reject({ status: 400, msg: 'BAD REQUEST!' });
     }
 };
+exports.updatePt = function (ptId, ptUpdate) {
+    var ptnameUpdate = ptUpdate.ptnameUpdate, cityUpdate = ptUpdate.cityUpdate, countryUpdate = ptUpdate.countryUpdate, postcodeUpdate = ptUpdate.postcodeUpdate, descriptionUpdate = ptUpdate.descriptionUpdate, websiteUpdate = ptUpdate.websiteUpdate, emailUpdate = ptUpdate.emailUpdate, instagramUpdate = ptUpdate.instagramUpdate, facebookUpdate = ptUpdate.facebookUpdate, contact_numberUpdate = ptUpdate.contact_numberUpdate, avatar_urlUpdate = ptUpdate.avatar_urlUpdate;
+    return db.query("SELECT * FROM personaltrainers WHERE pt_id=$1;", [ptId]).then(function (_a) {
+        var rows = _a.rows;
+        var pt = rows[0];
+        if (!pt) {
+            return Promise.reject({ status: 404, msg: 'PT not found!' });
+        }
+        var updateValues = [];
+        var queryParams = [ptId];
+        if (ptnameUpdate) {
+            updateValues.push("ptname = $".concat(queryParams.length + 1));
+            queryParams.push(ptnameUpdate);
+        }
+        if (cityUpdate) {
+            updateValues.push("city = $".concat(queryParams.length + 1));
+            queryParams.push(cityUpdate);
+        }
+        if (countryUpdate) {
+            updateValues.push("country = $".concat(queryParams.length + 1));
+            queryParams.push(countryUpdate);
+        }
+        if (postcodeUpdate) {
+            updateValues.push("postcode = $".concat(queryParams.length + 1));
+            queryParams.push(postcodeUpdate);
+        }
+        if (descriptionUpdate) {
+            updateValues.push("description = $".concat(queryParams.length + 1));
+            queryParams.push(descriptionUpdate);
+        }
+        if (websiteUpdate) {
+            updateValues.push("website = $".concat(queryParams.length + 1));
+            queryParams.push(websiteUpdate);
+        }
+        if (emailUpdate) {
+            updateValues.push("email = $".concat(queryParams.length + 1));
+            queryParams.push(emailUpdate);
+        }
+        if (instagramUpdate) {
+            updateValues.push("instagram = $".concat(queryParams.length + 1));
+            queryParams.push(instagramUpdate);
+        }
+        if (facebookUpdate) {
+            updateValues.push("facebook = $".concat(queryParams.length + 1));
+            queryParams.push(facebookUpdate);
+        }
+        if (contact_numberUpdate) {
+            updateValues.push("contact_number = $".concat(queryParams.length + 1));
+            queryParams.push(contact_numberUpdate);
+        }
+        if (avatar_urlUpdate) {
+            updateValues.push("avatar_url = $".concat(queryParams.length + 1));
+            queryParams.push(avatar_urlUpdate);
+        }
+        var updateQuery = "UPDATE personaltrainers SET ".concat(updateValues.join(', '), " WHERE pt_id = $1 RETURNING *;");
+        return db.query(updateQuery, queryParams).then(function (_a) {
+            var updatedRows = _a.rows;
+            return updatedRows[0];
+        });
+    });
+};

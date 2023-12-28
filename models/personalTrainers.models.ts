@@ -36,6 +36,20 @@ interface PtSample{
     avatar_url: string;
   }
 
+  interface PtUpdateSample{
+          ptnameUpdate: string; 
+          cityUpdate: string; 
+          countryUpdate: string; 
+          postcodeUpdate: string; 
+          descriptionUpdate: string; 
+          websiteUpdate: string; 
+          emailUpdate: string; 
+          instagramUpdate: string; 
+          facebookUpdate: string; 
+          contact_numberUpdate: string; 
+          avatar_urlUpdate: string; 
+        }
+
 exports.selectPersonalTrainers = ()=>{
     return db.query(`SELECT * FROM personaltrainers`)
     .then(({rows}: Result)=>{
@@ -100,4 +114,81 @@ exports.addPt = (newPt: ADDNewPtSample) => {
     } else {
       return Promise.reject({ status: 400, msg: 'BAD REQUEST!' });
     }
+  };
+
+  
+  exports.updatePt =  (ptId: string, ptUpdate: PtUpdateSample) => {
+    const { ptnameUpdate, cityUpdate, countryUpdate, postcodeUpdate, descriptionUpdate, websiteUpdate, emailUpdate, instagramUpdate, facebookUpdate, contact_numberUpdate, avatar_urlUpdate } = ptUpdate;
+  
+    return db.query(`SELECT * FROM personaltrainers WHERE pt_id=$1;`, [ptId]).then(({ rows }: Result) => {
+      const pt: PtSample = rows[0];
+      if (!pt) {
+        return Promise.reject({ status: 404, msg: 'PT not found!' });
+      }
+  
+      const updateValues: string[] = [];
+      const queryParams: any[] = [ptId];
+  
+      if (ptnameUpdate) {
+        updateValues.push(`ptname = $${queryParams.length + 1}`);
+        queryParams.push(ptnameUpdate);
+      }
+  
+      if (cityUpdate) {
+        updateValues.push(`city = $${queryParams.length + 1}`);
+        queryParams.push(cityUpdate);
+      }
+  
+      if (countryUpdate) {
+        updateValues.push(`country = $${queryParams.length + 1}`);
+        queryParams.push(countryUpdate);
+      }
+  
+      if (postcodeUpdate) {
+        updateValues.push(`postcode = $${queryParams.length + 1}`);
+        queryParams.push(postcodeUpdate);
+      }
+  
+      if (descriptionUpdate) {
+        updateValues.push(`description = $${queryParams.length + 1}`);
+        queryParams.push(descriptionUpdate);
+      }
+
+      if (websiteUpdate) {
+        updateValues.push(`website = $${queryParams.length + 1}`);
+        queryParams.push(websiteUpdate);
+      }
+
+      if (emailUpdate) {
+        updateValues.push(`email = $${queryParams.length + 1}`);
+        queryParams.push(emailUpdate);
+      }
+
+      if (instagramUpdate) {
+        updateValues.push(`instagram = $${queryParams.length + 1}`);
+        queryParams.push(instagramUpdate);
+      }
+
+      if (facebookUpdate) {
+        updateValues.push(`facebook = $${queryParams.length + 1}`);
+        queryParams.push(facebookUpdate);
+      }
+
+      if (contact_numberUpdate) {
+        updateValues.push(`contact_number = $${queryParams.length + 1}`);
+        queryParams.push(contact_numberUpdate);
+      }
+
+      if (avatar_urlUpdate) {
+        updateValues.push(`avatar_url = $${queryParams.length + 1}`);
+        queryParams.push(avatar_urlUpdate);
+      }
+  
+      const updateQuery = `UPDATE personaltrainers SET ${updateValues.join(', ')} WHERE pt_id = $1 RETURNING *;`;
+      
+      return db.query(updateQuery, queryParams).then(({ rows: updatedRows }: Result) => {
+        return updatedRows[0];
+      });
+    })
+    
   };

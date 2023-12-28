@@ -2340,6 +2340,72 @@ describe("/api/businesses/:business_id", ()=>{
   })
 })
 
+describe("/api/personaltrainers/:pt_id", ()=>{
+
+  test("PATCH- status: 404- responds with an error if PT ID does  not exist",()=>{
+    const PtUpdate = { "cityUpdate": "Manchester" };
+
+    return request(app)
+    .patch('/api/personaltrainers/0000028798780')
+    .send(PtUpdate)
+    .expect(404)
+      .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("PT not found!")
+        })
+  })
+
+  test("PATCH- status: 202- responds with the updated PT",()=>{
+    const PtUpdate = {
+          "ptnameUpdate": "John DoeDoe",
+          "cityUpdate": "Manchester",
+          "countryUpdate": "UK",
+          "postcodeUpdate":  "YYY xxx",
+          "descriptionUpdate": "User Description",
+          "websiteUpdate": "www.xxxUrl.com",
+          "emailUpdate": "john_Doe@example.com",
+          "instagramUpdate": "UserInsta",
+          "facebookUpdate": "UserFacebook",
+          "contact_numberUpdate": "00000001111",
+          "avatar_urlUpdate": "data:image/jpeg"
+        }
+    return request(app)
+    .patch('/api/personaltrainers/2')
+    .send(PtUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+      const pt = body.updatedPt;
+
+      expect(Object.keys(pt).length).toBe(14);
+      expect(pt.ptname).toBe(PtUpdate.ptnameUpdate);
+      expect(pt.city).toBe(PtUpdate.cityUpdate);
+      expect(pt.country).toBe(PtUpdate.countryUpdate);
+      expect(pt.postcode).toBe(PtUpdate.postcodeUpdate);
+      expect(pt.description).toBe(PtUpdate.descriptionUpdate);
+      expect(pt.website).toBe(PtUpdate.websiteUpdate);
+      expect(pt.email).toBe(PtUpdate.emailUpdate);
+      expect(pt.instagram).toBe(PtUpdate.instagramUpdate);
+      expect(pt.facebook).toBe(PtUpdate.facebookUpdate);
+      expect(pt.contact_number).toBe(PtUpdate.contact_numberUpdate);
+      expect(pt.avatar_url).toBe(PtUpdate.avatar_urlUpdate);
+
+        })
+  })
+
+  test("PATCH- status: 202- responds with the updated PT",()=>{
+    const PtUpdate = { "instagramUpdate": "UserInsta" };
+    return request(app)
+    .patch('/api/personaltrainers/2')
+    .send(PtUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+      const pt = body.updatedPt;
+
+      expect(Object.keys(pt).length).toBe(14);
+      expect(pt.instagram).toBe(PtUpdate.instagramUpdate);
+    })
+  })
+})
+
 //------------------------------------DELETE------------------------------
 
 

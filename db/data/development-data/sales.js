@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-[
+module.exports = [
     {
         username: "grumpy19",
         itemname: 'Trendy Roller Skates',

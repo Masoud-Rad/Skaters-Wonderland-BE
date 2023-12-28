@@ -6,7 +6,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const {getBusinessesReviews, getEndpoints, getUsers, getLands, getLandById, getComments, getBusinesses, getBusinessById, getPersonaltrainers, getPersonalTrainerById, getPersonalTrainersReviews, getSalesItems, getSalesItemById, postUser, postLand, postComment, postBusiness, postBusinessReview, postPersonalTrainer, postPtReview, postSaleItem, patchUser, patchLand, patchBusiness, deleteLand, deleteComment} = require('./contrlollers/api.controllers')
+const {getBusinessesReviews, getEndpoints, getUsers, getLands, getLandById, getComments, getBusinesses, getBusinessById, getPersonaltrainers, getPersonalTrainerById, getPersonalTrainersReviews, getSalesItems, getSalesItemById, postUser, postLand, postComment, postBusiness, postBusinessReview, postPersonalTrainer, postPtReview, postSaleItem, patchUser, patchLand, patchBusiness, patchPersonalTrainer, deleteLand, deleteComment} = require('./contrlollers/api.controllers')
 
 //----------------------------------------------Get-------------------------------------------------
 app.get('/api/getEndpoints', getEndpoints)
@@ -56,6 +56,8 @@ app.patch('/api/users',patchUser)
 app.patch('/api/lands/:land_id', patchLand)
 
 app.patch('/api/businesses/:business_id', patchBusiness)
+
+app.patch('/api/personaltrainers/:pt_id', patchPersonalTrainer)
 
 //----------------------------------------------Delete-------------------------------------------------
 
