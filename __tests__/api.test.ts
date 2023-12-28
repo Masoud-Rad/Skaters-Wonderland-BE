@@ -2406,6 +2406,70 @@ describe("/api/personaltrainers/:pt_id", ()=>{
   })
 })
 
+describe("/api/sales/:item_id", ()=>{
+
+  test("PATCH- status: 404- responds with an error if item does  not exist in data-base",()=>{
+    const itemUpdate = { "priceUpdate": "50" };
+
+    return request(app)
+    .patch('/api/sales/0000028798780')
+    .send(itemUpdate)
+    .expect(404)
+      .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("Item not found!")
+        })
+  })
+
+  test("PATCH- status: 202- responds with the updated PT",()=>{
+    const itemUpdate = {
+      "itemnameUpdate": "Roller Skates",
+      "descriptionUpdate": "Bitem's description",
+      "priceUpdate": "50",
+      "emailUpdate": "MrJohn@example.com",
+      "facebookUpdate": "facebookUser",
+      "contact_numberUpdate": "0000001111",
+      "availabilityUpdate": "unavailable",
+      "gear_avatar_urlUpdate": "data:image/jpeg"
+        }
+    return request(app)
+    .patch('/api/sales/2')
+    .send(itemUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+      const item = body.updatedItem;
+
+      expect(Object.keys(item).length).toBe(13);
+      expect(item.itemname).toBe(itemUpdate.itemnameUpdate);
+      expect(item.description).toBe(itemUpdate.descriptionUpdate);
+      expect(item.price).toBe(itemUpdate.priceUpdate);
+      expect(item.email).toBe(itemUpdate.emailUpdate);
+      expect(item.facebook).toBe(itemUpdate.facebookUpdate);
+      expect(item.contact_number).toBe(itemUpdate.contact_numberUpdate);
+      expect(item.availability).toBe(itemUpdate.availabilityUpdate);
+      expect(item.gear_avatar_url).toBe(itemUpdate.gear_avatar_urlUpdate);
+
+    })
+  })
+
+  test("PATCH- status: 202- responds with the updated PT",()=>{
+    const itemUpdate = { 
+      "priceUpdate": "50",
+      "availabilityUpdate": "unavailable",
+    }
+    return request(app)
+    .patch('/api/sales/1')
+    .send(itemUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+      const item = body.updatedItem;
+
+      expect(Object.keys(item).length).toBe(13);
+      expect(item.price).toBe(itemUpdate.priceUpdate);
+      expect(item.availability).toBe(itemUpdate.availabilityUpdate);
+    })
+  })
+})
+
 //------------------------------------DELETE------------------------------
 
 
