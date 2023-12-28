@@ -6,7 +6,7 @@ const { selectLands, selectSingleLand, addLand, updateLand, delLand } = require(
 const { selectComments, addComment, delComment }= require('../models/comments.models')
 const { selectBusinesses, selectSingleBusiness, addBusiness, updateBusiness } = require ('../models/businesses.models')
 const { selectBusinessesReviews, addBusinessReview } = require ('../models/businessesReviews.models')
-const { selectPersonalTrainers, selectSinglePersonalTrainer, addPt } = require ('../models/personalTrainers.models')
+const { selectPersonalTrainers, selectSinglePersonalTrainer, addPt, updatePt } = require ('../models/personalTrainers.models')
 const { selectPersonalTrainersReviews, addPtReview } = require (`../models/personalTrainersReviews.models`)
 const { selectsalesItems, selectSingleSalesItem, addSaleItem } = require('../models/sales.models')
 
@@ -405,6 +405,19 @@ exports.postPersonalTrainer = (req: Request, res: Response, next: NextFunction)=
  .catch((err: Error)=>{
   next(err)
  })
+}
+
+exports.patchPersonalTrainer = (req : Request , res : Response, next : NextFunction)=>{
+  const ptId = req.params.pt_id;
+  const ptUpdate = req.body; 
+
+  updatePt(ptId, ptUpdate)
+  .then((updatedPt: PtSample)=>{ 
+    res.status(202).send({updatedPt})
+  })
+  .catch((err: Error)=>{  
+    next(err);
+  })
 }
 
 //------------------------------PersonaltrainerReviews------------------------------
