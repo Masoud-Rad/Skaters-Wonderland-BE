@@ -4,7 +4,7 @@ var selectEndpoints = require('../models/api.models').selectEndpoints;
 var _a = require('../models/users.models'), selectUsers = _a.selectUsers, addUser = _a.addUser, updateUser = _a.updateUser;
 var _b = require('../models/lands.models'), selectLands = _b.selectLands, selectSingleLand = _b.selectSingleLand, addLand = _b.addLand, updateLand = _b.updateLand, delLand = _b.delLand;
 var _c = require('../models/comments.models'), selectComments = _c.selectComments, addComment = _c.addComment, delComment = _c.delComment;
-var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBusinesses, selectSingleBusiness = _d.selectSingleBusiness, addBusiness = _d.addBusiness;
+var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBusinesses, selectSingleBusiness = _d.selectSingleBusiness, addBusiness = _d.addBusiness, updateBusiness = _d.updateBusiness;
 var _e = require('../models/businessesReviews.models'), selectBusinessesReviews = _e.selectBusinessesReviews, addBusinessReview = _e.addBusinessReview;
 var _f = require('../models/personalTrainers.models'), selectPersonalTrainers = _f.selectPersonalTrainers, selectSinglePersonalTrainer = _f.selectSinglePersonalTrainer, addPt = _f.addPt;
 var _g = require("../models/personalTrainersReviews.models"), selectPersonalTrainersReviews = _g.selectPersonalTrainersReviews, addPtReview = _g.addPtReview;
@@ -155,6 +155,17 @@ exports.postBusiness = function (req, res, next) {
     addBusiness(newBusiness)
         .then(function (addedBusiness) {
         res.status(201).send({ addedBusiness: addedBusiness });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.patchBusiness = function (req, res, next) {
+    var businessId = req.params.business_id;
+    var businessUpdate = req.body;
+    updateBusiness(businessId, businessUpdate)
+        .then(function (updatedBusiness) {
+        res.status(202).send({ updatedBusiness: updatedBusiness });
     })
         .catch(function (err) {
         next(err);

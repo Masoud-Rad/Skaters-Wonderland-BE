@@ -2276,6 +2276,69 @@ describe("PATCH /api/lands/:land_id", ()=>{
 
 })
 
+describe("/api/businesses/:business_id", ()=>{
+
+  test("PATCH- status: 404- responds with an error if business ID does  not exist",()=>{
+    const businessUpdate = { "cityUpdate": "Manchester" };
+
+    return request(app)
+    .patch('/api/businesses/28798780')
+    .send(businessUpdate)
+    .expect(404)
+      .then((response : ErrorResponse)=>{
+        expect(response.body.msg).toBe("Business not found!")
+        })
+  })
+
+  test("PATCH- status: 202- responds with the updated Business",()=>{
+    const businessUpdate = {
+      "businessnameUpdate": "Skate Store LTD",
+      "cityUpdate": "Manchester",
+      "countryUpdate": "UK",
+      "postcodeUpdate": "M22 6LQ",
+      "descriptionUpdate": " new description",
+      "websiteUpdate": "https://welcomeleedsLTD.com",
+      "contact_numberUpdate": "0999999111",
+      "business_img_urlUpdate": "https://url.com",
+  };
+    return request(app)
+    .patch('/api/businesses/2')
+    .send(businessUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+      const business = body.updatedBusiness;
+
+      expect(Object.keys(business).length).toBe(11);
+      expect(business.businessname).toBe(businessUpdate.businessnameUpdate);
+      expect(business.city).toBe(businessUpdate.cityUpdate);
+      expect(business.country).toBe(businessUpdate.countryUpdate);
+      expect(business.postcode).toBe(businessUpdate.postcodeUpdate);
+      expect(business.description).toBe(businessUpdate.descriptionUpdate);
+      expect(business.website).toBe(businessUpdate.websiteUpdate);
+      expect(business.contact_number).toBe(businessUpdate.contact_numberUpdate);
+      expect(business.business_img_url).toBe(businessUpdate.business_img_urlUpdate);
+
+        })
+  })
+
+  test("PATCH- status: 202- responds with the updated Business",()=>{
+    const businessUpdate = {
+      "cityUpdate": "Manchester",
+      "countryUpdate": "UK",   
+  };
+    return request(app)
+    .patch('/api/businesses/2')
+    .send(businessUpdate)
+    .expect(202)
+    .then(({ body }: Response) => {
+      const business = body.updatedBusiness;
+
+      expect(Object.keys(business).length).toBe(11);
+      expect(business.city).toBe(businessUpdate.cityUpdate);
+      expect(business.country).toBe(businessUpdate.countryUpdate);
+    })
+  })
+})
 
 //------------------------------------DELETE------------------------------
 

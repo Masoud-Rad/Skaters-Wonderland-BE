@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 
-const {selectEndpoints} = require ('../models/api.models')
+const { selectEndpoints} = require ('../models/api.models')
 const { selectUsers, addUser, updateUser }= require ('../models/users.models')
-const {selectLands, selectSingleLand, addLand, updateLand, delLand} = require('../models/lands.models')
-const {selectComments, addComment, delComment}= require('../models/comments.models')
-const {selectBusinesses, selectSingleBusiness, addBusiness} = require ('../models/businesses.models')
-const {selectBusinessesReviews, addBusinessReview} = require ('../models/businessesReviews.models')
-const {selectPersonalTrainers, selectSinglePersonalTrainer, addPt} = require ('../models/personalTrainers.models')
-const {selectPersonalTrainersReviews, addPtReview} = require (`../models/personalTrainersReviews.models`)
-const {selectsalesItems, selectSingleSalesItem, addSaleItem} = require('../models/sales.models')
+const { selectLands, selectSingleLand, addLand, updateLand, delLand } = require('../models/lands.models')
+const { selectComments, addComment, delComment }= require('../models/comments.models')
+const { selectBusinesses, selectSingleBusiness, addBusiness, updateBusiness } = require ('../models/businesses.models')
+const { selectBusinessesReviews, addBusinessReview } = require ('../models/businessesReviews.models')
+const { selectPersonalTrainers, selectSinglePersonalTrainer, addPt } = require ('../models/personalTrainers.models')
+const { selectPersonalTrainersReviews, addPtReview } = require (`../models/personalTrainersReviews.models`)
+const { selectsalesItems, selectSingleSalesItem, addSaleItem } = require('../models/sales.models')
 
 //-------------------------------Types----------------------------
 
@@ -327,6 +327,19 @@ exports.postBusiness =(req : Request , res : Response, next : NextFunction)=>{
     res.status(201).send({addedBusiness})
   })
   .catch((err: Error)=>{
+    next(err);
+  })
+}
+
+exports.patchBusiness = (req : Request , res : Response, next : NextFunction)=>{
+  const businessId = req.params.business_id;
+  const businessUpdate = req.body; 
+
+  updateBusiness(businessId, businessUpdate)
+  .then((updatedBusiness: BusinessSample)=>{ 
+    res.status(202).send({updatedBusiness})
+  })
+  .catch((err: Error)=>{  
     next(err);
   })
 }

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var app = express();
 app.use(express.json());
-var _a = require('./contrlollers/api.controllers'), getBusinessesReviews = _a.getBusinessesReviews, getEndpoints = _a.getEndpoints, getUsers = _a.getUsers, getLands = _a.getLands, getLandById = _a.getLandById, getComments = _a.getComments, getBusinesses = _a.getBusinesses, getBusinessById = _a.getBusinessById, getPersonaltrainers = _a.getPersonaltrainers, getPersonalTrainerById = _a.getPersonalTrainerById, getPersonalTrainersReviews = _a.getPersonalTrainersReviews, getSalesItems = _a.getSalesItems, getSalesItemById = _a.getSalesItemById, postUser = _a.postUser, postLand = _a.postLand, postComment = _a.postComment, postBusiness = _a.postBusiness, postBusinessReview = _a.postBusinessReview, postPersonalTrainer = _a.postPersonalTrainer, postPtReview = _a.postPtReview, postSaleItem = _a.postSaleItem, patchUser = _a.patchUser, patchLand = _a.patchLand, deleteLand = _a.deleteLand, deleteComment = _a.deleteComment;
+var _a = require('./contrlollers/api.controllers'), getBusinessesReviews = _a.getBusinessesReviews, getEndpoints = _a.getEndpoints, getUsers = _a.getUsers, getLands = _a.getLands, getLandById = _a.getLandById, getComments = _a.getComments, getBusinesses = _a.getBusinesses, getBusinessById = _a.getBusinessById, getPersonaltrainers = _a.getPersonaltrainers, getPersonalTrainerById = _a.getPersonalTrainerById, getPersonalTrainersReviews = _a.getPersonalTrainersReviews, getSalesItems = _a.getSalesItems, getSalesItemById = _a.getSalesItemById, postUser = _a.postUser, postLand = _a.postLand, postComment = _a.postComment, postBusiness = _a.postBusiness, postBusinessReview = _a.postBusinessReview, postPersonalTrainer = _a.postPersonalTrainer, postPtReview = _a.postPtReview, postSaleItem = _a.postSaleItem, patchUser = _a.patchUser, patchLand = _a.patchLand, patchBusiness = _a.patchBusiness, deleteLand = _a.deleteLand, deleteComment = _a.deleteComment;
 //----------------------------------------------Get-------------------------------------------------
 app.get('/api/getEndpoints', getEndpoints);
 app.get('/api/users', getUsers);
@@ -30,6 +30,7 @@ app.post('/api/saleItem', postSaleItem);
 //----------------------------------------------Patch-------------------------------------------------
 app.patch('/api/users', patchUser);
 app.patch('/api/lands/:land_id', patchLand);
+app.patch('/api/businesses/:business_id', patchBusiness);
 //----------------------------------------------Delete-------------------------------------------------
 app.delete('/api/comments/:comment_id', deleteComment);
 app.delete('/api/lands/:land_id', deleteLand);
