@@ -2489,10 +2489,10 @@ describe("DELETE - /api/lands/:land_id", ()=>{
   })
 })
 
-describe.only("DELETE - /api/businessereviews/:review_id", ()=>{
+describe("DELETE - /api/businesserviews/:review_id", ()=>{
   test("DELETE - status: 204 , respond with no content",()=>{
     return request(app)
-    .delete("/api/businessereviews/1")
+    .delete("/api/businessreviews/1")
     .expect(204)
   })
 })

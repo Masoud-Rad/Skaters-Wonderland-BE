@@ -46,3 +46,7 @@ interface BusinessesReviewsSample{
         return Promise.reject({ status: 400, msg: "BAD REQUEST!" })
     }
   }
+
+  exports.delBusinessReview=(reviewId : string)=>{
+    return db.query(`DELETE FROM businessesreview WHERE review_id=$1 ;`, [reviewId])
+  }

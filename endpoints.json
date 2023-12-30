@@ -534,7 +534,7 @@
     "Delete /api/comments/:comment_id":{},
     "Delete /api/lands/:land_id":{},   
     "Delete /api/businesses/:business_id":{},
-    "Delete /api/businessereviews/:review_id":{}, 
+    "Delete /api/businessreviews/:review_id":{}, 
     "Delete /api/personaltrainers/:pt_id":{},
     "Delete /api/ptreviews/:review_id":{},
     "Delete /api/sales/:item_id":{}

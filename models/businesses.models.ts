@@ -170,3 +170,9 @@ interface BusinessSample {
     })
     
   };
+
+
+  exports.delBusiness=(businessId : string)=>
+    db.query(`DELETE FROM businessesreview WHERE business_id=$1 ;`, [businessId])
+     .then(()=> db.query(`DELETE FROM businesses WHERE business_id=$1 ;`, [businessId]))
+  

@@ -29,6 +29,79 @@ interface Result {
     locationUpdate: string;
   }
 
+
+
+  interface PtSample{
+    pt_id: number; 
+    username: string; 
+    ptname: string;
+    city: string;
+    country: string;
+    postcode: string;
+    description: string;
+    created_at: Date;
+    website: string;
+    email: string;
+    instagram: string;
+    facebook: string;
+    contact_number : string;
+    avatar_url: string;
+  }
+  interface PtResult {
+    rows: PtSample[];
+    [key: string]: unknown;
+  }
+
+
+  interface BusinessSample {
+    business_id: number;
+    username: string;
+    businessname: string;
+    city: string;
+    country: string;
+    postcode: string;
+    description: string;
+    created_at: Date;
+    website: string;
+    business_img_url: string;
+    contact_number: string;
+  }
+
+  interface BusinessResult {
+    rows: BusinessSample[];
+    [key: string]: unknown;
+  }
+
+
+  interface LandSample {
+    land_id: number;
+    landname: string;
+    city: string;
+    country: string;
+    postcode: string;
+    description: string;
+    created_at: Date;
+    vote: number;
+    safety_rating_total: number;
+    safety_rating_count: number;
+    safety_rating_ave: number;
+    suitability_rating_total: number;
+    suitability_rating_count: number;
+    suitability_rating_ave: number;
+    cost: string;
+    is_public: boolean;
+    has_rink: boolean;
+    suitabile_for: string;
+    land_img_url: string;
+    username: string;
+}
+
+
+interface LandsResult {
+  rows: LandSample[];
+  [key: string]: unknown;
+}
+
 exports.selectUsers=(userName: string)=>{
   if(!userName){
                 return db.query(`SELECT * FROM users;`)
@@ -133,6 +206,52 @@ exports.updateUser = (username: string, userUpdate: UserUpdateSample) => {
   });
 };
 
+
+
+
+exports.delUser = (userName: string) => 
+db.query('DELETE FROM sales WHERE username = $1 ;', [userName])
+ .then(()=> 
+    db.query('DELETE FROM ptsreview WHERE username = $1;', [userName]))
+    // Before deleting a PT we should delete all of Pt's reviews (All reviews have been posted for that PT)
+    .then(()=> 
+      //First we should find pt_id
+      db.query(`SELECT * FROM personaltrainers WHERE username = $1;`, [userName]))
+      .then(({rows}: PtResult)=>{
+        if(rows.length!==0){
+        const ptID = rows[0].pt_id;
+        return db.query('DELETE FROM ptsreview WHERE pt_id = $1;', [ptID])
+        }
+      })
+        .then(()=> db.query('DELETE FROM personaltrainers WHERE username = $1 ;', [userName]))
+          .then(()=> db.query('DELETE FROM businessesreview WHERE username = $1;', [userName]))
+          // Before deleting a business we should delete all of businesses's reviews 
+          .then(()=> 
+            //we should find business_id
+            db.query(`SELECT * FROM businesses WHERE username = $1;`, [userName]))
+            .then(({rows}: BusinessResult)=>{
+              if(rows.length!==0){
+              const businessId = rows[0].business_id;
+              return db.query('DELETE FROM businessesreview WHERE business_id = $1;', [businessId])
+              }
+            })
+              .then(()=> db.query('DELETE FROM businesses WHERE username = $1 ;', [userName]))
+                .then(()=> db.query('DELETE FROM comments WHERE username = $1;', [userName]))
+                  // Before deleting a land we should delete all of land's reviews 
+                  .then(()=> 
+                  //we should find land_id
+                  db.query(`SELECT * FROM lands WHERE username = $1;`, [userName]))
+                  .then(({rows}: LandsResult)=>{
+                    if(rows.length!==0){
+                    const landId = rows[0].land_id;
+                    return db.query('DELETE FROM comments WHERE land_id = $1;', [landId])
+                    }
+                  })
+                    .then(()=> db.query('DELETE FROM lands WHERE username = $1 ;', [userName]))
+                      .then(()=> db.query('DELETE FROM users WHERE username = $1 ;', [userName]))
+
+
+   
 
 
 

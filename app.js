@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var app = express();
 app.use(express.json());
-var _a = require('./contrlollers/api.controllers'), getBusinessesReviews = _a.getBusinessesReviews, getEndpoints = _a.getEndpoints, getUsers = _a.getUsers, getLands = _a.getLands, getLandById = _a.getLandById, getComments = _a.getComments, getBusinesses = _a.getBusinesses, getBusinessById = _a.getBusinessById, getPersonaltrainers = _a.getPersonaltrainers, getPersonalTrainerById = _a.getPersonalTrainerById, getPersonalTrainersReviews = _a.getPersonalTrainersReviews, getSalesItems = _a.getSalesItems, getSalesItemById = _a.getSalesItemById, postUser = _a.postUser, postLand = _a.postLand, postComment = _a.postComment, postBusiness = _a.postBusiness, postBusinessReview = _a.postBusinessReview, postPersonalTrainer = _a.postPersonalTrainer, postPtReview = _a.postPtReview, postSaleItem = _a.postSaleItem, patchUser = _a.patchUser, patchLand = _a.patchLand, patchBusiness = _a.patchBusiness, patchPersonalTrainer = _a.patchPersonalTrainer, patchSaleItem = _a.patchSaleItem, deleteLand = _a.deleteLand, deleteComment = _a.deleteComment;
+var _a = require('./contrlollers/api.controllers'), getBusinessesReviews = _a.getBusinessesReviews, getEndpoints = _a.getEndpoints, getUsers = _a.getUsers, getLands = _a.getLands, getLandById = _a.getLandById, getComments = _a.getComments, getBusinesses = _a.getBusinesses, getBusinessById = _a.getBusinessById, getPersonaltrainers = _a.getPersonaltrainers, getPersonalTrainerById = _a.getPersonalTrainerById, getPersonalTrainersReviews = _a.getPersonalTrainersReviews, getSalesItems = _a.getSalesItems, getSalesItemById = _a.getSalesItemById, postUser = _a.postUser, postLand = _a.postLand, postComment = _a.postComment, postBusiness = _a.postBusiness, postBusinessReview = _a.postBusinessReview, postPersonalTrainer = _a.postPersonalTrainer, postPtReview = _a.postPtReview, postSaleItem = _a.postSaleItem, patchUser = _a.patchUser, patchLand = _a.patchLand, patchBusiness = _a.patchBusiness, patchPersonalTrainer = _a.patchPersonalTrainer, patchSaleItem = _a.patchSaleItem, deleteComment = _a.deleteComment, deleteLand = _a.deleteLand, deleteBusinessReview = _a.deleteBusinessReview, deleteBusiness = _a.deleteBusiness, deletePtReview = _a.deletePtReview, deletePt = _a.deletePt, deleteSaleItem = _a.deleteSaleItem, deleteUser = _a.deleteUser;
 //----------------------------------------------Get-------------------------------------------------
 app.get('/api/getEndpoints', getEndpoints);
 app.get('/api/users', getUsers);
@@ -36,6 +36,12 @@ app.patch('/api/sales/:item_id', patchSaleItem);
 //----------------------------------------------Delete-------------------------------------------------
 app.delete('/api/comments/:comment_id', deleteComment);
 app.delete('/api/lands/:land_id', deleteLand);
+app.delete('/api/businessreviews/:review_id', deleteBusinessReview);
+app.delete('/api/businesses/:business_id', deleteBusiness);
+app.delete('/api/ptreviews/:review_id', deletePtReview);
+app.delete('/api/personaltrainers/:pt_id', deletePt);
+app.delete('/api/sales/:item_id', deleteSaleItem);
+app.delete('/api/users', deleteUser);
 //-----------------------------------------------ERROR HANDELING--------------------------------------
 app.use(function (error, _req, res, next) {
     if (error.code === "22P02") {

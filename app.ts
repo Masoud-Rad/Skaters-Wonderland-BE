@@ -6,7 +6,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const {getBusinessesReviews, getEndpoints, getUsers, getLands, getLandById, getComments, getBusinesses, getBusinessById, getPersonaltrainers, getPersonalTrainerById, getPersonalTrainersReviews, getSalesItems, getSalesItemById, postUser, postLand, postComment, postBusiness, postBusinessReview, postPersonalTrainer, postPtReview, postSaleItem, patchUser, patchLand, patchBusiness, patchPersonalTrainer, patchSaleItem, deleteLand, deleteComment} = require('./contrlollers/api.controllers')
+const {getBusinessesReviews, getEndpoints, getUsers, getLands, getLandById, getComments, getBusinesses, getBusinessById, getPersonaltrainers, getPersonalTrainerById, getPersonalTrainersReviews, getSalesItems, getSalesItemById, postUser, postLand, postComment, postBusiness, postBusinessReview, postPersonalTrainer, postPtReview, postSaleItem, patchUser, patchLand, patchBusiness, patchPersonalTrainer, patchSaleItem, deleteComment, deleteLand, deleteBusinessReview, deleteBusiness, deletePtReview, deletePt, deleteSaleItem, deleteUser } = require('./contrlollers/api.controllers')
 
 //----------------------------------------------Get-------------------------------------------------
 
@@ -66,10 +66,17 @@ app.patch('/api/sales/:item_id', patchSaleItem)
 //----------------------------------------------Delete-------------------------------------------------
 
 app.delete('/api/comments/:comment_id', deleteComment)
-
 app.delete('/api/lands/:land_id', deleteLand)
 
+app.delete('/api/businessreviews/:review_id', deleteBusinessReview)
+app.delete('/api/businesses/:business_id', deleteBusiness)
 
+app.delete('/api/ptreviews/:review_id', deletePtReview)
+app.delete('/api/personaltrainers/:pt_id', deletePt)
+
+app.delete('/api/sales/:item_id', deleteSaleItem)
+
+app.delete('/api/users', deleteUser)
 
 //-----------------------------------------------ERROR HANDELING--------------------------------------
 
