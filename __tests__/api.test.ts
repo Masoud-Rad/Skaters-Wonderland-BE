@@ -2472,10 +2472,11 @@ describe("/api/sales/:item_id", ()=>{
 
 //------------------------------------DELETE------------------------------
 
-describe("DELETE - /api/users/?username", ()=>{
+
+describe("DELETE - /api/comments/:comment_id", ()=>{
   test("DELETE - status: 204 , respond with no content",()=>{
     return request(app)
-    .delete("/api/users/?username=weegembump")
+    .delete("/api/comments/1")
     .expect(204)
   })
 })
@@ -2488,10 +2489,10 @@ describe("DELETE - /api/lands/:land_id", ()=>{
   })
 })
 
-describe("DELETE - /api/comments/:comment_id", ()=>{
+describe.only("DELETE - /api/businessereviews/:review_id", ()=>{
   test("DELETE - status: 204 , respond with no content",()=>{
     return request(app)
-    .delete("/api/comments/1")
+    .delete("/api/businessereviews/1")
     .expect(204)
   })
 })
@@ -2504,10 +2505,10 @@ describe("DELETE - /api/businesses/:business_id", ()=>{
   })
 })
 
-describe("DELETE - /api/businessereviews/:review_id", ()=>{
+describe("DELETE - /api/ptreviews/:review_id", ()=>{
   test("DELETE - status: 204 , respond with no content",()=>{
     return request(app)
-    .delete("/api/businessereviews/1")
+    .delete("/api/ptreviews/1")
     .expect(204)
   })
 })
@@ -2520,18 +2521,18 @@ describe("DELETE - /api/personaltrainers/:pt_id", ()=>{
   })
 })
 
-describe("DELETE - /api/ptreviews/:review_id", ()=>{
-  test("DELETE - status: 204 , respond with no content",()=>{
-    return request(app)
-    .delete("/api/ptreviews/1")
-    .expect(204)
-  })
-})
-
 describe("DELETE - /api/sales/:item_id", ()=>{
   test("DELETE - status: 204 , respond with no content",()=>{
     return request(app)
     .delete("/api/sales/1")
+    .expect(204)
+  })
+})
+
+describe("DELETE - /api/users/?username", ()=>{
+  test("DELETE - status: 204 , respond with no content",()=>{
+    return request(app)
+    .delete("/api/users/?username=weegembump")
     .expect(204)
   })
 })
