@@ -66,7 +66,10 @@ app.patch('/api/sales/:item_id', patchSaleItem)
 //----------------------------------------------Delete-------------------------------------------------
 
 app.delete('/api/comments/:comment_id', deleteComment)
+
 app.delete('/api/lands/:land_id', deleteLand)
+
+
 
 //-----------------------------------------------ERROR HANDELING--------------------------------------
 
