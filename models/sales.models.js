@@ -101,3 +101,6 @@ exports.updateSaleItem = function (itemId, itemUpdate) {
         });
     });
 };
+exports.delSaleItem = function (itemId) {
+    return db.query("DELETE FROM sales WHERE item_id=$1 ;", [itemId]);
+};

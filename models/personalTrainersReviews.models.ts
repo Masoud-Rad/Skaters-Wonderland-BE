@@ -46,3 +46,7 @@ exports.addPtReview = (ptId: string, newPtReview: AddPtReviewSample)=>{
         return Promise.reject({ status: 400, msg: "BAD REQUEST!" })
     }
 }
+
+
+exports.delPtReview=(reviewId : string)=> db.query(`DELETE FROM ptsreview WHERE review_id=$1 ;`, [reviewId])
+  

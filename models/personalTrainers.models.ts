@@ -192,3 +192,10 @@ exports.addPt = (newPt: ADDNewPtSample) => {
     })
     
   };
+
+
+  exports.delPt=(ptId : string)=>
+      db.query(`DELETE FROM ptsreview WHERE pt_id=$1 ;`, [ptId])
+       .then(()=>
+         db.query(`DELETE FROM personaltrainers WHERE pt_id=$1 ;`, [ptId]))
+    

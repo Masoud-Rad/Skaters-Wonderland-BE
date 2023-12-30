@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 
 const { selectEndpoints} = require ('../models/api.models')
-const { selectUsers, addUser, updateUser }= require ('../models/users.models')
+const { selectUsers, addUser, updateUser, delUser }= require ('../models/users.models')
 const { selectLands, selectSingleLand, addLand, updateLand, delLand } = require('../models/lands.models')
 const { selectComments, addComment, delComment }= require('../models/comments.models')
-const { selectBusinesses, selectSingleBusiness, addBusiness, updateBusiness } = require ('../models/businesses.models')
-const { selectBusinessesReviews, addBusinessReview } = require ('../models/businessesReviews.models')
-const { selectPersonalTrainers, selectSinglePersonalTrainer, addPt, updatePt } = require ('../models/personalTrainers.models')
-const { selectPersonalTrainersReviews, addPtReview } = require (`../models/personalTrainersReviews.models`)
-const { selectsalesItems, selectSingleSalesItem, addSaleItem, updateSaleItem } = require('../models/sales.models')
+const { selectBusinesses, selectSingleBusiness, addBusiness, updateBusiness, delBusiness } = require ('../models/businesses.models')
+const { selectBusinessesReviews, addBusinessReview, delBusinessReview } = require ('../models/businessesReviews.models')
+const { selectPersonalTrainers, selectSinglePersonalTrainer, addPt, updatePt, delPt } = require ('../models/personalTrainers.models')
+const { selectPersonalTrainersReviews, addPtReview, delPtReview } = require (`../models/personalTrainersReviews.models`)
+const { selectsalesItems, selectSingleSalesItem, addSaleItem, updateSaleItem, delSaleItem } = require('../models/sales.models')
 
 //-------------------------------Types----------------------------
 
@@ -190,6 +190,17 @@ exports.patchUser= (req : Request , res : Response, next : NextFunction)=>{
   })
 }
 
+exports.deleteUser= (req : Request , res : Response, next : NextFunction)=>{
+  const username = req.query.username;
+
+  delUser(username).then(()=>{
+    res.status(204).send();
+  })
+  .catch((err: Error)=>{ console.log("in ctrl, err:  ", err)
+    next(err);
+  })
+}
+
 //------------------------------Lands------------------------------
 
 
@@ -343,6 +354,17 @@ exports.patchBusiness = (req : Request , res : Response, next : NextFunction)=>{
     next(err);
   })
 }
+
+exports.deleteBusiness= (req : Request , res : Response, next : NextFunction)=>{
+  const businessId = req.params.business_id
+
+  delBusiness(businessId).then(()=>{
+    res.status(204).send();
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
 //------------------------------BusinessesReviews------------------------------
 
 exports.getBusinessesReviews = (req: Request, res: Response, next: NextFunction)=>{
@@ -364,6 +386,17 @@ exports.postBusinessReview = (req : Request , res : Response, next : NextFunctio
   addBusinessReview(businessId , newBusinessReview)
   .then((addedBusinessReview: BusinessesReviewsSample)=>{ 
     res.status(201).send({addedBusinessReview})
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
+
+exports.deleteBusinessReview= (req : Request , res : Response, next : NextFunction)=>{
+  const reviewId = req.params.review_id
+
+  delBusinessReview(reviewId).then(()=>{
+    res.status(204).send();
   })
   .catch((err: Error)=>{
     next(err);
@@ -420,6 +453,17 @@ exports.patchPersonalTrainer = (req : Request , res : Response, next : NextFunct
   })
 }
 
+exports.deletePt= (req : Request , res : Response, next : NextFunction)=>{
+  const ptId = req.params.pt_id
+
+  delPt(ptId).then(()=>{
+    res.status(204).send();
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
+
 //------------------------------PersonaltrainerReviews------------------------------
 exports.getPersonalTrainersReviews = (req: Request, res: Response, next: NextFunction)=>{
   const pt_id = req.params.pt_id; 
@@ -445,6 +489,16 @@ exports.postPtReview = (req : Request , res : Response, next : NextFunction)=>{
   })
 }
 
+exports.deletePtReview= (req : Request , res : Response, next : NextFunction)=>{
+  const reviewId = req.params.review_id
+
+  delPtReview(reviewId).then(()=>{
+    res.status(204).send();
+  })
+  .catch((err: Error)=>{
+    next(err);
+  })
+}
 
 //------------------------------sales----------------------------------
 
@@ -494,6 +548,17 @@ exports.patchSaleItem = (req : Request , res : Response, next : NextFunction)=>{
     res.status(202).send({updatedItem})
   })
   .catch((err: Error)=>{  
+    next(err);
+  })
+}
+
+exports.deleteSaleItem= (req : Request , res : Response, next : NextFunction)=>{
+  const itemId = req.params.item_id
+
+  delSaleItem(itemId).then(()=>{
+    res.status(204).send();
+  })
+  .catch((err: Error)=>{ console.log("errrrrr:", err)
     next(err);
   })
 }

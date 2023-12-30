@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var selectEndpoints = require('../models/api.models').selectEndpoints;
-var _a = require('../models/users.models'), selectUsers = _a.selectUsers, addUser = _a.addUser, updateUser = _a.updateUser;
+var _a = require('../models/users.models'), selectUsers = _a.selectUsers, addUser = _a.addUser, updateUser = _a.updateUser, delUser = _a.delUser;
 var _b = require('../models/lands.models'), selectLands = _b.selectLands, selectSingleLand = _b.selectSingleLand, addLand = _b.addLand, updateLand = _b.updateLand, delLand = _b.delLand;
 var _c = require('../models/comments.models'), selectComments = _c.selectComments, addComment = _c.addComment, delComment = _c.delComment;
-var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBusinesses, selectSingleBusiness = _d.selectSingleBusiness, addBusiness = _d.addBusiness, updateBusiness = _d.updateBusiness;
-var _e = require('../models/businessesReviews.models'), selectBusinessesReviews = _e.selectBusinessesReviews, addBusinessReview = _e.addBusinessReview;
-var _f = require('../models/personalTrainers.models'), selectPersonalTrainers = _f.selectPersonalTrainers, selectSinglePersonalTrainer = _f.selectSinglePersonalTrainer, addPt = _f.addPt, updatePt = _f.updatePt;
-var _g = require("../models/personalTrainersReviews.models"), selectPersonalTrainersReviews = _g.selectPersonalTrainersReviews, addPtReview = _g.addPtReview;
-var _h = require('../models/sales.models'), selectsalesItems = _h.selectsalesItems, selectSingleSalesItem = _h.selectSingleSalesItem, addSaleItem = _h.addSaleItem, updateSaleItem = _h.updateSaleItem;
+var _d = require('../models/businesses.models'), selectBusinesses = _d.selectBusinesses, selectSingleBusiness = _d.selectSingleBusiness, addBusiness = _d.addBusiness, updateBusiness = _d.updateBusiness, delBusiness = _d.delBusiness;
+var _e = require('../models/businessesReviews.models'), selectBusinessesReviews = _e.selectBusinessesReviews, addBusinessReview = _e.addBusinessReview, delBusinessReview = _e.delBusinessReview;
+var _f = require('../models/personalTrainers.models'), selectPersonalTrainers = _f.selectPersonalTrainers, selectSinglePersonalTrainer = _f.selectSinglePersonalTrainer, addPt = _f.addPt, updatePt = _f.updatePt, delPt = _f.delPt;
+var _g = require("../models/personalTrainersReviews.models"), selectPersonalTrainersReviews = _g.selectPersonalTrainersReviews, addPtReview = _g.addPtReview, delPtReview = _g.delPtReview;
+var _h = require('../models/sales.models'), selectsalesItems = _h.selectsalesItems, selectSingleSalesItem = _h.selectSingleSalesItem, addSaleItem = _h.addSaleItem, updateSaleItem = _h.updateSaleItem, delSaleItem = _h.delSaleItem;
 //------------------------------Api-------------------------------
 exports.getEndpoints = function (_req, res, next) {
     selectEndpoints().then(function (endpoints) {
@@ -46,6 +46,16 @@ exports.patchUser = function (req, res, next) {
         res.status(202).send({ updatedUser: updatedUser });
     })
         .catch(function (err) {
+        next(err);
+    });
+};
+exports.deleteUser = function (req, res, next) {
+    var username = req.query.username;
+    delUser(username).then(function () {
+        res.status(204).send();
+    })
+        .catch(function (err) {
+        console.log("in ctrl, err:  ", err);
         next(err);
     });
 };
@@ -171,6 +181,15 @@ exports.patchBusiness = function (req, res, next) {
         next(err);
     });
 };
+exports.deleteBusiness = function (req, res, next) {
+    var businessId = req.params.business_id;
+    delBusiness(businessId).then(function () {
+        res.status(204).send();
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
 //------------------------------BusinessesReviews------------------------------
 exports.getBusinessesReviews = function (req, res, next) {
     var businessId = req.params.business_id;
@@ -187,6 +206,15 @@ exports.postBusinessReview = function (req, res, next) {
     addBusinessReview(businessId, newBusinessReview)
         .then(function (addedBusinessReview) {
         res.status(201).send({ addedBusinessReview: addedBusinessReview });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.deleteBusinessReview = function (req, res, next) {
+    var reviewId = req.params.review_id;
+    delBusinessReview(reviewId).then(function () {
+        res.status(204).send();
     })
         .catch(function (err) {
         next(err);
@@ -232,6 +260,15 @@ exports.patchPersonalTrainer = function (req, res, next) {
         next(err);
     });
 };
+exports.deletePt = function (req, res, next) {
+    var ptId = req.params.pt_id;
+    delPt(ptId).then(function () {
+        res.status(204).send();
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
 //------------------------------PersonaltrainerReviews------------------------------
 exports.getPersonalTrainersReviews = function (req, res, next) {
     var pt_id = req.params.pt_id;
@@ -249,6 +286,15 @@ exports.postPtReview = function (req, res, next) {
     addPtReview(ptId, newPtReview)
         .then(function (addedPtReview) {
         res.status(201).send({ addedPtReview: addedPtReview });
+    })
+        .catch(function (err) {
+        next(err);
+    });
+};
+exports.deletePtReview = function (req, res, next) {
+    var reviewId = req.params.review_id;
+    delPtReview(reviewId).then(function () {
+        res.status(204).send();
     })
         .catch(function (err) {
         next(err);
@@ -291,6 +337,16 @@ exports.patchSaleItem = function (req, res, next) {
         res.status(202).send({ updatedItem: updatedItem });
     })
         .catch(function (err) {
+        next(err);
+    });
+};
+exports.deleteSaleItem = function (req, res, next) {
+    var itemId = req.params.item_id;
+    delSaleItem(itemId).then(function () {
+        res.status(204).send();
+    })
+        .catch(function (err) {
+        console.log("errrrrr:", err);
         next(err);
     });
 };

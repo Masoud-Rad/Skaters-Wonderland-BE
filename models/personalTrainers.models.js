@@ -120,3 +120,9 @@ exports.updatePt = function (ptId, ptUpdate) {
         });
     });
 };
+exports.delPt = function (ptId) {
+    return db.query("DELETE FROM ptsreview WHERE pt_id=$1 ;", [ptId])
+        .then(function () {
+        return db.query("DELETE FROM personaltrainers WHERE pt_id=$1 ;", [ptId]);
+    });
+};

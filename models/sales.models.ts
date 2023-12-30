@@ -171,3 +171,9 @@ exports.updateSaleItem =  (itemId: string, itemUpdate: ItemUpdateSample) => {
     })
     
   };
+
+
+exports.delSaleItem=(itemId : string)=>{
+    return db.query(`DELETE FROM sales WHERE item_id=$1 ;`, [itemId])
+  }
+
