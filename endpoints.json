@@ -94,7 +94,7 @@
     },
   
     "Get /api/lands/:land_id/comments": {
-      "description": "serves an array of a specefic land's comments ",
+      "description": "serves an array of a specific land's comments ",
       "parametr": ["land_id"],
       "exampleResponse": {
         "comments": [
@@ -153,7 +153,7 @@
     },
 
     "Get /api/businesses/:business_id/businessereviews":{
-      "description": "serves an array of a specefic business's reviews ",
+      "description": "serves an array of a specific business's reviews ",
       "parametr": ["business_id"],
       "exampleResponse": {
         "reviews": [
@@ -211,7 +211,7 @@
     },
 
     "Get /api/personaltrainers/:pt_id/ptreviews":{
-      "description": "serves an array of a specefic pt's reviews ",
+      "description": "serves an array of a specific pt's reviews ",
       "parametr": ["pt_id"],
       "exampleResponse": {
         "reviews": [
