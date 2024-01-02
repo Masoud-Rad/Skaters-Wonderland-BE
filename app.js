@@ -1,9 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var cors = require("cors");
 var express = require("express");
 var app = express();
 app.use(express.json());
 var _a = require('./contrlollers/api.controllers'), getBusinessesReviews = _a.getBusinessesReviews, getEndpoints = _a.getEndpoints, getUsers = _a.getUsers, getLands = _a.getLands, getLandById = _a.getLandById, getComments = _a.getComments, getBusinesses = _a.getBusinesses, getBusinessById = _a.getBusinessById, getPersonaltrainers = _a.getPersonaltrainers, getPersonalTrainerById = _a.getPersonalTrainerById, getPersonalTrainersReviews = _a.getPersonalTrainersReviews, getSalesItems = _a.getSalesItems, getSalesItemById = _a.getSalesItemById, postUser = _a.postUser, postLand = _a.postLand, postComment = _a.postComment, postBusiness = _a.postBusiness, postBusinessReview = _a.postBusinessReview, postPersonalTrainer = _a.postPersonalTrainer, postPtReview = _a.postPtReview, postSaleItem = _a.postSaleItem, patchUser = _a.patchUser, patchLand = _a.patchLand, patchBusiness = _a.patchBusiness, patchPersonalTrainer = _a.patchPersonalTrainer, patchSaleItem = _a.patchSaleItem, deleteComment = _a.deleteComment, deleteLand = _a.deleteLand, deleteBusinessReview = _a.deleteBusinessReview, deleteBusiness = _a.deleteBusiness, deletePtReview = _a.deletePtReview, deletePt = _a.deletePt, deleteSaleItem = _a.deleteSaleItem, deleteUser = _a.deleteUser;
+//----------------------cors-------------------
+app.use(cors());
 //----------------------------------------------Get-------------------------------------------------
 app.get('/api/getEndpoints', getEndpoints);
 app.get('/api/users', getUsers);

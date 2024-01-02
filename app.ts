@@ -1,3 +1,7 @@
+
+import * as cors from 'cors';
+
+
 import { Request, Response, NextFunction } from 'express';
 //I tried to use "import createError from 'http-errors'" but I hade this error: " This module is declared with 'export =', and can only be used with a default import when using the 'esModuleInterop' flag.", so I used the following method to requier createError; 
 import * as createError from 'http-errors'; // Import the Error type
@@ -7,6 +11,9 @@ const app = express();
 app.use(express.json());
 
 const {getBusinessesReviews, getEndpoints, getUsers, getLands, getLandById, getComments, getBusinesses, getBusinessById, getPersonaltrainers, getPersonalTrainerById, getPersonalTrainersReviews, getSalesItems, getSalesItemById, postUser, postLand, postComment, postBusiness, postBusinessReview, postPersonalTrainer, postPtReview, postSaleItem, patchUser, patchLand, patchBusiness, patchPersonalTrainer, patchSaleItem, deleteComment, deleteLand, deleteBusinessReview, deleteBusiness, deletePtReview, deletePt, deleteSaleItem, deleteUser } = require('./contrlollers/api.controllers')
+
+//----------------------cors-------------------
+app.use(cors());
 
 //----------------------------------------------Get-------------------------------------------------
 
