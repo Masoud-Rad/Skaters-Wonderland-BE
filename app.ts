@@ -1,5 +1,5 @@
 
-import * as cors from 'cors';
+const cors = require('cors');
 
 
 import { Request, Response, NextFunction } from 'express';

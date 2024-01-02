@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var cors = require("cors");
+var cors = require('cors');
 var express = require("express");
 var app = express();
 app.use(express.json());
