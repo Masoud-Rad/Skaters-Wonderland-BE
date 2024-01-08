@@ -29,7 +29,9 @@ interface UsersResponseBody {
     users: UsersSample[];
   }
 
-
+  interface SingleUsersResponseBody {
+    user: UsersSample;
+  }
 //**** landsType
 interface LandSample {
   land_id: number;
@@ -274,8 +276,10 @@ describe("GET /api/users/?username",()=>{
       .get("/api/users/?username=weegembump")
       .expect(200)
       .then((response : Response)=>{
-        const responseBody: UsersResponseBody = response.body;
-        const user = responseBody.users;
+        const responseBody: SingleUsersResponseBody = response.body;
+        
+        const user: UsersSample = responseBody.user;
+        
           const expectedResult ={
                                   username: 'weegembump',
                                   name: "Tom Hederson",

@@ -155,12 +155,23 @@ exports.getEndpoints = (_req : Request , res : Response, next : NextFunction)=>{
 
 exports.getUsers = (req : Request , res : Response, next : NextFunction)=>{
   const {username}= req.query;
-  selectUsers(username).then((users: UserSample[])=>{
-    res.status(200).send({users})
-  })
-  .catch((err: Error)=>{
-    next(err);
-  })
+  if(!username)
+  {
+    selectUsers(username).then((users: UserSample[])=>{
+      res.status(200).send({users})
+    })
+    .catch((err: Error)=>{
+      next(err);
+    })
+  }else{
+    selectUsers(username).then((user: UserSample)=>{
+      res.status(200).send({user})
+    })
+    .catch((err: Error)=>{
+      next(err);
+    })
+  }
+  
 }
 
 exports.postUser =(req : Request , res : Response, next : NextFunction)=>{

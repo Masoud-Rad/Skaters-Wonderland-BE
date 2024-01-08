@@ -21,12 +21,22 @@ exports.getEndpoints = function (_req, res, next) {
 //------------------------------Users-----------------------------
 exports.getUsers = function (req, res, next) {
     var username = req.query.username;
-    selectUsers(username).then(function (users) {
-        res.status(200).send({ users: users });
-    })
-        .catch(function (err) {
-        next(err);
-    });
+    if (!username) {
+        selectUsers(username).then(function (users) {
+            res.status(200).send({ users: users });
+        })
+            .catch(function (err) {
+            next(err);
+        });
+    }
+    else {
+        selectUsers(username).then(function (user) {
+            res.status(200).send({ user: user });
+        })
+            .catch(function (err) {
+            next(err);
+        });
+    }
 };
 exports.postUser = function (req, res, next) {
     var newUser = req.body;
