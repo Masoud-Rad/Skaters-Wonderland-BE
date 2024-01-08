@@ -24,7 +24,7 @@
       "description": "serves a specific user",
       "queries": ["username"],
       "exampleResponse": {
-        "users": [
+        "user": 
           {
             "username": "tickle122",
             "name": "Jane Smith",
@@ -33,7 +33,6 @@
             "avatar_url": "data:image/jpeg;base64,/9j/Wuf7aUqx",
             "location": "Los Angeles, CA"
           }
-        ]
       }
     },
   
