@@ -275,7 +275,7 @@ describe("GET /api/users/?username",()=>{
       .expect(200)
       .then((response : Response)=>{
         const responseBody: UsersResponseBody = response.body;
-        const user: UsersSample = responseBody.users[0];
+        const user = responseBody.users;
           const expectedResult ={
                                   username: 'weegembump',
                                   name: "Tom Hederson",

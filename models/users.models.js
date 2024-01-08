@@ -15,7 +15,7 @@ exports.selectUsers = function (userName) {
                 return Promise.reject({ status: 404, msg: 'Not Found!' });
             }
             else {
-                return rows;
+                return rows[0];
             }
         });
     }
