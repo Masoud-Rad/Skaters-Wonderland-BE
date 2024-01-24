@@ -46,7 +46,7 @@ interface AddNewLandSample {
 }
 
 
-exports.selectLands=(city: string, has_rink: string, cost: string, sort_by:string ="land_id" , order_by:string = "ASC")=>{
+exports.selectLands=(city: string, has_rink: string, cost: string, outputLength:string, sort_by:string ="land_id" , order_by:string = "ASC")=>{
  
   let queryStr: string =`SELECT * FROM lands`;
   const quertValues : string[] = [];
@@ -66,7 +66,12 @@ if (cost) {
     queryStr += `${queryStr.includes('WHERE') ? ' AND' : ' WHERE'} cost=$${quertValues.length}`;
 }
 
-queryStr += ` ORDER BY ${sort_by} ${order_by};`;
+
+if (outputLength){
+  queryStr += ` ORDER BY ${sort_by} ${order_by} LIMIT ${outputLength};`;
+}else{
+  queryStr += ` ORDER BY ${sort_by} ${order_by};`;
+}
 
 //this is an easier method but longer:
   // if(city && has_rink && cost){

@@ -71,8 +71,8 @@ exports.deleteUser = function (req, res, next) {
 };
 //------------------------------Lands------------------------------
 exports.getLands = function (req, res, next) {
-    var _a = req.query, city = _a.city, has_rink = _a.has_rink, cost = _a.cost, sort_by = _a.sort_by, order_by = _a.order_by;
-    selectLands(city, has_rink, cost, sort_by, order_by)
+    var _a = req.query, city = _a.city, has_rink = _a.has_rink, cost = _a.cost, outputLength = _a.outputLength, sort_by = _a.sort_by, order_by = _a.order_by;
+    selectLands(city, has_rink, cost, outputLength, sort_by, order_by)
         .then(function (lands) {
         res.status(200).send({ "lands": lands });
     })

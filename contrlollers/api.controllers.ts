@@ -216,8 +216,8 @@ exports.deleteUser= (req : Request , res : Response, next : NextFunction)=>{
 
 
 exports.getLands= (req : Request , res : Response, next : NextFunction)=>{
-  const {city, has_rink, cost, sort_by, order_by} = req.query; 
-  selectLands(city, has_rink, cost, sort_by, order_by)
+  const {city, has_rink, cost, outputLength, sort_by, order_by} = req.query; 
+  selectLands(city, has_rink, cost, outputLength, sort_by, order_by)
     .then((lands: LandSample[])=>{
       res.status(200).send({"lands": lands})
     })
