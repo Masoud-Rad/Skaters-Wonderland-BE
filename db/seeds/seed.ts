@@ -157,7 +157,7 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
             is_public BOOL NOT NULL,
             has_rink BOOL NOT NULL,
             suitabile_for VARCHAR NOT NULL,
-            land_img_url VARCHAR DEFAULT 'https://tse2.mm.bing.net/th?id=OIP.0G5ekV-kpF__IG0wQRRDGQHaFj&pid=Api&P=0&h=180',
+            land_img_url VARCHAR DEFAULT 'https://www.google.co.uk/url?sa=i&url=https%3A%2F%2Fwww.wikihow.com%2FBe-a-Skater-Girl&psig=AOvVaw3SRIRLoVS0IdSJe6ZHN4L-&ust=1706209021042000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCNDVtY3a9oMDFQAAAAAdAAAAABAD',
             username VARCHAR REFERENCES users(username) NOT NULL
             );
         `);
