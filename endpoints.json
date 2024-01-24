@@ -38,7 +38,7 @@
   
     "GET /api/lands": {
       "description": "serves an array of all lands",
-      "queries": ["has_rink","cost","city","order_by","sort_by"],
+      "queries": ["has_rink","cost","city","order_by","sort_by", "outputLength"],
       "exampleResponse": {
         "Lands": [
           {
