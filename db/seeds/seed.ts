@@ -122,7 +122,7 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
         await db.query(`CREATE TABLE users (
             username VARCHAR PRIMARY KEY,
             name VARCHAR NOT NULL,
-            avatar_url VARCHAR  DEFAULT 'https://vectorified.com/images/unknown-avatar-icon-7.jpg',
+            avatar_url VARCHAR  DEFAULT './images/defaultWL.avif',
             email VARCHAR NOT NULL,
             password VARCHAR NOT NULL,
             location VARCHAR
@@ -181,7 +181,7 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
                 description VARCHAR NOT NULL,
                 created_at TIMESTAMP DEFAULT NOW(),
                 website VARCHAR,
-                business_img_url VARCHAR DEFAULT 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzc33XS9klYYR7JzdNkT2ryvg22j79wh4rxfIJciN-WQ&s',
+                business_img_url VARCHAR DEFAULT './images/defaultWL.avif',
                 contact_number VARCHAR
             );
         `)
@@ -210,7 +210,7 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
                     instagram VARCHAR,
                     facebook VARCHAR,
                     contact_number VARCHAR,
-                    avatar_url VARCHAR DEFAULT 'https://vectorified.com/images/unknown-avatar-icon-7.jpg'
+                    avatar_url VARCHAR DEFAULT './images/defaultWL.avif'
                 );
         `)
         await db.query (`
@@ -237,7 +237,7 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
                 facebook VARCHAR,
                 contact_number VARCHAR,
                 availability VARCHAR NOT NULL,
-                gear_avatar_url VARCHAR  DEFAULT 'http://rlv.zcache.com/az_sunset_series_by_unknown_skateboards-r339c69a8681444aeb08080977bf89165_xw0k0_8byvr_324.jpg'
+                gear_avatar_url VARCHAR  DEFAULT './images/defaultWL.avif'
             );
         `)
        
