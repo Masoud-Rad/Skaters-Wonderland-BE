@@ -389,7 +389,7 @@ describe("GET /api/lands",()=>{
                 is_public: true,
                 has_rink: true,
                 suitabile_for: 'Skateboarding',
-                land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
+                land_img_url: '""',
                 username: 'weegembump'
               },
               {
@@ -608,7 +608,7 @@ test("GET - status: 200 - respond with all the lands filtered by cost",()=>{
           is_public: true,
           has_rink: true,
           suitabile_for: 'Skateboarding',
-          land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
+          land_img_url: '""',
           username: 'weegembump'
         },
         {
@@ -687,7 +687,7 @@ test("GET - status: 200 - respond with all the lands filtered by city and has_ri
           is_public: true,
           has_rink: true,
           suitabile_for: 'Skateboarding',
-          land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
+          land_img_url: '""',
           username: 'weegembump'
         },
         {
@@ -933,7 +933,7 @@ describe("GET sorted lands",()=>{
             is_public: true,
             has_rink: true,
             suitabile_for: 'Skateboarding',
-            land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
+            land_img_url: '""',
             username: 'weegembump'
           },
           {

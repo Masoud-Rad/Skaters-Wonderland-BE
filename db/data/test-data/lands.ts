@@ -72,7 +72,7 @@ module.exports = [
         is_public: true,
         has_rink: true,
         suitabile_for: "Skateboarding",
-        land_img_url: 'https://goo.gl/maps/HRFQ8LWEGEVxXyD38',
+        land_img_url: '""',
         username: 'weegembump'
     },
     {
