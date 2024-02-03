@@ -49,25 +49,16 @@ This is the SKATERS-WONDERLAND Back-End repository! This is where the server-sid
 
 API Endpoints Users are able to access and interact with the data using the following endpoints:
 
-GET /api/users Returns a list of users
+## API Documentation
 
-GET /api/users/?username Returns an object of a specipic user's info
+API Endpoints Users are able to access and interact with the data using the following endpoint:
 
-GET /api/lands Returns a list of lands Can be used with optional queries sort_by & city
+- **GET /api/getEndpoints**
+  - **Description:** Serves up a JSON representation of all the available endpoints of the API.
+  - **Example:** You can view the detailed list of endpoints by checking the [endpoints.json](https://github.com/Masoud-Rad/Skaters-Wonderland-BE/blob/main/endpoints.json) file.
 
-GET /api/lands/:land_id Returns the specified land
 
-GET /api/lands/:land_id/comments Returns a list of comments from a specified land
 
-POST /api/lands/:land_id/comments Inserts a comment into the specified land and returns comment
-
-PATCH /api/lands/:land_id Updates a specified lands vote count and returns updated land
-
-DELETE /api/comments/:comment_id
-
-Deletes specified comment
-
-Delete land. /api/lands/:land_id
 
 ### A live version of this app is available here, hosted with Render. A list of available endpoints can be found here:
 `https://dashboard.render.com/web/srv-cjei90ocfp5c73f0s3pg`
