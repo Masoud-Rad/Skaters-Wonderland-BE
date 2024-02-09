@@ -345,7 +345,7 @@ describe("GET /api/lands",()=>{
                 is_public: true,
                 has_rink: false,
                 suitabile_for: 'Roller skating',
-                land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+                land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                 username: 'cooljmessy'
               },
               {
@@ -367,7 +367,7 @@ describe("GET /api/lands",()=>{
                 is_public: true,
                 has_rink: true,
                 suitabile_for: 'Skateboarding , Roller skating ',
-                land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+                land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                 username: 'grumpy19'
               },
               {
@@ -389,7 +389,7 @@ describe("GET /api/lands",()=>{
                 is_public: true,
                 has_rink: true,
                 suitabile_for: 'Skateboarding',
-                land_img_url: '""',
+                land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                 username: 'weegembump'
               },
               {
@@ -411,7 +411,7 @@ describe("GET /api/lands",()=>{
                 is_public: true,
                 has_rink: true,
                 suitabile_for: 'Skateboarding',
-                land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
+                land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                 username: 'jessjelly'
               }
             ]
@@ -507,7 +507,7 @@ describe("GET Filtered Lands",()=>{
             is_public: true,
             has_rink: false,
             suitabile_for: 'Roller skating',
-            land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'cooljmessy'
           }
           ]
@@ -564,7 +564,7 @@ test("GET - status: 200 - respond with all the lands filtered by cost",()=>{
           is_public: true,
           has_rink: false,
           suitabile_for: 'Roller skating',
-          land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'cooljmessy'
         },
         {
@@ -586,7 +586,7 @@ test("GET - status: 200 - respond with all the lands filtered by cost",()=>{
           is_public: true,
           has_rink: true,
           suitabile_for: 'Skateboarding , Roller skating ',
-          land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'grumpy19'
         },
         {
@@ -608,7 +608,7 @@ test("GET - status: 200 - respond with all the lands filtered by cost",()=>{
           is_public: true,
           has_rink: true,
           suitabile_for: 'Skateboarding',
-          land_img_url: '""',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'weegembump'
         },
         {
@@ -630,7 +630,7 @@ test("GET - status: 200 - respond with all the lands filtered by cost",()=>{
           is_public: true,
           has_rink: true,
           suitabile_for: 'Skateboarding',
-          land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'jessjelly'
         }
     ]
@@ -665,7 +665,7 @@ test("GET - status: 200 - respond with all the lands filtered by city and has_ri
           is_public: true,
           has_rink: true,
           suitabile_for: 'Skateboarding , Roller skating ',
-          land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'grumpy19'
         },
         {
@@ -687,7 +687,7 @@ test("GET - status: 200 - respond with all the lands filtered by city and has_ri
           is_public: true,
           has_rink: true,
           suitabile_for: 'Skateboarding',
-          land_img_url: '""',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'weegembump'
         },
         {
@@ -709,7 +709,7 @@ test("GET - status: 200 - respond with all the lands filtered by city and has_ri
           is_public: true,
           has_rink: true,
           suitabile_for: 'Skateboarding',
-          land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'jessjelly'
         }
       ]
@@ -744,7 +744,7 @@ test("GET - status: 200 - respond with all the lands filtered by city, cost and 
           is_public: true,
           has_rink: false,
           suitabile_for: 'Roller skating',
-          land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'cooljmessy'
         }
     ]
@@ -801,7 +801,7 @@ test("GET - status: 200 - respond with all the lands limited by number of lands"
           is_public: true,
           has_rink: false,
           suitabile_for: 'Roller skating',
-          land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'cooljmessy'
         },
         {
@@ -823,7 +823,7 @@ test("GET - status: 200 - respond with all the lands limited by number of lands"
           is_public: true,
           has_rink: true,
           suitabile_for: 'Skateboarding , Roller skating ',
-          land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'grumpy19'
         }
     ]
@@ -867,7 +867,7 @@ describe("GET sorted lands",()=>{
             is_public: true,
             has_rink: true,
             suitabile_for: 'Skateboarding , Roller skating ',
-            land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'grumpy19'
           },
           {
@@ -911,7 +911,7 @@ describe("GET sorted lands",()=>{
             is_public: true,
             has_rink: false,
             suitabile_for: 'Roller skating',
-            land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'cooljmessy'
           },
           {
@@ -933,7 +933,7 @@ describe("GET sorted lands",()=>{
             is_public: true,
             has_rink: true,
             suitabile_for: 'Skateboarding',
-            land_img_url: '""',
+            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'weegembump'
           },
           {
@@ -955,7 +955,7 @@ describe("GET sorted lands",()=>{
             is_public: true,
             has_rink: true,
             suitabile_for: 'Skateboarding',
-            land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
+            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'jessjelly'
           }
         ]
@@ -1050,7 +1050,7 @@ describe("GET /api/lands/:land_id",()=>{
           is_public: true,
           has_rink: false,
           suitabile_for: 'Roller skating',
-          land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'cooljmessy'
         }
           

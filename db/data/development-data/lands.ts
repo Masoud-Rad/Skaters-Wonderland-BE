@@ -34,7 +34,7 @@ module.exports = [
         is_public: true,
         has_rink: false,
         suitabile_for: "Roller skating",
-        land_img_url: 'https://goo.gl/maps/HerU9jhe6H855wh76',
+        land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'cooljmessy'
     },
     {
@@ -53,7 +53,7 @@ module.exports = [
         is_public: true,
         has_rink: true,
         suitabile_for: "Skateboarding , Roller skating ",
-        land_img_url: 'https://goo.gl/maps/xCoDTQdv6ddvUzLh6',
+        land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'grumpy19'
     },
     {
@@ -72,7 +72,7 @@ module.exports = [
         is_public: true,
         has_rink: true,
         suitabile_for: "Skateboarding",
-        land_img_url: '""',
+        land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'weegembump'
     },
     {
@@ -91,7 +91,7 @@ module.exports = [
         is_public: true,
         has_rink: true,
         suitabile_for: "Skateboarding",
-        land_img_url: 'https://goo.gl/maps/SdUzVby5PqoKo4YV7',
+        land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'jessjelly'
     }
 ]
