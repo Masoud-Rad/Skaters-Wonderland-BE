@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 module.exports = [
     {
         landname: 'Media City Salford Quays',
@@ -11,10 +13,6 @@ module.exports = [
         safety_rating_count: 4,
         suitability_rating_total: 25,
         suitability_rating_count: 5,
-        cost: "Free",
-        is_public: true,
-        has_rink: false,
-        suitabile_for: "Skateboarding , Roller skating ",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'tickle122'
     },
@@ -30,10 +28,6 @@ module.exports = [
         safety_rating_count: 6,
         suitability_rating_total: 25,
         suitability_rating_count: 5,
-        cost: "Free",
-        is_public: true,
-        has_rink: false,
-        suitabile_for: "Roller skating",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'cooljmessy'
     },
@@ -42,17 +36,13 @@ module.exports = [
         city: 'Manchester',
         country: 'England',
         postcode: 'M16 0UB',
-        description: "Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there",
+        description: `Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there`,
         created_at: new Date("2023-08-10T12:00:00Z"),
         vote: 5,
         safety_rating_total: 20,
         safety_rating_count: 4,
         suitability_rating_total: 30,
         suitability_rating_count: 6,
-        cost: "Free",
-        is_public: true,
-        has_rink: true,
-        suitabile_for: "Skateboarding , Roller skating ",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'grumpy19'
     },
@@ -61,17 +51,13 @@ module.exports = [
         city: 'Manchester',
         country: 'England',
         postcode: 'M11 1JY',
-        description: "This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!",
+        description: `This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!`,
         created_at: new Date("2023-08-10T12:00:00Z"),
         vote: 2,
         safety_rating_total: 7,
         safety_rating_count: 2,
         suitability_rating_total: 25,
         suitability_rating_count: 6,
-        cost: "Free",
-        is_public: true,
-        has_rink: true,
-        suitabile_for: "Skateboarding",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'weegembump'
     },
@@ -80,18 +66,15 @@ module.exports = [
         city: 'Manchester',
         country: 'England',
         postcode: 'M40 1GJ',
-        description: "Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park",
+        description: `Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park`,
         created_at: new Date("2023-08-10T12:00:00Z"),
         vote: 0,
         safety_rating_total: 32,
         safety_rating_count: 8,
         suitability_rating_total: 25,
         suitability_rating_count: 6,
-        cost: "Free",
-        is_public: true,
-        has_rink: true,
-        suitabile_for: "Skateboarding",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'jessjelly'
     }
 ];
+//# sourceMappingURL=lands.js.map

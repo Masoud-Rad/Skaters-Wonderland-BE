@@ -17,10 +17,6 @@ interface LandSample {
     suitability_rating_total: number;
     suitability_rating_count: number;
     suitability_rating_ave: number;
-    cost: string;
-    is_public: boolean;
-    has_rink: boolean;
-    suitabile_for: string;
     land_img_url: string;
     username: string;
 }
@@ -46,7 +42,7 @@ interface AddNewLandSample {
 }
 
 
-exports.selectLands=(city: string, has_rink: string, cost: string, outputLength:string, sort_by:string ="land_id" , order_by:string = "ASC")=>{
+exports.selectLands=(city: string, outputLength:string, sort_by:string ="land_id" , order_by:string = "ASC")=>{
  
   let queryStr: string =`SELECT * FROM lands`;
   const quertValues : string[] = [];
@@ -54,16 +50,6 @@ exports.selectLands=(city: string, has_rink: string, cost: string, outputLength:
   if (city) {
     quertValues.push(city);
     queryStr += ` WHERE city=$${quertValues.length}`;
-}
-
-if (has_rink) {
-  quertValues.push(has_rink);
-    queryStr += `${queryStr.includes('WHERE') ? ' AND' : ' WHERE'} has_rink=$${quertValues.length}`;
-}
-
-if (cost) {
-  quertValues.push(cost);
-    queryStr += `${queryStr.includes('WHERE') ? ' AND' : ' WHERE'} cost=$${quertValues.length}`;
 }
 
 
@@ -126,7 +112,7 @@ exports.selectSingleLand=(landId : string)=>{
 }
 
 exports.addLand=(newLand: AddNewLandSample)=>{
-  const {landname , city, country, postcode, description, cost, is_public, has_rink, suitabile_for, land_img_url, username} = newLand;
+  const {landname , city, country, postcode, description, land_img_url, username} = newLand;
   if (
     typeof newLand === "object" && 
     newLand.hasOwnProperty("landname") && 
@@ -134,24 +120,20 @@ exports.addLand=(newLand: AddNewLandSample)=>{
     newLand.hasOwnProperty("country") && 
     newLand.hasOwnProperty("postcode") &&
     newLand.hasOwnProperty("description") && 
-    newLand.hasOwnProperty("cost") &&
-    newLand.hasOwnProperty("is_public") &&
-    newLand.hasOwnProperty("has_rink") &&
-    newLand.hasOwnProperty("suitabile_for") &&
     newLand.hasOwnProperty("username")
     ) 
     {
       if(newLand.land_img_url)
       {
-        return db.query(`INSERT INTO lands (landname, city, country, postcode, description, cost, is_public, has_rink, suitabile_for, land_img_url, username) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *;`,
-        [landname , city, country, postcode, description, cost, is_public, has_rink, suitabile_for, land_img_url, username])
+        return db.query(`INSERT INTO lands (landname, city, country, postcode, description, land_img_url, username) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *;`,
+        [landname , city, country, postcode, description, land_img_url, username])
         .then(({rows} : LandsResult)=>{
           return rows[0];
         })
 
       }else{
-              return db.query(`INSERT INTO lands (landname, city, country, postcode, description, safety_rating, suitability_rating, cost, is_public, has_rink, suitabile_for, username) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *;`,
-              [landname , city, country, postcode, description, cost, is_public, has_rink, suitabile_for, username])
+              return db.query(`INSERT INTO lands (landname, city, country, postcode, description, username) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *;`,
+              [landname , city, country, postcode, description, username])
               .then(({rows} : LandsResult)=>{
                 return rows[0];
               })

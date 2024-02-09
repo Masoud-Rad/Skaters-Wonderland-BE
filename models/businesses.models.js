@@ -1,8 +1,9 @@
-var db = require('../db/connection');
-exports.selectBusinesses = function () {
-    return db.query("SELECT * FROM businesses;")
-        .then(function (_a) {
-        var rows = _a.rows;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const db = require('../db/connection');
+exports.selectBusinesses = () => {
+    return db.query(`SELECT * FROM businesses;`)
+        .then(({ rows }) => {
         if (rows.length === 0) {
             return Promise.reject({ status: 404, msg: 'Not Found!' });
         }
@@ -11,10 +12,9 @@ exports.selectBusinesses = function () {
         }
     });
 };
-exports.selectSingleBusiness = function (businessId) {
-    return db.query("SELECT * FROM businesses WHERE business_id=$1;", [businessId])
-        .then(function (_a) {
-        var rows = _a.rows;
+exports.selectSingleBusiness = (businessId) => {
+    return db.query(`SELECT * FROM businesses WHERE business_id=$1;`, [businessId])
+        .then(({ rows }) => {
         if (rows.length === 0) {
             return Promise.reject({ status: 404, msg: 'Not Found!' });
         }
@@ -23,8 +23,8 @@ exports.selectSingleBusiness = function (businessId) {
         }
     });
 };
-exports.addBusiness = function (newBusiness) {
-    var username = newBusiness.username, businessname = newBusiness.businessname, city = newBusiness.city, country = newBusiness.country, postcode = newBusiness.postcode, description = newBusiness.description, website = newBusiness.website, business_img_url = newBusiness.business_img_url, contact_number = newBusiness.contact_number;
+exports.addBusiness = (newBusiness) => {
+    const { username, businessname, city, country, postcode, description, website, business_img_url, contact_number } = newBusiness;
     if (typeof newBusiness === "object" &&
         newBusiness.hasOwnProperty("businessname") &&
         newBusiness.hasOwnProperty("city") &&
@@ -32,8 +32,8 @@ exports.addBusiness = function (newBusiness) {
         newBusiness.hasOwnProperty("postcode") &&
         newBusiness.hasOwnProperty("description") &&
         newBusiness.hasOwnProperty("username")) {
-        var queryValues = [username, businessname, city, country, postcode, description];
-        var queryColumns = ['username', 'businessname', 'city', 'country', 'postcode', 'description'];
+        const queryValues = [username, businessname, city, country, postcode, description];
+        const queryColumns = ['username', 'businessname', 'city', 'country', 'postcode', 'description'];
         if (website) {
             queryValues.push(website);
             queryColumns.push('website');
@@ -46,67 +46,61 @@ exports.addBusiness = function (newBusiness) {
             queryValues.push(contact_number);
             queryColumns.push('contact_number');
         }
-        var query = "INSERT INTO businesses(".concat(queryColumns.join(', '), ") VALUES (").concat(queryValues.map(function (_, index) { return "$".concat(index + 1); }).join(','), ") RETURNING *;");
+        const query = `INSERT INTO businesses(${queryColumns.join(', ')}) VALUES (${queryValues.map((_, index) => `$${index + 1}`).join(',')}) RETURNING *;`;
         return db.query(query, queryValues)
-            .then(function (_a) {
-            var rows = _a.rows;
-            return rows[0];
-        });
+            .then(({ rows }) => rows[0]);
     }
     else {
         return Promise.reject({ status: 400, msg: 'BAD REQUEST!' });
     }
 };
-exports.updateBusiness = function (businessId, businessUpdate) {
-    var businessnameUpdate = businessUpdate.businessnameUpdate, cityUpdate = businessUpdate.cityUpdate, countryUpdate = businessUpdate.countryUpdate, postcodeUpdate = businessUpdate.postcodeUpdate, descriptionUpdate = businessUpdate.descriptionUpdate, websiteUpdate = businessUpdate.websiteUpdate, contact_numberUpdate = businessUpdate.contact_numberUpdate, business_img_urlUpdate = businessUpdate.business_img_urlUpdate;
-    return db.query("SELECT * FROM businesses WHERE business_id=$1;", [businessId]).then(function (_a) {
-        var rows = _a.rows;
-        var business = rows[0];
+exports.updateBusiness = (businessId, businessUpdate) => {
+    const { businessnameUpdate, cityUpdate, countryUpdate, postcodeUpdate, descriptionUpdate, websiteUpdate, contact_numberUpdate, business_img_urlUpdate } = businessUpdate;
+    return db.query(`SELECT * FROM businesses WHERE business_id=$1;`, [businessId]).then(({ rows }) => {
+        const business = rows[0];
         if (!business) {
             return Promise.reject({ status: 404, msg: 'Business not found!' });
         }
-        var updateValues = [];
-        var queryParams = [businessId];
+        const updateValues = [];
+        const queryParams = [businessId];
         if (businessnameUpdate) {
-            updateValues.push("businessname = $".concat(queryParams.length + 1));
+            updateValues.push(`businessname = $${queryParams.length + 1}`);
             queryParams.push(businessnameUpdate);
         }
         if (cityUpdate) {
-            updateValues.push("city = $".concat(queryParams.length + 1));
+            updateValues.push(`city = $${queryParams.length + 1}`);
             queryParams.push(cityUpdate);
         }
         if (countryUpdate) {
-            updateValues.push("country = $".concat(queryParams.length + 1));
+            updateValues.push(`country = $${queryParams.length + 1}`);
             queryParams.push(countryUpdate);
         }
         if (postcodeUpdate) {
-            updateValues.push("postcode = $".concat(queryParams.length + 1));
+            updateValues.push(`postcode = $${queryParams.length + 1}`);
             queryParams.push(postcodeUpdate);
         }
         if (descriptionUpdate) {
-            updateValues.push("description = $".concat(queryParams.length + 1));
+            updateValues.push(`description = $${queryParams.length + 1}`);
             queryParams.push(descriptionUpdate);
         }
         if (websiteUpdate) {
-            updateValues.push("website = $".concat(queryParams.length + 1));
+            updateValues.push(`website = $${queryParams.length + 1}`);
             queryParams.push(websiteUpdate);
         }
         if (contact_numberUpdate) {
-            updateValues.push("contact_number = $".concat(queryParams.length + 1));
+            updateValues.push(`contact_number = $${queryParams.length + 1}`);
             queryParams.push(contact_numberUpdate);
         }
         if (business_img_urlUpdate) {
-            updateValues.push("business_img_url = $".concat(queryParams.length + 1));
+            updateValues.push(`business_img_url = $${queryParams.length + 1}`);
             queryParams.push(business_img_urlUpdate);
         }
-        var updateQuery = "UPDATE businesses SET ".concat(updateValues.join(', '), " WHERE business_id = $1 RETURNING *;");
-        return db.query(updateQuery, queryParams).then(function (_a) {
-            var updatedRows = _a.rows;
+        const updateQuery = `UPDATE businesses SET ${updateValues.join(', ')} WHERE business_id = $1 RETURNING *;`;
+        return db.query(updateQuery, queryParams).then(({ rows: updatedRows }) => {
             return updatedRows[0];
         });
     });
 };
-exports.delBusiness = function (businessId) {
-    return db.query("DELETE FROM businessesreview WHERE business_id=$1 ;", [businessId])
-        .then(function () { return db.query("DELETE FROM businesses WHERE business_id=$1 ;", [businessId]); });
-};
+exports.delBusiness = (businessId) => db.query(`DELETE FROM businessesreview WHERE business_id=$1 ;`, [businessId])
+    .then(() => db.query(`DELETE FROM businesses WHERE business_id=$1 ;`, [businessId]));
+//# sourceMappingURL=businesses.models.js.map

@@ -17,10 +17,6 @@ interface Land {
     suitability_rating_total: number;
     suitability_rating_count: number;
     suitability_rating_ave: number;
-    cost: string;
-    is_public: boolean;
-    has_rink: boolean;
-    suitabile_for: string;
     land_img_url: string;
     username: string;
 }
@@ -153,10 +149,6 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
                   ELSE 0
                 END
             ) STORED,
-            cost VARCHAR NOT NULL,
-            is_public BOOL NOT NULL,
-            has_rink BOOL NOT NULL,
-            suitabile_for VARCHAR NOT NULL,
             land_img_url VARCHAR DEFAULT './images/defaultWL.avif',
             username VARCHAR REFERENCES users(username) NOT NULL
             );
@@ -243,7 +235,7 @@ async function seed(salesData: Sale[], ptsreviewData: Ptsreview[], personaltrain
        
         const insertUsersQueryStr = format(`INSERT INTO users (username, name, avatar_url, email, password, location) VALUES %L;`, userData.map(({ username, name, avatar_url, email, password, location }) => [username, name, avatar_url, email, password, location]));
         await db.query(insertUsersQueryStr);
-        const insertLandsQueryStr = format(`INSERT INTO lands (landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username }) => [landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, cost, is_public, has_rink, created_at, suitabile_for, land_img_url, username]));
+        const insertLandsQueryStr = format(`INSERT INTO lands (landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, created_at, land_img_url, username) VALUES %L RETURNING *;`, landData.map(({ landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, created_at, land_img_url, username }) => [landname, city, country, postcode, description, vote, safety_rating_total, safety_rating_count, suitability_rating_total, suitability_rating_count, created_at, land_img_url, username]));
         const result = await db.query(insertLandsQueryStr);
         const formatedCommentsData = formatComments(commentData, result.rows);
         const insertCommentsQueryStr = format(`INSERT INTO comments (body, land_id, username, created_at) VALUES %L;`, formatedCommentsData.map((formatedComment: FormatedComment) => [formatedComment.body, formatedComment.land_id, formatedComment.username, formatedComment.created_at]));

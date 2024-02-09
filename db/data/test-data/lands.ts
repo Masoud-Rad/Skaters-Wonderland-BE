@@ -11,10 +11,6 @@ module.exports = [
         safety_rating_count: 4,
         suitability_rating_total: 25,
         suitability_rating_count: 5,
-        cost: "Free", 
-        is_public: true,
-        has_rink: false,
-        suitabile_for: "Skateboarding , Roller skating ",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'tickle122'
     },
@@ -30,10 +26,6 @@ module.exports = [
         safety_rating_count: 6,
         suitability_rating_total: 25,
         suitability_rating_count: 5,
-        cost: "Free",
-        is_public: true,
-        has_rink: false,
-        suitabile_for: "Roller skating",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'cooljmessy'
     },
@@ -49,10 +41,6 @@ module.exports = [
         safety_rating_count: 4,
         suitability_rating_total: 30,
         suitability_rating_count: 6,
-        cost: "Free",
-        is_public: true,
-        has_rink: true,
-        suitabile_for: "Skateboarding , Roller skating ",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'grumpy19'
     },
@@ -68,10 +56,6 @@ module.exports = [
         safety_rating_count: 2,
         suitability_rating_total: 25,
         suitability_rating_count: 6,
-        cost: "Free",
-        is_public: true,
-        has_rink: true,
-        suitabile_for: "Skateboarding",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'weegembump'
     },
@@ -87,10 +71,6 @@ module.exports = [
         safety_rating_count: 8,
         suitability_rating_total: 25,
         suitability_rating_count: 6,
-        cost: "Free",
-        is_public: true,
-        has_rink: true,
-        suitabile_for: "Skateboarding",
         land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
         username: 'jessjelly'
     }

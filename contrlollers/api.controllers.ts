@@ -54,10 +54,6 @@ interface LandSample {
     suitability_rating_total: number;
     suitability_rating_count: number;
     suitability_rating_ave: number;
-    cost: string;
-    is_public: boolean;
-    has_rink: boolean;
-    suitabile_for: string;
     land_img_url: string;
     username: string;
 }
@@ -216,8 +212,8 @@ exports.deleteUser= (req : Request , res : Response, next : NextFunction)=>{
 
 
 exports.getLands= (req : Request , res : Response, next : NextFunction)=>{
-  const {city, has_rink, cost, outputLength, sort_by, order_by} = req.query; 
-  selectLands(city, has_rink, cost, outputLength, sort_by, order_by)
+  const {city, outputLength, sort_by, order_by} = req.query; 
+  selectLands(city, outputLength, sort_by, order_by)
     .then((lands: LandSample[])=>{
       res.status(200).send({"lands": lands})
     })

@@ -48,10 +48,6 @@ interface LandSample {
   suitability_rating_total: number;
   suitability_rating_count: number;
   suitability_rating_ave: number;
-  cost: string;
-  is_public: boolean;
-  has_rink: boolean;
-  suitabile_for: string;
   land_img_url: string;
   username: string;
 }
@@ -319,10 +315,6 @@ describe("GET /api/lands",()=>{
                 suitability_rating_total: 25,
                 suitability_rating_count: 5,
                 suitability_rating_ave: '5.00',
-                cost: 'Free',
-                is_public: true,
-                has_rink: false,
-                suitabile_for: 'Skateboarding , Roller skating ',
                 land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                 username: 'tickle122'
               },
@@ -341,10 +333,6 @@ describe("GET /api/lands",()=>{
                 suitability_rating_total: 25,
                 suitability_rating_count: 5,
                 suitability_rating_ave: '5.00',
-                cost: 'Free',
-                is_public: true,
-                has_rink: false,
-                suitabile_for: 'Roller skating',
                 land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                 username: 'cooljmessy'
               },
@@ -363,10 +351,6 @@ describe("GET /api/lands",()=>{
                 suitability_rating_total: 30,
                 suitability_rating_count: 6,
                 suitability_rating_ave: '5.00',
-                cost: 'Free',
-                is_public: true,
-                has_rink: true,
-                suitabile_for: 'Skateboarding , Roller skating ',
                 land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                 username: 'grumpy19'
               },
@@ -385,10 +369,6 @@ describe("GET /api/lands",()=>{
                 suitability_rating_total: 25,
                 suitability_rating_count: 6,
                 suitability_rating_ave: '4.17',
-                cost: 'Free',
-                is_public: true,
-                has_rink: true,
-                suitabile_for: 'Skateboarding',
                 land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                 username: 'weegembump'
               },
@@ -407,10 +387,6 @@ describe("GET /api/lands",()=>{
                 suitability_rating_total: 25,
                 suitability_rating_count: 6,
                 suitability_rating_ave: '4.17',
-                cost: 'Free',
-                is_public: true,
-                has_rink: true,
-                suitabile_for: 'Skateboarding',
                 land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                 username: 'jessjelly'
               }
@@ -446,10 +422,6 @@ describe("GET Filtered Lands",()=>{
               suitability_rating_total: 25,
               suitability_rating_count: 5,
               suitability_rating_ave: '5.00',
-              cost: 'Free',
-              is_public: true,
-              has_rink: false,
-              suitabile_for: 'Skateboarding , Roller skating ',
               land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
               username: 'tickle122'
             }
@@ -458,268 +430,12 @@ describe("GET Filtered Lands",()=>{
       })
   })
 
-  test("GET - status: 200 - respond with all the lands filtered by has_rink",()=>{
-    return request(app)
-    .get("/api/lands/?has_rink=false")
-    .expect(200)
-    .then((response : Response)=>{
-        const responseBody: LandsResponseBody = response.body;
-        const lands: LandSample[] = responseBody.lands;
-        const expectedResult = [
-          {
-            land_id: 1,
-            landname: 'Media City Salford Quays',
-            city: 'Salford',
-            country: 'England',
-            postcode: 'M50 2NT',
-            description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
-            created_at: '2023-08-10T11:00:00.000Z',
-            vote: 8,
-            safety_rating_total: 15,
-            safety_rating_count: 4,
-            safety_rating_ave: '3.75',
-            suitability_rating_total: 25,
-            suitability_rating_count: 5,
-            suitability_rating_ave: '5.00',
-            cost: 'Free',
-            is_public: true,
-            has_rink: false,
-            suitabile_for: 'Skateboarding , Roller skating ',
-            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-            username: 'tickle122'
-          },
-          {
-            land_id: 2,
-            landname: 'Heaton Park',
-            city: 'Manchester',
-            country: 'England',
-            postcode: 'M25 2SW',
-            description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
-            created_at: '2023-08-10T11:00:00.000Z',
-            vote: 8,
-            safety_rating_total: 15,
-            safety_rating_count: 6,
-            safety_rating_ave: '2.50',
-            suitability_rating_total: 25,
-            suitability_rating_count: 5,
-            suitability_rating_ave: '5.00',
-            cost: 'Free',
-            is_public: true,
-            has_rink: false,
-            suitabile_for: 'Roller skating',
-            land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-            username: 'cooljmessy'
-          }
-          ]
-        expect(lands).toEqual(expectedResult);
-    })
-})
+  
 
-test("GET - status: 200 - respond with all the lands filtered by cost",()=>{
-  return request(app)
-  .get("/api/lands/?cost=Free")
-  .expect(200)
-  .then((response : Response)=>{
-      const responseBody: LandsResponseBody = response.body;
-      const lands: LandSample[] = responseBody.lands;
-      const expectedResult = [
-        {
-          land_id: 1,
-          landname: 'Media City Salford Quays',
-          city: 'Salford',
-          country: 'England',
-          postcode: 'M50 2NT',
-          description: 'popular place for skating on the weekends! Media City Salford Quays is set in the Salford district of Manchester, 400 metres from The Lowry and 4.3 km from Opera House Manchester.',
-          created_at: '2023-08-10T11:00:00.000Z',
-          vote: 8,
-          safety_rating_total: 15,
-          safety_rating_count: 4,
-          safety_rating_ave: '3.75',
-          suitability_rating_total: 25,
-          suitability_rating_count: 5,
-          suitability_rating_ave: '5.00',
-          cost: 'Free',
-          is_public: true,
-          has_rink: false,
-          suitabile_for: 'Skateboarding , Roller skating ',
-          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-          username: 'tickle122'
-        },
-        {
-          land_id: 2,
-          landname: 'Heaton Park',
-          city: 'Manchester',
-          country: 'England',
-          postcode: 'M25 2SW',
-          description: 'Urban park with a championship golf course for grown-ups, farm animals and play areas for kids.',
-          created_at: '2023-08-10T11:00:00.000Z',
-          vote: 8,
-          safety_rating_total: 15,
-          safety_rating_count: 6,
-          safety_rating_ave: '2.50',
-          suitability_rating_total: 25,
-          suitability_rating_count: 5,
-          suitability_rating_ave: '5.00',
-          cost: 'Free',
-          is_public: true,
-          has_rink: false,
-          suitabile_for: 'Roller skating',
-          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-          username: 'cooljmessy'
-        },
-        {
-          land_id: 3,
-          landname: 'Seymour skatepark',
-          city: 'Manchester',
-          country: 'England',
-          postcode: 'M16 0UB',
-          description: "Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there",
-          created_at: '2023-08-10T11:00:00.000Z',
-          vote: 5,
-          safety_rating_total: 20,
-          safety_rating_count: 4,
-          safety_rating_ave: '5.00',
-          suitability_rating_total: 30,
-          suitability_rating_count: 6,
-          suitability_rating_ave: '5.00',
-          cost: 'Free',
-          is_public: true,
-          has_rink: true,
-          suitabile_for: 'Skateboarding , Roller skating ',
-          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-          username: 'grumpy19'
-        },
-        {
-          land_id: 4,
-          landname: 'Delamere Skate park',
-          city: 'Manchester',
-          country: 'England',
-          postcode: 'M11 1JY',
-          description: "This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!",
-          created_at: '2023-08-10T11:00:00.000Z',
-          vote: 2,
-          safety_rating_total: 7,
-          safety_rating_count: 2,
-          safety_rating_ave: '3.50',
-          suitability_rating_total: 25,
-          suitability_rating_count: 6,
-          suitability_rating_ave: '4.17',
-          cost: 'Free',
-          is_public: true,
-          has_rink: true,
-          suitabile_for: 'Skateboarding',
-          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-          username: 'weegembump'
-        },
-        {
-          land_id: 5,
-          landname: 'Brookdale Skate Park',
-          city: 'Manchester',
-          country: 'England',
-          postcode: 'M40 1GJ',
-          description: 'Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park',
-          created_at: '2023-08-10T11:00:00.000Z',
-          vote: 0,
-          safety_rating_total: 32,
-          safety_rating_count: 8,
-          safety_rating_ave: '4.00',
-          suitability_rating_total: 25,
-          suitability_rating_count: 6,
-          suitability_rating_ave: '4.17',
-          cost: 'Free',
-          is_public: true,
-          has_rink: true,
-          suitabile_for: 'Skateboarding',
-          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-          username: 'jessjelly'
-        }
-    ]
-      expect(lands).toEqual(expectedResult);
-  })
-})
 
-test("GET - status: 200 - respond with all the lands filtered by city and has_rink",()=>{
+test("GET - status: 200 - respond with all the lands filtered by city",()=>{
   return request(app)
-  .get("/api/lands/?city=Manchester&has_rink=true")
-  .expect(200)
-  .then((response : Response)=>{
-      const responseBody: LandsResponseBody = response.body;
-      const lands: LandSample[] = responseBody.lands;
-      const expectedResult = [
-        {
-          land_id: 3,
-          landname: 'Seymour skatepark',
-          city: 'Manchester',
-          country: 'England',
-          postcode: 'M16 0UB',
-          description: "Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there",
-          created_at: '2023-08-10T11:00:00.000Z',
-          vote: 5,
-          safety_rating_total: 20,
-          safety_rating_count: 4,
-          safety_rating_ave: '5.00',
-          suitability_rating_total: 30,
-          suitability_rating_count: 6,
-          suitability_rating_ave: '5.00',
-          cost: 'Free',
-          is_public: true,
-          has_rink: true,
-          suitabile_for: 'Skateboarding , Roller skating ',
-          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-          username: 'grumpy19'
-        },
-        {
-          land_id: 4,
-          landname: 'Delamere Skate park',
-          city: 'Manchester',
-          country: 'England',
-          postcode: 'M11 1JY',
-          description: "This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!",
-          created_at: '2023-08-10T11:00:00.000Z',
-          vote: 2,
-          safety_rating_total: 7,
-          safety_rating_count: 2,
-          safety_rating_ave: '3.50',
-          suitability_rating_total: 25,
-          suitability_rating_count: 6,
-          suitability_rating_ave: '4.17',
-          cost: 'Free',
-          is_public: true,
-          has_rink: true,
-          suitabile_for: 'Skateboarding',
-          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-          username: 'weegembump'
-        },
-        {
-          land_id: 5,
-          landname: 'Brookdale Skate Park',
-          city: 'Manchester',
-          country: 'England',
-          postcode: 'M40 1GJ',
-          description: 'Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park',
-          created_at: '2023-08-10T11:00:00.000Z',
-          vote: 0,
-          safety_rating_total: 32,
-          safety_rating_count: 8,
-          safety_rating_ave: '4.00',
-          suitability_rating_total: 25,
-          suitability_rating_count: 6,
-          suitability_rating_ave: '4.17',
-          cost: 'Free',
-          is_public: true,
-          has_rink: true,
-          suitabile_for: 'Skateboarding',
-          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-          username: 'jessjelly'
-        }
-      ]
-      expect(lands).toEqual(expectedResult);
-  })
-})
-
-test("GET - status: 200 - respond with all the lands filtered by city, cost and has_rink",()=>{
-  return request(app)
-  .get("/api/lands/?city=Manchester&has_rink=false&cost=Free")
+  .get("/api/lands/?city=Manchester")
   .expect(200)
   .then((response : Response)=>{
       const responseBody: LandsResponseBody = response.body;
@@ -740,13 +456,63 @@ test("GET - status: 200 - respond with all the lands filtered by city, cost and 
           suitability_rating_total: 25,
           suitability_rating_count: 5,
           suitability_rating_ave: '5.00',
-          cost: 'Free',
-          is_public: true,
-          has_rink: false,
-          suitabile_for: 'Roller skating',
           land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'cooljmessy'
-        }
+        },
+        {
+          land_id: 3,
+          landname: 'Seymour skatepark',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M16 0UB',
+          description: "Got to be one of the best skate parks I've ever been to, great atmosphere, a bit small but every inch of space is used great for all skill levels, my only complaint is that there isnt anything too unusual there",
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 5,
+          safety_rating_total: 20,
+          safety_rating_count: 4,
+          safety_rating_ave: '5.00',
+          suitability_rating_total: 30,
+          suitability_rating_count: 6,
+          suitability_rating_ave: '5.00',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+          username: 'grumpy19'
+        },
+        {
+          land_id: 4,
+          landname: 'Delamere Skate park',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M11 1JY',
+          description: "This is a nice park, safe for children and it's relatively clean and tidy. The surrounding area is safe too. Lots of benches for relaxing too!",
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 2,
+          safety_rating_total: 7,
+          safety_rating_count: 2,
+          safety_rating_ave: '3.50',
+          suitability_rating_total: 25,
+          suitability_rating_count: 6,
+          suitability_rating_ave: '4.17',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+          username: 'weegembump'
+        },
+        {
+          land_id: 5,
+          landname: 'Brookdale Skate Park',
+          city: 'Manchester',
+          country: 'England',
+          postcode: 'M40 1GJ',
+          description: 'Good park with roll over , mini ramp ,some good smaller vert ramps , on one of the ramps the coping is loose and coming off could definitely do with a few repairs but good little park',
+          created_at: '2023-08-10T11:00:00.000Z',
+          vote: 0,
+          safety_rating_total: 32,
+          safety_rating_count: 8,
+          safety_rating_ave: '4.00',
+          suitability_rating_total: 25,
+          suitability_rating_count: 6,
+          suitability_rating_ave: '4.17',
+          land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
+          username: 'jessjelly'
+        } 
     ]
       expect(lands).toEqual(expectedResult);
   })
@@ -775,10 +541,6 @@ test("GET - status: 200 - respond with all the lands limited by number of lands"
           suitability_rating_total: 25,
           suitability_rating_count: 5,
           suitability_rating_ave: '5.00',
-          cost: 'Free',
-          is_public: true,
-          has_rink: false,
-          suitabile_for: 'Skateboarding , Roller skating ',
           land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'tickle122'
         },
@@ -797,10 +559,6 @@ test("GET - status: 200 - respond with all the lands limited by number of lands"
           suitability_rating_total: 25,
           suitability_rating_count: 5,
           suitability_rating_ave: '5.00',
-          cost: 'Free',
-          is_public: true,
-          has_rink: false,
-          suitabile_for: 'Roller skating',
           land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'cooljmessy'
         },
@@ -819,10 +577,6 @@ test("GET - status: 200 - respond with all the lands limited by number of lands"
           suitability_rating_total: 30,
           suitability_rating_count: 6,
           suitability_rating_ave: '5.00',
-          cost: 'Free',
-          is_public: true,
-          has_rink: true,
-          suitabile_for: 'Skateboarding , Roller skating ',
           land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'grumpy19'
         }
@@ -863,10 +617,6 @@ describe("GET sorted lands",()=>{
             suitability_rating_total: 30,
             suitability_rating_count: 6,
             suitability_rating_ave: '5.00',
-            cost: 'Free',
-            is_public: true,
-            has_rink: true,
-            suitabile_for: 'Skateboarding , Roller skating ',
             land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'grumpy19'
           },
@@ -885,10 +635,6 @@ describe("GET sorted lands",()=>{
             suitability_rating_total: 25,
             suitability_rating_count: 5,
             suitability_rating_ave: '5.00',
-            cost: 'Free',
-            is_public: true,
-            has_rink: false,
-            suitabile_for: 'Skateboarding , Roller skating ',
             land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'tickle122'
           },
@@ -907,10 +653,6 @@ describe("GET sorted lands",()=>{
             suitability_rating_total: 25,
             suitability_rating_count: 5,
             suitability_rating_ave: '5.00',
-            cost: 'Free',
-            is_public: true,
-            has_rink: false,
-            suitabile_for: 'Roller skating',
             land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'cooljmessy'
           },
@@ -929,10 +671,6 @@ describe("GET sorted lands",()=>{
             suitability_rating_total: 25,
             suitability_rating_count: 6,
             suitability_rating_ave: '4.17',
-            cost: 'Free',
-            is_public: true,
-            has_rink: true,
-            suitabile_for: 'Skateboarding',
             land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'weegembump'
           },
@@ -951,10 +689,6 @@ describe("GET sorted lands",()=>{
             suitability_rating_total: 25,
             suitability_rating_count: 6,
             suitability_rating_ave: '4.17',
-            cost: 'Free',
-            is_public: true,
-            has_rink: true,
-            suitabile_for: 'Skateboarding',
             land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
             username: 'jessjelly'
           }
@@ -992,10 +726,6 @@ describe("GET /api/lands/?sort_by&order_by",()=>{
               suitability_rating_total: 25,
               suitability_rating_count: 5,
               suitability_rating_ave: '5.00',
-              cost: 'Free',
-              is_public: true,
-              has_rink: false,
-              suitabile_for: 'Skateboarding , Roller skating ',
               land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
               username: 'tickle122'
             }
@@ -1046,10 +776,6 @@ describe("GET /api/lands/:land_id",()=>{
           suitability_rating_total: 25,
           suitability_rating_count: 5,
           suitability_rating_ave: '5.00',
-          cost: 'Free',
-          is_public: true,
-          has_rink: false,
-          suitabile_for: 'Roller skating',
           land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
           username: 'cooljmessy'
         }

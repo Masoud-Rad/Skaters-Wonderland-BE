@@ -1,5 +1,5 @@
 var db = require('../db/connection');
-exports.selectLands = function (city, has_rink, cost, outputLength, sort_by, order_by) {
+exports.selectLands = function (city, outputLength, sort_by, order_by) {
     if (sort_by === void 0) { sort_by = "land_id"; }
     if (order_by === void 0) { order_by = "ASC"; }
     var queryStr = "SELECT * FROM lands";
@@ -7,14 +7,6 @@ exports.selectLands = function (city, has_rink, cost, outputLength, sort_by, ord
     if (city) {
         quertValues.push(city);
         queryStr += " WHERE city=$".concat(quertValues.length);
-    }
-    if (has_rink) {
-        quertValues.push(has_rink);
-        queryStr += "".concat(queryStr.includes('WHERE') ? ' AND' : ' WHERE', " has_rink=$").concat(quertValues.length);
-    }
-    if (cost) {
-        quertValues.push(cost);
-        queryStr += "".concat(queryStr.includes('WHERE') ? ' AND' : ' WHERE', " cost=$").concat(quertValues.length);
     }
     if (outputLength) {
         queryStr += " ORDER BY ".concat(sort_by, " ").concat(order_by, " LIMIT ").concat(outputLength, ";");
@@ -71,27 +63,23 @@ exports.selectSingleLand = function (landId) {
     });
 };
 exports.addLand = function (newLand) {
-    var landname = newLand.landname, city = newLand.city, country = newLand.country, postcode = newLand.postcode, description = newLand.description, cost = newLand.cost, is_public = newLand.is_public, has_rink = newLand.has_rink, suitabile_for = newLand.suitabile_for, land_img_url = newLand.land_img_url, username = newLand.username;
+    var landname = newLand.landname, city = newLand.city, country = newLand.country, postcode = newLand.postcode, description = newLand.description, land_img_url = newLand.land_img_url, username = newLand.username;
     if (typeof newLand === "object" &&
         newLand.hasOwnProperty("landname") &&
         newLand.hasOwnProperty("city") &&
         newLand.hasOwnProperty("country") &&
         newLand.hasOwnProperty("postcode") &&
         newLand.hasOwnProperty("description") &&
-        newLand.hasOwnProperty("cost") &&
-        newLand.hasOwnProperty("is_public") &&
-        newLand.hasOwnProperty("has_rink") &&
-        newLand.hasOwnProperty("suitabile_for") &&
         newLand.hasOwnProperty("username")) {
         if (newLand.land_img_url) {
-            return db.query("INSERT INTO lands (landname, city, country, postcode, description, cost, is_public, has_rink, suitabile_for, land_img_url, username) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *;", [landname, city, country, postcode, description, cost, is_public, has_rink, suitabile_for, land_img_url, username])
+            return db.query("INSERT INTO lands (landname, city, country, postcode, description, land_img_url, username) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *;", [landname, city, country, postcode, description, land_img_url, username])
                 .then(function (_a) {
                 var rows = _a.rows;
                 return rows[0];
             });
         }
         else {
-            return db.query("INSERT INTO lands (landname, city, country, postcode, description, safety_rating, suitability_rating, cost, is_public, has_rink, suitabile_for, username) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *;", [landname, city, country, postcode, description, cost, is_public, has_rink, suitabile_for, username])
+            return db.query("INSERT INTO lands (landname, city, country, postcode, description, username) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *;", [landname, city, country, postcode, description, username])
                 .then(function (_a) {
                 var rows = _a.rows;
                 return rows[0];
