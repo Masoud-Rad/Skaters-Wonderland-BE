@@ -1364,10 +1364,6 @@ describe("POST /api/land",()=>{
       country: 'countryexample1',
       postcode: "M11 M11",
       description: 'test description',
-      cost: 'free',
-      is_public: true,
-      has_rink: false,
-      suitabile_for: 'Skateboarding',
       land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
       username: 'weegembump'
                     }
@@ -1403,10 +1399,6 @@ describe("POST /api/land",()=>{
                       country: 'countryexample1',
                       postcode: "M11 M11",
                       description: 'test description',
-                      cost: 'free',
-                      is_public: true,
-                      has_rink: false,
-                      suitabile_for: 'Skateboarding',
                       land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
                       username: 'happyamy2016'
                     }
