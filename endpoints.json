@@ -536,8 +536,8 @@
     "Delete /api/businessreviews/:review_id":{}, 
     "Delete /api/personaltrainers/:pt_id":{},
     "Delete /api/ptreviews/:review_id":{},
-    "Delete /api/sales/:item_id":{}
-    "Delete /api/users/?username:{}"
+    "Delete /api/sales/:item_id":{},
+    "Delete /api/users/?username":{}
 
   
   }
