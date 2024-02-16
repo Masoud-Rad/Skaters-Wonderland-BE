@@ -1394,13 +1394,13 @@ describe("POST /api/land",()=>{
 
   test("POST- status: 201- responds with the added land",()=>{
     const newLand = {
-                      landname: 'Forth land',
-                      city: 'Cityexample1',
-                      country: 'countryexample1',
+                      landname: "Forth land",
+                      city: "Cityexample1",
+                      country: "countryexample1",
                       postcode: "M11 M11",
-                      description: 'test description',
-                      land_img_url: 'https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg',
-                      username: 'happyamy2016'
+                      description: "test description",
+                      land_img_url: "https://thedeveloper.live/AcuCustom/Sitename/DAM/130/MediaCityUKlead.jpg",
+                      username: "happyamy2016"
                     }
   return request(app)
   .post('/api/land')

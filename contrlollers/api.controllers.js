@@ -356,7 +356,6 @@ exports.deleteSaleItem = function (req, res, next) {
         res.status(204).send();
     })
         .catch(function (err) {
-        console.log("errrrrr:", err);
         next(err);
     });
 };

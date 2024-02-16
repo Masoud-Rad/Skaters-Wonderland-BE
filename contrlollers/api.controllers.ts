@@ -240,7 +240,7 @@ exports.postLand =(req : Request , res : Response, next : NextFunction)=>{
   const newLand= req.body;
   
   addLand(newLand)
-  .then((addedLand: LandSample)=>{
+  .then((addedLand: LandSample)=>{ 
     res.status(201).send({addedLand})
   })
   .catch((err: Error)=>{
@@ -565,7 +565,7 @@ exports.deleteSaleItem= (req : Request , res : Response, next : NextFunction)=>{
   delSaleItem(itemId).then(()=>{
     res.status(204).send();
   })
-  .catch((err: Error)=>{ console.log("errrrrr:", err)
+  .catch((err: Error)=>{ 
     next(err);
   })
 }
