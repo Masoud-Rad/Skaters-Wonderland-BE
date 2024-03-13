@@ -139,6 +139,7 @@ exports.addLand=(newLand: AddNewLandSample)=>{
                 return rows[0];
               })
            }
+           
        
     }else {
       return Promise.reject({ status: 400, msg: "BAD REQUEST!" })
